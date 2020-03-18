@@ -98,7 +98,7 @@ jupiterPosition = vector(jupiterXPosition, jupiterYPosition, jupiterZPosition)
 jupiterMomentum = vector(jupiterXMomentum, jupiterYMomentum, jupiterZMomentum)
 
 #Graphics
-sun = sphere(pos=vector(0,0,0), radius=size_sun, color=color.yellow)
+sun = sphere(pos=vector(0, 0, 0), radius=size_sun, color=color.yellow)
 planet = sphere(pos=vector(earthXPosition, earthYPosition, earthZPosition), radius=size_planet, color=color.cyan)
 planet.trail = curve(pos=[planet.pos], color=color.cyan, radius=radiusTrail)
 jupiter = sphere(pos=vector(jupiterXPosition, jupiterYPosition, jupiterZPosition), radius=size_jupiter, color=color.red)
