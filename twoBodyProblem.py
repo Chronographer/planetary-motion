@@ -14,7 +14,7 @@ def run(orbitRadius, orbitPeriod, timeStep):
     earthSize = 0.2
     sunSize = 0.5
     trailRadius = 0
-    maxTrailLength = np.inf
+    maxTrailLength = 500
 
     circularSpeed = (2 * np.pi * orbitRadius) / orbitPeriod
     planetPosition = vector(orbitRadius, 0, 0)
