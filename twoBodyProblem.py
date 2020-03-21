@@ -8,13 +8,12 @@ UNITS
 '''
 
 
-def run(orbitRadius, orbitPeriod, timeStep):
+def run(orbitRadius, orbitPeriod, maxTrailLength, timeStep):
     axisLength = 5
 
     earthSize = 0.2
     sunSize = 0.5
     trailRadius = 0
-    maxTrailLength = 500
 
     circularSpeed = (2 * np.pi * orbitRadius) / orbitPeriod
     planetPosition = vector(orbitRadius, 0, 0)
@@ -25,8 +24,8 @@ def run(orbitRadius, orbitPeriod, timeStep):
 
     sun = sphere(pos=vector(0, 0, 0), radius=sunSize, color=color.yellow)
     earth = sphere(pos=vector(planetPosition.x, planetPosition.y, planetPosition.z), radius=earthSize, color=color.cyan)
-    earth.trail = curve(pos=[earth.pos], color=color.cyan, radius=trailRadius, interval=30, retain=maxTrailLength)
-
+    if maxTrailLength != -2:
+        earth.trail = curve(pos=[earth.pos], color=color.cyan, radius=trailRadius, retain=maxTrailLength, interval=30)
     earthPosition = vector(1, 0, 0)
     earthVelocity = vector(0, circularSpeed, 0)
 
@@ -38,4 +37,5 @@ def run(orbitRadius, orbitPeriod, timeStep):
         earthPosition.y = earthPosition.y + (earthVelocity.y * timeStep)
         rate(60)
         earth.pos = earthPosition
-        earth.trail.append(earth.pos)
+        if maxTrailLength != -2:
+            earth.trail.append(earth.pos)
