@@ -15,6 +15,7 @@ def run(orbitRadius, orbitPeriod, maxTrailLength, timeStep):
     trailRadius = 0
 
     earthVelocity = (2 * np.pi * orbitRadius) / orbitPeriod
+    print(earthVelocity)
     planetPosition = vector(orbitRadius, 0, 0)
 
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
@@ -34,7 +35,7 @@ def run(orbitRadius, orbitPeriod, maxTrailLength, timeStep):
         earthVelocity.y = earthVelocity.y - ((4 * np.pi ** 2 * earthPosition.y) / distanceEarthSun ** 3) * timeStep
         earthPosition.x = earthPosition.x + (earthVelocity.x * timeStep)
         earthPosition.y = earthPosition.y + (earthVelocity.y * timeStep)
-        rate(90)
+        rate(60)
         earth.pos = earthPosition
         if maxTrailLength != -2:
             earth.trail.append(earth.pos)

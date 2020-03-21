@@ -32,3 +32,55 @@ massSaturn = 5.7e26 / SolarMass
 massUranus = 8.8e25 / SolarMass
 massNeptune = 1.03e26 / SolarMass
 massPluto = 6.0e24 / SolarMass
+
+# table of eccentricities of the planets
+mercuryEccentricity = 0.206
+venusEccentricity = 0.007
+earthEccentricity = 0.017
+marsEccentricity = 0.093
+jupiterEccentricity = 0.048
+saturnEccentricity = 0.056
+uranusEccentricity = 0.046
+neptuneEccentricity = 0.010
+plutoEccentricity = 0.248
+
+
+def getPlanetData(planet):
+    dataList = []
+    if planet == "mercury":
+        dataList.append(mercuryOrbitRadius)
+        dataList.append(mercuryPeriod)
+        dataList.append(mercuryEccentricity)
+    elif planet == "venus":
+        dataList.append(venusOrbitRadius)
+        dataList.append(venusPeriod)
+        dataList.append(venusEccentricity)
+    elif planet == "earth":
+        dataList.append(earthOrbitRadius)
+        dataList.append(earthPeriod)
+        dataList.append(earthEccentricity)
+    elif planet == "mars":
+        dataList.append(marsOrbitRadius)
+        dataList.append(marsPeriod)
+        dataList.append(marsEccentricity)
+    elif planet == "jupiter":
+        dataList.append(jupiterOrbitRadius)
+        dataList.append(jupiterPeriod)
+        dataList.append(jupiterEccentricity)
+    elif planet == "saturn":
+        dataList.append(saturnOrbitRadius)
+        dataList.append(saturnPeriod)
+        dataList.append(saturnEccentricity)
+    elif planet == "uranus":
+        dataList.append(uranusOrbitRadius)
+        dataList.append(uranusPeriod)
+        dataList.append(uranusEccentricity)
+    elif planet == "neptune":
+        dataList.append(neptuneOrbitRadius)
+        dataList.append(neptunePeriod)
+        dataList.append(neptuneEccentricity)
+    elif planet == "pluto":
+        dataList.append(plutoOrbitRadius)
+        dataList.append(plutoPeriod)
+        dataList.append(plutoEccentricity)
+    return dataList

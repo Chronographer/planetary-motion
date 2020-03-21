@@ -8,24 +8,24 @@ UNITS
 '''
 
 
-def run(orbitRadius, orbitPeriod, maxTrailLength, timeStep):
+def run(orbitRadius, orbitPeriod, eccentricity, maxTrailLength, timeStep, targetFrameRate):
     axisLength = 5
     earthSize = 0.2
     sunSize = 0.5
     trailRadius = 0
+    eccentricityModifier = orbitRadius - (orbitRadius * eccentricity)
 
-    earthVelocity = (2 * np.pi * orbitRadius) / orbitPeriod
-    planetPosition = vector(orbitRadius, 0, 0)
+    earthVelocity = (2 * np.pi * eccentricityModifier) / orbitPeriod
+    earthPosition = vector(orbitRadius, 0, 0)
 
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
     zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
 
     sun = sphere(pos=vector(0, 0, 0), radius=sunSize, color=color.yellow)
-    earth = sphere(pos=vector(planetPosition.x, planetPosition.y, planetPosition.z), radius=earthSize, color=color.cyan)
+    earth = sphere(pos=vector(earthPosition.x, earthPosition.y, earthPosition.z), radius=earthSize, color=color.cyan)
     if maxTrailLength != -2:
-        earth.trail = curve(pos=[earth.pos], color=color.cyan, radius=trailRadius, retain=maxTrailLength, interval=30)
-    earthPosition = vector(1, 0, 0)
+        earth.trail = curve(pos=[earth.pos], color=color.blue, radius=trailRadius, retain=maxTrailLength, interval=30)
     earthVelocity = vector(0, earthVelocity, 0)
 
     while 1:
@@ -34,7 +34,7 @@ def run(orbitRadius, orbitPeriod, maxTrailLength, timeStep):
         earthVelocity.y = earthVelocity.y - ((4 * np.pi ** 2 * earthPosition.y) / distanceEarthSun ** 3) * timeStep
         earthPosition.x = earthPosition.x + (earthVelocity.x * timeStep)
         earthPosition.y = earthPosition.y + (earthVelocity.y * timeStep)
-        rate(90)
+        rate(targetFrameRate)
         earth.pos = earthPosition
         if maxTrailLength != -2:
             earth.trail.append(earth.pos)
