@@ -10,7 +10,6 @@ UNITS
 
 def run(orbitRadius, orbitPeriod, maxTrailLength, timeStep):
     axisLength = 5
-
     earthSize = 0.2
     sunSize = 0.5
     trailRadius = 0
