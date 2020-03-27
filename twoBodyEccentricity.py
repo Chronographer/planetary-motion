@@ -10,8 +10,8 @@ UNITS
 
 def run(orbitRadius, orbitPeriod, eccentricity, maxTrailLength, timeStep, targetFrameRate):
     axisLength = 5
-    earthSize = 0.2
-    sunSize = 0.5
+    earthSize = 0.3
+    sunSize = 0.8
     trailRadius = 0
     eccentricityModifier = orbitRadius - (orbitRadius * eccentricity)
 

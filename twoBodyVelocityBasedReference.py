@@ -14,9 +14,10 @@ def run(orbitRadius, orbitPeriod, maxTrailLength, timeStep):
     sunSize = 0.5
     trailRadius = 0
 
-    earthVelocity = (2 * np.pi * orbitRadius) / orbitPeriod
-    print(earthVelocity)
-    planetPosition = vector(orbitRadius, 0, 0)
+    initialVelocity = (2 * np.pi * orbitRadius) / orbitPeriod  # unit is circumferences of earth orbits per year
+    print(initialVelocity)
+    planetPosition = vector(orbitRadius, 0, 0)                 # unit is earth orbit radii
+    earthVelocity = vector(0, initialVelocity, 0)
 
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
@@ -26,16 +27,14 @@ def run(orbitRadius, orbitPeriod, maxTrailLength, timeStep):
     earth = sphere(pos=vector(planetPosition.x, planetPosition.y, planetPosition.z), radius=earthSize, color=color.cyan)
     if maxTrailLength != -2:
         earth.trail = curve(pos=[earth.pos], color=color.cyan, radius=trailRadius, retain=maxTrailLength, interval=30)
-    earthPosition = vector(1, 0, 0)
-    earthVelocity = vector(0, earthVelocity, 0)
 
     while 1:
-        distanceEarthSun = np.sqrt((earthPosition.x ** 2 + earthPosition.y ** 2))
-        earthVelocity.x = earthVelocity.x - ((4 * np.pi ** 2 * earthPosition.x) / distanceEarthSun ** 3) * timeStep
-        earthVelocity.y = earthVelocity.y - ((4 * np.pi ** 2 * earthPosition.y) / distanceEarthSun ** 3) * timeStep
-        earthPosition.x = earthPosition.x + (earthVelocity.x * timeStep)
-        earthPosition.y = earthPosition.y + (earthVelocity.y * timeStep)
+        distanceEarthSun = np.sqrt((planetPosition.x ** 2 + planetPosition.y ** 2))
+        earthVelocity.x = earthVelocity.x - ((4 * np.pi ** 2 * planetPosition.x) / distanceEarthSun ** 3) * timeStep
+        earthVelocity.y = earthVelocity.y - ((4 * np.pi ** 2 * planetPosition.y) / distanceEarthSun ** 3) * timeStep
+        planetPosition.x = planetPosition.x + (earthVelocity.x * timeStep)
+        planetPosition.y = planetPosition.y + (earthVelocity.y * timeStep)
         rate(60)
-        earth.pos = earthPosition
+        earth.pos = planetPosition
         if maxTrailLength != -2:
             earth.trail.append(earth.pos)
