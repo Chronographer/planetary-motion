@@ -14,6 +14,8 @@ def run(initialPosition, initialVelocity, maxTrailLength, timeStep):
     earthSize = 0.2
     sunSize = 0.5
     trailRadius = 0
+    planetPosition = initialPosition
+    planetVelocity = initialVelocity
 
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
@@ -23,9 +25,6 @@ def run(initialPosition, initialVelocity, maxTrailLength, timeStep):
     earth = sphere(pos=vector(planetPosition.x, planetPosition.y, planetPosition.z), radius=earthSize, color=color.cyan)
     if maxTrailLength != -2:
         earth.trail = curve(pos=[earth.pos], color=color.cyan, radius=trailRadius, retain=maxTrailLength, interval=30)
-
-    planetPosition = initialPosition
-    planetVelocity = initialVelocity
 
     while 1:
         distanceEarthSun = np.sqrt((planetPosition.x ** 2 + planetPosition.y ** 2))
