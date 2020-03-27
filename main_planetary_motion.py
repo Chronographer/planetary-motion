@@ -13,7 +13,7 @@ targetFrameRate = 960
 maxTrailLength = -1  # To remove the limit set this to -1, to remove the trail entirely, set this to -2
 planet = "earth"
 planetDataList = planetaryData.getPlanetData(planet)
+timeStep = 0.01 * planetDataList[1]
 
 
-# twoBodyEccentricity.run(planetDataList[0], planetDataList[1], planetDataList[2], maxTrailLength, timeStep, targetFrameRate)
-twoBodyVelocityBasedReference.run(planetDataList[0], planetDataList[1], maxTrailLength, timeStep)
+twoBodyEccentricity.run(planetDataList[0], planetDataList[1], planetDataList[2], maxTrailLength, timeStep, targetFrameRate)

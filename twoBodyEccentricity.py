@@ -15,7 +15,7 @@ def run(orbitRadius, orbitPeriod, eccentricity, maxTrailLength, timeStep, target
     trailRadius = 0
     eccentricityModifier = orbitRadius - (orbitRadius * eccentricity)
 
-    earthVelocity = (2 * np.pi * eccentricityModifier) / orbitPeriod
+    initialVelocity = (2 * np.pi * eccentricityModifier) / orbitPeriod
     earthPosition = vector(orbitRadius, 0, 0)
 
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
@@ -26,7 +26,7 @@ def run(orbitRadius, orbitPeriod, eccentricity, maxTrailLength, timeStep, target
     earth = sphere(pos=vector(earthPosition.x, earthPosition.y, earthPosition.z), radius=earthSize, color=color.cyan)
     if maxTrailLength != -2:
         earth.trail = curve(pos=[earth.pos], color=color.blue, radius=trailRadius, retain=maxTrailLength, interval=30)
-    earthVelocity = vector(0, earthVelocity, 0)
+    earthVelocity = vector(0, initialVelocity, 0)
 
     while 1:
         distanceEarthSun = np.sqrt((earthPosition.x ** 2 + earthPosition.y ** 2))
