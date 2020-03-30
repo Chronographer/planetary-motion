@@ -20,9 +20,9 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
         distanceJupiterSun = np.sqrt((jupiter.position.x ** 2 + jupiter.position.y ** 2))
         distanceJupiterEarth = np.sqrt((earth.position.x - jupiter.position.x) ** 2 + (earth.position.y - jupiter.position.y) ** 2)
 
-        forceEarthSun = - (gravitationalConstant * earth.mass * sun.mass) / (distanceEarthSun ** 2)
-        forceJupiterSun = - (gravitationalConstant * jupiter.mass * sun.mass) / (distanceJupiterSun ** 2)
-        forceJupiterEarth = - (gravitationalConstant * jupiter.mass * earth.mass) / (distanceJupiterEarth ** 2)
+        forceEarthSun = (gravitationalConstant * earth.mass * sun.mass) / (distanceEarthSun ** 2)
+        forceJupiterSun = (gravitationalConstant * jupiter.mass * sun.mass) / (distanceJupiterSun ** 2)
+        forceJupiterEarth = (gravitationalConstant * jupiter.mass * earth.mass) / (distanceJupiterEarth ** 2)
 
         accelerationEarthSun = forceEarthSun / earth.mass
         accelerationEarthJupiter = forceJupiterEarth / earth.mass

@@ -4,7 +4,7 @@ import twoBodyEccentricity              # takes arguments (<float> orbitRadius, 
 import twoBodyVelocityAndPositionBased  # takes arguments (<vector(x,y,z)> initialPosition, <vector(x,y,z)> initialVelocity, <integer> maxTrailLength, <integer> timeStep)
 import planetaryData                    # takes argument  (<string> planetName) :: returns <list[<float> orbitRadius, <float> orbitPeriod, <float> eccentricity]>
 import threeBodyProblem                 # add in arguments later
-import planetObjectGenerator
+import planetObjectGenerator            # add in arguments later
 import numpy as np
 from vpython import *
 
@@ -16,7 +16,7 @@ maxTrailLength = -1  # To remove the limit set this to -1, to remove the trail e
 planet = "earth"
 planetDataList = planetaryData.getPlanetData(planet)
 timeStep = 0.01 * planetDataList[1]
-trailRadius = 0.1
+trailRadius = 0
 axisLength = 4
 
 sphereSizeList = [0.7, 0.2, 0.4]
