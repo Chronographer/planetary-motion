@@ -3,16 +3,16 @@ import numpy as np
 import positionVectorGenerator
 
 
-def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, timeStep):
+def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep):
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
     zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
     sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[0], color=color.yellow)
-    earthSphere = sphere(pos=earth.position, radius=sphereSizeList[1], color=color.cyan)
+    earthSphere = sphere(pos=earth.position, radius=sphereSizeList[1], color=color.blue)
     jupiterSphere = sphere(pos=jupiter.position, radius=sphereSizeList[2], color=color.orange)
     if maxTrailLength != -2:
-        earthSphere.trail = curve(pos=[earth.pos], color=color.blue, radius=trailRadius, retain=maxTrailLength, interval=30)
-        jupiterSphere.trail = curve(pos=[earth.pos], color=color.blue, radius=trailRadius, retain=maxTrailLength, interval=30)
+        earthSphere.trail = curve(pos=[earthSphere.pos], color=color.cyan, radius=trailRadius, retain=maxTrailLength, interval=30)
+        jupiterSphere.trail = curve(pos=[jupiterSphere.pos], color=color.red, radius=trailRadius, retain=maxTrailLength, interval=30)
 
     gravitationalConstant = (4 * np.pi ** 2) / sun.mass
     while 1:
@@ -48,3 +48,10 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
 
         earth.position = earth.position + (earth.velocity * timeStep)
         jupiter.position = jupiter.position + (jupiter.velocity * timeStep)
+
+        earthSphere.pos = earth.position
+        jupiterSphere.pos = jupiter.position
+        if maxTrailLength != -2:
+            earthSphere.trail.append(earthSphere.pos)
+            jupiterSphere.trail.append(jupiterSphere.pos)
+        rate(targetFrameRate)
