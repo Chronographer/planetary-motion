@@ -26,7 +26,6 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
 
         accelerationEarthSun = forceEarthSun / earth.mass
         accelerationEarthJupiter = forceJupiterEarth / earth.mass
-
         accelerationJupiterSun = forceJupiterSun / jupiter.mass
         accelerationJupiterEarth = forceJupiterEarth / jupiter.mass
 
@@ -36,7 +35,6 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
 
         accelerationVectorEarthSun = accelerationEarthSun * unitPositionVectorEarthSun
         accelerationVectorEarthJupiter = accelerationEarthJupiter * -unitPositionVectorJupiterEarth
-
         accelerationVectorJupiterSun = accelerationJupiterSun * unitPositionVectorJupiterSun
         accelerationVectorJupiterEarth = accelerationJupiterEarth * unitPositionVectorJupiterEarth
 

@@ -9,19 +9,19 @@ import numpy as np
 from vpython import *
 
 title = "test scene"
-scene = canvas(title=title, width=640, height=480, forward=vector(-0, -0, -1))
+scene = canvas(title=title, width=1880, height=960, forward=vector(-0, -0, -1))
 timeStep = 0.01 * planetaryData.earthPeriod
-targetFrameRate = 60
+targetFrameRate = 90
 maxTrailLength = -1  # To remove the limit set this to -1, to remove the trail entirely, set this to -2
 planet = "earth"
 planetDataList = planetaryData.getPlanetData(planet)
 timeStep = 0.01 * planetDataList[1]
-trailRadius = 0
+trailRadius = 0.01
 axisLength = 4
 
 sphereSizeList = [0.7, 0.2, 0.4]
 
-earthObject = planetObjectGenerator.planet(planetaryData.getPlanetData("earth"))
+earthObject = planetObjectGenerator.planet(planetaryData.getPlanetData("pretend"))
 jupiterObject = planetObjectGenerator.planet(planetaryData.getPlanetData("jupiter"))
 sunObject = planetObjectGenerator.planet(planetaryData.getPlanetData("sun"))
 

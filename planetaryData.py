@@ -9,6 +9,7 @@ saturnOrbitRadius = 9.54
 uranusOrbitRadius = 19.19
 neptuneOrbitRadius = 30.06
 plutoOrbitRadius = 39.53
+pretendOrbitRadius = 3.21
 
 # table of orbital periods in years
 sunPeriod = "Null"
@@ -21,6 +22,7 @@ saturnPeriod = 29.46
 uranusPeriod = 84.01
 neptunePeriod = 164.8
 plutoPeriod = 248.1
+pretendPeriod = 5.1
 
 # table of masses in units of solar mass
 SolarMass = 2e30
@@ -34,6 +36,7 @@ saturnMass = 5.7e26 / SolarMass
 uranusMass = 8.8e25 / SolarMass
 neptuneMass = 1.03e26 / SolarMass
 plutoMass = 6.0e24 / SolarMass
+pretendMass = 6.6e23 / SolarMass
 
 # table of eccentricities of the planets
 sunEccentricity = "Null"
@@ -46,6 +49,7 @@ saturnEccentricity = 0.056
 uranusEccentricity = 0.046
 neptuneEccentricity = 0.010
 plutoEccentricity = 0.248
+pretendEccentricity = 0.031
 
 
 def getPlanetData(planet):
@@ -100,4 +104,9 @@ def getPlanetData(planet):
         dataList.append(sunPeriod)
         dataList.append(sunEccentricity)
         dataList.append(sunMass)
+    elif planet == "pretend":
+        dataList.append(pretendOrbitRadius)
+        dataList.append(pretendPeriod)
+        dataList.append(pretendEccentricity)
+        dataList.append(pretendMass)
     return dataList
