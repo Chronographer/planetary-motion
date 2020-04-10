@@ -9,9 +9,9 @@ import numpy as np
 from vpython import *
 
 title = "test scene"
-scene = canvas(title=title, width=1880, height=960, forward=vector(-0, -0, -1))
+scene = canvas(title=title, width=900, height=650, forward=vector(-0, -0, -1))
 timeStep = 0.01 * planetaryData.earthPeriod
-targetFrameRate = 90
+targetFrameRate = 480
 maxTrailLength = -1  # To remove the limit set this to -1, to remove the trail entirely, set this to -2
 planet = "earth"
 planetDataList = planetaryData.getPlanetData(planet)
