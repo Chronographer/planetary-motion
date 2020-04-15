@@ -1,5 +1,6 @@
 from vpython import *
 import numpy as np
+import matplotlib.pyplot as plt
 
 '''
 UNITS
@@ -8,7 +9,7 @@ UNITS
 '''
 
 
-def run(orbitRadius, orbitPeriod, maxTrailLength, timeStep):
+def run(orbitRadius, orbitPeriod, maxTrailLength, timeStep, targetFrameRate, endTime):
     axisLength = 5
     earthSize = 0.2
     sunSize = 0.5
@@ -25,16 +26,28 @@ def run(orbitRadius, orbitPeriod, maxTrailLength, timeStep):
     earth = sphere(pos=vector(planetPosition.x, planetPosition.y, planetPosition.z), radius=earthSize, color=color.cyan)
     if maxTrailLength != -2:
         earth.trail = curve(pos=[earth.pos], color=color.cyan, radius=trailRadius, retain=maxTrailLength, interval=30)
-    earthPosition = vector(1, 0, 0)
+    earthPosition = vector(orbitRadius, 0, 0)
     earthVelocity = vector(0, earthVelocity, 0)
 
-    while 1:
+    currentTime = 0.0
+    twoBodyEarthPositionList = []
+    timeList = []
+
+    while currentTime < endTime:
         distanceEarthSun = np.sqrt((earthPosition.x ** 2 + earthPosition.y ** 2))
         earthVelocity.x = earthVelocity.x - ((4 * np.pi ** 2 * earthPosition.x) / distanceEarthSun ** 3) * timeStep
         earthVelocity.y = earthVelocity.y - ((4 * np.pi ** 2 * earthPosition.y) / distanceEarthSun ** 3) * timeStep
         earthPosition.x = earthPosition.x + (earthVelocity.x * timeStep)
         earthPosition.y = earthPosition.y + (earthVelocity.y * timeStep)
-        rate(90)
+        rate(targetFrameRate)
+        currentTime = currentTime + timeStep
         earth.pos = earthPosition
+        twoBodyEarthPositionList.append(earth.pos.x)
+        timeList.append(currentTime)
+
         if maxTrailLength != -2:
             earth.trail.append(earth.pos)
+    returnList = []
+    returnList.append(timeList)
+    returnList.append(twoBodyEarthPositionList)
+    return returnList
