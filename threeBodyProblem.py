@@ -2,6 +2,7 @@ from vpython import *
 import numpy as np
 import matplotlib.pyplot as plt
 import positionVectorGenerator
+import time
 
 
 def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, vPlot, numPlot, endTime):
@@ -22,7 +23,11 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
 
     earthPlot = gcurve(color=color.cyan, fast=False)
     jupiterPlot = gcurve(color=color.red, fast=False)
+
+    performanceList = []
+    counter = 0
     while currentTime < endTime:
+        beginTime = time.perf_counter_ns()
         distanceEarthSun = np.sqrt((earth.position.x ** 2 + earth.position.y ** 2))
         distanceJupiterSun = np.sqrt((jupiter.position.x ** 2 + jupiter.position.y ** 2))
         distanceJupiterEarth = np.sqrt((earth.position.x - jupiter.position.x) ** 2 + (earth.position.y - jupiter.position.y) ** 2)
@@ -56,6 +61,12 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
 
         currentTime = currentTime + timeStep
 
+        finishTime = time.perf_counter_ns()
+        #if counter >=1000:
+        performanceList.append(finishTime - beginTime)
+            #print("iteration " + str(counter - 1000) + " computed in " + str(performanceList[counter - 1000]) + " nanoseconds")
+        counter = counter + 1
+
         earthSphere.pos = earth.position
         jupiterSphere.pos = jupiter.position
 
@@ -66,12 +77,14 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
             earthPlot.plot(currentTime, earth.velocity.y)
             jupiterPlot.plot(currentTime, jupiter.velocity.x)
         if numPlot == True:
-            timeList.append(currentTime)
-            threeBodyEarthPositionList.append(earth.position.x)
+            #timeList.append(currentTime)
+            threeBodyEarthPositionList.append(earth.position)
         rate(targetFrameRate)
     returnList = []
     returnList.append(timeList)
     returnList.append(threeBodyEarthPositionList)
+
+    print("average computation time was " + str( (sum(performanceList)) / (len(performanceList)) ) )
 
     return returnList
 

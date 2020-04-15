@@ -11,20 +11,19 @@ from vpython import *
 
 title = "test scene"
 scene = canvas(title=title, width=900, height=650, forward=vector(-0, -0, -1))
-timeStep = 0.00001 * planetaryData.earthPeriod
-targetFrameRate = 900000000
-maxTrailLength = -2  # To remove the limit set this to -1, to remove the trail entirely, set this to -2
-planet = "mars"
+timeStep = 0.01 * planetaryData.earthPeriod
+targetFrameRate = 900
+maxTrailLength = -1  # To remove the limit set this to -1, to remove the trail entirely, set this to -2
+planet = "pretend"
 planetDataList = planetaryData.getPlanetData(planet)
 trailRadius = 0.01
 axisLength = 4
 makeVpythonPlot = False
 makeNumPyPlot = True
 endTime = 50
-
 sphereSizeList = [0.7, 0.2, 0.4]
 
-earthObject = planetObjectGenerator.planet(planetaryData.getPlanetData("mars"))
+earthObject = planetObjectGenerator.planet(planetaryData.getPlanetData(planet))
 jupiterObject = planetObjectGenerator.planet(planetaryData.getPlanetData("jupiter"))
 sunObject = planetObjectGenerator.planet(planetaryData.getPlanetData("sun"))
 
@@ -32,17 +31,19 @@ threeBodyData = threeBodyProblem.run(earthObject, jupiterObject, sunObject, axis
 twoBodyData = twoBodyProblem.run(planetDataList[0], planetDataList[1], maxTrailLength, timeStep, targetFrameRate, endTime)
 
 differenceList = []
-threeBodyCleanList = threeBodyData[1]
-twoBodyCleanList = twoBodyData[1]
-timeList = threeBodyData[0]
-for i in range(len(threeBodyCleanList)):
-    difference = threeBodyCleanList[i] - twoBodyCleanList[i]
-    differenceList.append(difference)
-
-print(len(differenceList))
-print(len(timeList))
+threeBodyPositionVectorList = threeBodyData[1]
+twoBodyPositionVectorList = twoBodyData[1]
+timeList = twoBodyData[0]
+for i in range(len(threeBodyPositionVectorList)):
+    threeBodyVector = threeBodyPositionVectorList[i]
+    twoBodyVector = twoBodyPositionVectorList[i]
+    distance = np.sqrt((threeBodyVector.x - twoBodyVector.x) ** 2 + (threeBodyVector.y - twoBodyVector.y) ** 2 + (threeBodyVector.z - twoBodyVector.z) ** 2)
+    differenceList.append(distance)
 
 plt.plot(timeList, differenceList)
+plt.suptitle("Variation between Mars in two and three body computations")
+plt.xlabel("Time (Earth years)")
+plt.ylabel("Distance (AU's)")
 plt.show()
 
 

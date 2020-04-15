@@ -42,7 +42,7 @@ def run(orbitRadius, orbitPeriod, maxTrailLength, timeStep, targetFrameRate, end
         rate(targetFrameRate)
         currentTime = currentTime + timeStep
         earth.pos = earthPosition
-        twoBodyEarthPositionList.append(earth.pos.x)
+        twoBodyEarthPositionList.append(earth.pos)
         timeList.append(currentTime)
 
         if maxTrailLength != -2:
