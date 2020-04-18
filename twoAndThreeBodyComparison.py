@@ -22,9 +22,14 @@ def run(earthThreeBody, earthTwoBody, jupiter, sun, axisLength, sphereSizeList, 
         jupiterSphere.trail = curve(pos=[jupiterSphere.pos], color=color.red, radius=trailRadius, retain=50, interval=30)
     gravitationalConstant = (4 * np.pi ** 2) / sun.mass
 
+    gd = graph(width=1500, height=700, title='Variation in Mars orbit with addition of Jupiter', xtitle='Time (Years)', ytitle="distance between mars and other mars (AU's)", fast=False)
+    fastPlot = False
     earthThreeBodyPlot = gcurve(color=color.cyan, fast=False)
     earthTwoBodyPlot = gcurve(color=color.green, fast=False)
     jupiterPlot = gcurve(color=color.red, fast=False)
+    differencePlot = gcurve(color=color.purple, fast=False)
+    differenceList = []
+    vpythonTimeList = []
 
     while currentTime < endTime:
         distanceEarthThreeBodySun = np.sqrt((earthThreeBody.position.x ** 2 + earthThreeBody.position.y ** 2 + earthThreeBody.position.z ** 2))
@@ -69,7 +74,6 @@ def run(earthThreeBody, earthTwoBody, jupiter, sun, axisLength, sphereSizeList, 
         earthThreeBodySphere.pos = earthThreeBody.position
         jupiterSphere.pos = jupiter.position
         earthTwoBodySphere.pos = earthTwoBody.position
-
         currentTime = currentTime + timeStep
 
         if maxTrailLength != -2:
@@ -77,16 +81,13 @@ def run(earthThreeBody, earthTwoBody, jupiter, sun, axisLength, sphereSizeList, 
             earthTwoBodySphere.trail.append(earthTwoBodySphere.pos)
             jupiterSphere.trail.append(jupiterSphere.pos)
         if vPlot == True:
-            earthThreeBodyPlot.plot(currentTime, earthThreeBody.velocity.y)
-            earthTwoBodyPlot.plot(currentTime, earthThreeBody.velocity.y)
-            jupiterPlot.plot(currentTime, jupiter.velocity.x)
-        if numPlot == True:
-            #timeList.append(currentTime)
-            threeBodyEarthPositionList.append(earthThreeBody.position)
+            #earthThreeBodyPlot.plot(currentTime, distanceEarthThreeBodySun)
+            #earthTwoBodyPlot.plot(currentTime, distanceEarthTwoBodySun)
+            #jupiterPlot.plot(currentTime, jupiter.velocity.x)
+            distance = np.sqrt((earthThreeBody.position.x - earthTwoBody.position.x) ** 2 + (earthThreeBody.position.y - earthTwoBody.position.y) ** 2 + (earthThreeBody.position.z - earthTwoBody.position.z) ** 2)
+            differenceList.append(distance)
+            vpythonTimeList.append(currentTime)
         rate(targetFrameRate)
-    #returnList = []
-    #returnList.append(timeList)
-    #returnList.append(threeBodyEarthPositionList)
 
-    #return returnList
-
+    for index in range(len(differenceList)):
+        differencePlot.plot(vpythonTimeList[index], differenceList[index])
