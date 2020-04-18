@@ -1,4 +1,4 @@
-import twoBodyProblem                   # takes arguments (<float> orbitRadius, <float> orbitPeriod, <integer> maxTrailLength, <integer> timeStep, <integer> targetFrameRate)
+import twoBodyProblemDeprecated                   # takes arguments (<float> orbitRadius, <float> orbitPeriod, <integer> maxTrailLength, <integer> timeStep, <integer> targetFrameRate)
 import twoBodyVelocityBasedReference    # takes arguments (<float> orbitRadius, <float> orbitPeriod, <integer> maxTrailLength, <integer> timeStep)
 import twoBodyEccentricity              # takes arguments (<float> orbitRadius, <float> orbitPeriod, <float> eccentricity, <integer> maxTrailLength, <integer> timeStep)
 import twoBodyVelocityAndPositionBased  # takes arguments (<vector(x,y,z)> initialPosition, <vector(x,y,z)> initialVelocity, <integer> maxTrailLength, <integer> timeStep)
@@ -45,7 +45,7 @@ def threeBodyWorker():
 
 def twoBodyWorker():
     global twoBodyData
-    twoBodyData = twoBodyProblem.run(planetDataList[0], planetDataList[1], -1, timeStep, targetFrameRate, endTime)
+    twoBodyData = twoBodyProblemDeprecated.run(planetDataList[0], planetDataList[1], -1, timeStep, targetFrameRate, endTime)
     return twoBodyData
 
 
