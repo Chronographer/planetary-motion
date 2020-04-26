@@ -12,6 +12,7 @@ class planet:
         if planetOrbitRadius == "Null":  # this handles the sun, which is a special case as it does not have an orbital period, velocity, or eccentricity for the purposes of this lab.
             self.position = vector(0, 0, 0)
             self.mass = mass
+            self.velocity = vector(0, 0, 0)
         else:
             initialVelocity = (2 * np.pi * planetOrbitRadius) / planetPeriod
             self.velocity = vector(0, initialVelocity, 0)

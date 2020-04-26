@@ -5,6 +5,7 @@ import twoBodyVelocityAndPositionBased  # takes arguments (<vector(x,y,z)> initi
 import planetaryData                    # takes argument  (<string> planetName) :: returns <list[<float> orbitRadius, <float> orbitPeriod, <float> eccentricity]>
 import threeBodyProblem                 # takes arguments (<object> planetObject1, <object> planetObject2, <object> planetObject3, <float> axisLength, <list[<float> sphere1Size, <float> sphere2Size, <float> sphere3Size>], <integer> maxTrailLength, <float> trailRadius, <float> timeStep, <boolean> makeVpythonPlot, <boolean> makePyPlot)
 import planetObjectGenerator            # add in arguments later
+import nBodyExperimental
 import twoAndThreeBodyComparison
 import twoBodyProblemNew
 import numpy as np
@@ -30,10 +31,9 @@ twoBodyEarth = planetObjectGenerator.planet(planetaryData.getPlanetData(planet))
 jupiterObject = planetObjectGenerator.planet(planetaryData.getPlanetData("jupiter"))
 sunObject = planetObjectGenerator.planet(planetaryData.getPlanetData("sun"))
 
-#twoAndThreeBodyComparison.run(earthObject, twoBodyEarth, jupiterObject, sunObject, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
+planetObjectList = [earthObject, jupiterObject, sunObject]
 
-twoBodyProblemNew.run(earthObject, sunObject, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
-
+nBodyExperimental.run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
 
 """threeBodyData = threeBodyProblem.run(earthObject, jupiterObject, sunObject, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
 twoBodyData = twoBodyProblem.run(planetDataList[0], planetDataList[1], maxTrailLength, timeStep, targetFrameRate, endTime)
