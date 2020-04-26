@@ -43,7 +43,9 @@ def run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadiu
         planetAccelerationVectorList.append(accelerationVectorList)
 
     planetTotalAccelerationVectorList = []
-
+    for index in range(len(planetObjectList)):
+        planetTotalAccelerationVector = vector(0, 0, 0)
+        planetTotalAccelerationVectorList.append(planetTotalAccelerationVector)
     if maxTrailLength != -2:
         for index in range(len(planetSphereList)):
             planetSphere = planetSphereList[index]
@@ -54,7 +56,8 @@ def run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadiu
         for index in range(len(planetObjectList)):  # computes the distance between each planet object and every other planet object, avoiding duplication.
             currentPlanetObject = planetObjectList[index]
             currentPlanetDistanceList = planetDistanceList[index]
-            for innerIndex in range(index, len(planetObjectList)):  # starts at index so that it doesnt duplicate any distances.
+            currentPlanetDistanceList.clear()
+            for innerIndex in range(len(planetObjectList)):  # starts at index so that it doesnt duplicate any distances.
                 comparisonPlanetObject = planetObjectList[innerIndex]
                 if innerIndex != index:
                     distance = np.sqrt((currentPlanetObject.position.x - comparisonPlanetObject.position.x) ** 2 + (currentPlanetObject.position.y - comparisonPlanetObject.position.y) ** 2 + (currentPlanetObject.position.z - comparisonPlanetObject.position.z) ** 2)
@@ -68,7 +71,8 @@ def run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadiu
             currentPlanetObject = planetObjectList[index]
             currentPlanetForceList = planetForceList[index]
             currentPlanetDistanceList = planetDistanceList[index]
-            for innerIndex in range(index, len(planetObjectList)):  # starts at index so that it doesnt duplicate any forces.
+            currentPlanetForceList.clear()
+            for innerIndex in range(len(currentPlanetDistanceList)):  # starts at index so that it doesnt duplicate any forces.
                 comparisonPlanetObject = planetObjectList[innerIndex]
                 comparisonPlanetDistance = currentPlanetDistanceList[innerIndex]
                 if innerIndex != index:
@@ -83,9 +87,10 @@ def run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadiu
             currentPlanetObject = planetObjectList[index]
             currentPlanetForceList = planetForceList[index]
             currentPlanetAccelerationList = planetAccelerationList[index]
-            for innerIndex in range(len(planetObjectList)):
+            currentPlanetAccelerationList.clear()
+            for innerIndex in range(len(currentPlanetForceList)):
                 comparisonPlanetForce = currentPlanetForceList[innerIndex]
-                if innerIndex != index:
+                if comparisonPlanetForce != "self":
                     acceleration = comparisonPlanetForce / currentPlanetObject.mass
                     currentPlanetAccelerationList.append(acceleration)
                 else:  # make the acceleration of one planetObject towards itself something that cannot possibly be accidentally used in a mathematical operation.
@@ -98,13 +103,18 @@ def run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadiu
             # currentPlanetUnitPositionVectorList = planetUnitVectorList[index]
             currentPlanetAccelerationList = planetAccelerationList[index]
             currentPlanetAccelerationVectorList = planetAccelerationVectorList[index]
+            currentPlanetAccelerationVectorList.clear()
             for innerIndex in range(len(planetObjectList)):
                 if innerIndex != index:
                     comparisonPlanetObject = planetObjectList[innerIndex]
                     comparisonPlanetAcceleration = currentPlanetAccelerationList[innerIndex]
                     unitPositionVector = norm(positionVectorGenerator.generatePositionVector(currentPlanetObject, comparisonPlanetObject))
-                    accelerationVector = unitPositionVector * comparisonPlanetAcceleration
-                    currentPlanetAccelerationVectorList.append(accelerationVector)
+                    if comparisonPlanetAcceleration != "self":
+                        accelerationVector = unitPositionVector * comparisonPlanetAcceleration
+                        currentPlanetAccelerationVectorList.append(accelerationVector)
+                    else:
+                        accelerationVector = "self"
+                        currentPlanetAccelerationVectorList.append(accelerationVector)
                     # currentPlanetUnitPositionVectorList.append(unitPositionVector)
                 else:  # make the acceleration vector between a planetObject and itself something that cannot possibly be accidentally used in a mathematical operation.
                     # unitPositionVector = "self"
@@ -118,12 +128,13 @@ def run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadiu
             currentPlanetAccelerationVectorList = planetAccelerationVectorList[index]
             currentPlanetTotalAccelerationVector = planetTotalAccelerationVectorList[index]
             for innerIndex in range(len(currentPlanetAccelerationVectorList)):
-                comparisonPlanetAccelerationVector = currentPlanetAccelerationVectorList[innerIndex]
-                currentPlanetTotalAccelerationVector = currentPlanetTotalAccelerationVector + comparisonPlanetAccelerationVector
+                if innerIndex != index:
+                    comparisonPlanetAccelerationVector = currentPlanetAccelerationVectorList[innerIndex]
+                    currentPlanetTotalAccelerationVector = currentPlanetTotalAccelerationVector + comparisonPlanetAccelerationVector
             planetTotalAccelerationVectorList[index] = currentPlanetTotalAccelerationVector
 
         for index in range(len(planetObjectList)):  # computes the new position and velocity of each planet object
-            currentPlanetTotalAccelerationVector = planetAccelerationVectorList[index]
+            currentPlanetTotalAccelerationVector = planetTotalAccelerationVectorList[index]
             currentPlanetObject = planetObjectList[index]
             currentPlanetObject.velocity = currentPlanetObject.velocity + (currentPlanetTotalAccelerationVector * timeStep)
             currentPlanetObject.position = currentPlanetObject.position + (currentPlanetObject.velocity * timeStep)

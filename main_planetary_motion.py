@@ -15,8 +15,8 @@ from vpython import *
 title = "test scene"
 scene = canvas(title=title, width=900, height=650, forward=vector(-0, -0, -1))
 timeStep = 0.005 * planetaryData.earthPeriod
-targetFrameRate = 4000
-maxTrailLength = -2  # To remove the limit set this to -1, to remove the trail entirely, set this to -2
+targetFrameRate = 5
+maxTrailLength = -1  # To remove the limit set this to -1, to remove the trail entirely, set this to -2
 planet = "mars"
 planetDataList = planetaryData.getPlanetData(planet)
 trailRadius = 0.01
