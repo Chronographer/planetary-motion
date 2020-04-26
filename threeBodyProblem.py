@@ -13,9 +13,9 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
     if numPlot == True:
         threeBodyEarthPositionList = []
         timeList = []
-    sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[0], color=color.yellow)
-    earthSphere = sphere(pos=earth.position, radius=sphereSizeList[1], color=color.blue)
-    jupiterSphere = sphere(pos=jupiter.position, radius=sphereSizeList[2], color=color.orange)
+    sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[2], color=color.yellow)
+    earthSphere = sphere(pos=earth.position, radius=sphereSizeList[0], color=color.blue)
+    jupiterSphere = sphere(pos=jupiter.position, radius=sphereSizeList[1], color=color.orange)
     if maxTrailLength != -2:
         earthSphere.trail = curve(pos=[earthSphere.pos], color=color.cyan, radius=trailRadius, retain=maxTrailLength, interval=30)
         jupiterSphere.trail = curve(pos=[jupiterSphere.pos], color=color.red, radius=trailRadius, retain=maxTrailLength, interval=30)

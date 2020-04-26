@@ -24,7 +24,7 @@ axisLength = 4
 makeVpythonPlot = True
 makeNumPyPlot = False
 endTime = 1000
-sphereSizeList = [0.7, 0.2, 0.4]
+sphereSizeList = [0.2, 0.4, 0.7]
 
 earthObject = planetObjectGenerator.planet(planetaryData.getPlanetData(planet))
 twoBodyEarth = planetObjectGenerator.planet(planetaryData.getPlanetData(planet))
@@ -32,8 +32,8 @@ jupiterObject = planetObjectGenerator.planet(planetaryData.getPlanetData("jupite
 sunObject = planetObjectGenerator.planet(planetaryData.getPlanetData("sun"))
 
 planetObjectList = [earthObject, jupiterObject, sunObject]
-
-nBodyExperimental.run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
+threeBodyProblem.run(earthObject, jupiterObject, sunObject, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
+#nBodyExperimental.run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
 
 """threeBodyData = threeBodyProblem.run(earthObject, jupiterObject, sunObject, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
 twoBodyData = twoBodyProblem.run(planetDataList[0], planetDataList[1], maxTrailLength, timeStep, targetFrameRate, endTime)
