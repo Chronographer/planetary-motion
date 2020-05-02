@@ -3,21 +3,29 @@ import numpy as np
 import matplotlib.pyplot as plt
 import positionVectorGenerator
 
+""" This program simulates a simple 2-body system. Note that it assumes the effects of the first planet object ("earth") 
+on the second planet object ("sun") are so small as to be negligable, so position, velocity, ect, are only computed for 
+the "earth" object. Note however that any planet object may be used in place of "earth". """
+
 
 def run(earth, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, vPlot, numPlot, endTime):
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
     zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
     currentTime = 0.0
-    sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[0], color=color.yellow)
-    earthSphere = sphere(pos=earth.position, radius=sphereSizeList[1], color=color.green)
+    sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[1], color=color.yellow)
+    earthSphere = sphere(pos=earth.position, radius=sphereSizeList[0], color=color.green)
     gravitationalConstant = (4 * np.pi ** 2) / sun.mass
-    gd = graph(width=1500, height=700, title='Variation in Mars orbit with addition of Jupiter', xtitle='Time (Years)', ytitle="distance between mars and other mars (AU's)", fast=False)
 
     if numPlot is True:
         timeList = []
+
+    if vPlot is True:
+        gd = graph(width=1500, height=700, title='Variation in Mars orbit with addition of Jupiter', xtitle='Time (Years)', ytitle="distance between mars and other mars (AU's)", fast=False)
+        earthPlot = gcurve(color=color.cyan, fast=False)
+
     if maxTrailLength != -2:
-        earthSphere.trail = curve(pos=[earthSphere.pos], color=color.white, radius=trailRadius, retain=50, interval=30)
+        earthSphere.trail = curve(pos=[earthSphere.pos], color=color.white, radius=trailRadius, retain=maxTrailLength, interval=30)
 
     while currentTime < endTime:
         distanceEarthSun = np.sqrt((earth.position.x ** 2 + earth.position.y ** 2 + earth.position.z ** 2))

@@ -20,9 +20,9 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
         earthSphere.trail = curve(pos=[earthSphere.pos], color=color.cyan, radius=trailRadius, retain=maxTrailLength, interval=30)
         jupiterSphere.trail = curve(pos=[jupiterSphere.pos], color=color.red, radius=trailRadius, retain=maxTrailLength, interval=30)
     gravitationalConstant = (4 * np.pi ** 2) / sun.mass
-
-    earthPlot = gcurve(color=color.cyan, fast=False)
-    jupiterPlot = gcurve(color=color.red, fast=False)
+    if vPlot is True:
+        earthPlot = gcurve(color=color.cyan, fast=False)
+        jupiterPlot = gcurve(color=color.red, fast=False)
 
     performanceList = []
     counter = 0
