@@ -83,7 +83,7 @@ def run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadiu
                     currentPlanetForceList.append(force)
             planetForceList[index] = currentPlanetForceList
 
-        for index in range(len(planetObjectList)):  # computes the acceleration felt between each planetObject and every other planetObject. Note: I am less confident that this one is correct than I am with the other ones. Also, it is probably a good idea to merge it with the section that calculates force, since its just taking that force and dividing it by the mass of the planet, except that would require doing duplicate calculations of force, so maybe not...
+        for index in range(len(planetObjectList)):  # computes the acceleration felt between each planetObject and every other planetObject. Note: This is consistent with threeBodyProblem.py and works correctly. (for the first timestep at least)
             currentPlanetObject = planetObjectList[index]
             currentPlanetForceList = planetForceList[index]
             currentPlanetAccelerationList = planetAccelerationList[index]
@@ -99,7 +99,7 @@ def run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadiu
             planetAccelerationList[index] = currentPlanetAccelerationList
 
         for index in range(len(planetObjectList)):  # computes the acceleration vector between each planet object and every other planetObject. Note: I combined the chunk that computes the unit position vector and the following chunk which computes the acceleration vectors into this single chunk.
-            currentPlanetObject = planetObjectList[index]
+            currentPlanetObject = planetObjectList[index]  # Note: This chunk appears to be working correctly and matches what I see in threeBodyProblem.py (for the first timestep at least)
             # currentPlanetUnitPositionVectorList = planetUnitVectorList[index]
             currentPlanetAccelerationList = planetAccelerationList[index]
             currentPlanetAccelerationVectorList = planetAccelerationVectorList[index]
@@ -124,7 +124,7 @@ def run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadiu
             # planetUnitVectorList[index] = currentPlanetUnitPositionVectorList
             planetAccelerationVectorList[index] = currentPlanetAccelerationVectorList
 
-        for index in range(len(planetObjectList)):  # adds all acceleration vectors associated with each planetObject together.
+        for index in range(len(planetObjectList)):  # adds all acceleration vectors associated with each planetObject together. NOTE: This works as expected for the first frame at least.
             currentPlanetAccelerationVectorList = planetAccelerationVectorList[index]
             currentPlanetTotalAccelerationVector = planetTotalAccelerationVectorList[index]
             for innerIndex in range(len(currentPlanetAccelerationVectorList)):
@@ -133,7 +133,7 @@ def run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadiu
                     currentPlanetTotalAccelerationVector = currentPlanetTotalAccelerationVector + comparisonPlanetAccelerationVector
             planetTotalAccelerationVectorList[index] = currentPlanetTotalAccelerationVector
 
-        for index in range(len(planetObjectList)):  # computes the new position and velocity of each planet object
+        for index in range(len(planetObjectList)):  # computes the new position and velocity of each planet object Note: This works for earth for at least the first frame.
             currentPlanetTotalAccelerationVector = planetTotalAccelerationVectorList[index]
             currentPlanetObject = planetObjectList[index]
             currentPlanetObject.velocity = currentPlanetObject.velocity + (currentPlanetTotalAccelerationVector * timeStep)

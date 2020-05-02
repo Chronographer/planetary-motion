@@ -15,24 +15,33 @@ from vpython import *
 title = "test scene"
 scene = canvas(title=title, width=900, height=650, forward=vector(-0, -0, -1))
 timeStep = 0.005 * planetaryData.earthPeriod
-targetFrameRate = 5
+targetFrameRate = 30
 maxTrailLength = -1  # To remove the limit set this to -1, to remove the trail entirely, set this to -2
 planet = "mars"
 planetDataList = planetaryData.getPlanetData(planet)
-trailRadius = 0.01
+trailRadius = 0
 axisLength = 4
 makeVpythonPlot = True
 makeNumPyPlot = False
 endTime = 1000
-sphereSizeList = [0.2, 0.4, 0.7]
+sphereSizeList = [0.7, 0.03, 0.09, 0.1, 0.06, 0.4, 0.35, 0.25, 0.2]
 
-earthObject = planetObjectGenerator.planet(planetaryData.getPlanetData(planet))
+
 twoBodyEarth = planetObjectGenerator.planet(planetaryData.getPlanetData(planet))
-jupiterObject = planetObjectGenerator.planet(planetaryData.getPlanetData("jupiter"))
-sunObject = planetObjectGenerator.planet(planetaryData.getPlanetData("sun"))
 
-planetObjectList = [earthObject, jupiterObject, sunObject]
-threeBodyProblem.run(earthObject, jupiterObject, sunObject, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
+sunObject = planetObjectGenerator.planet(planetaryData.getPlanetData("sun"))
+mercuryObject = planetObjectGenerator.planet(planetaryData.getPlanetData("mercury"))
+venusObject = planetObjectGenerator.planet(planetaryData.getPlanetData("venus"))
+earthObject = planetObjectGenerator.planet(planetaryData.getPlanetData("earth"))
+marsObject = planetObjectGenerator.planet(planetaryData.getPlanetData("mars"))
+jupiterObject = planetObjectGenerator.planet(planetaryData.getPlanetData("jupiter"))
+saturnObject = planetObjectGenerator.planet(planetaryData.getPlanetData("saturn"))
+uranusObject = planetObjectGenerator.planet(planetaryData.getPlanetData("uranus"))
+neptuneObject = planetObjectGenerator.planet(planetaryData.getPlanetData("neptune"))
+
+#planetObjectList = [sunObject, mercuryObject, venusObject, earthObject, marsObject, jupiterObject, saturnObject, uranusObject, neptuneObject]
+#planetObjectList = [sunObject, earthObject, jupiterObject]
+#threeBodyProblem.run(earthObject, jupiterObject, sunObject, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
 #nBodyExperimental.run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
 
 """threeBodyData = threeBodyProblem.run(earthObject, jupiterObject, sunObject, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
