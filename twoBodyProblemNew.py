@@ -17,8 +17,8 @@ def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, ta
     planetSphere = sphere(pos=planet.position, radius=sphereSizeList[0], texture=textures.earth, shininess=0,)
     gravitationalConstant = (4 * np.pi ** 2) / sun.mass
 
-    timeInterval = timeStep * 10
-    intervalTimer = 0
+    plotAreaSweptInterval = timeStep * 10
+    plotAreaSweptIntervalTimer = 0
     currentSectorPoint = planet.position
     lastSectorPoint = planet.position
     lastAreaSwept = 0
@@ -38,21 +38,21 @@ def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, ta
         planetSphere.trail = curve(pos=[planetSphere.pos], color=color.white, radius=trailRadius, retain=maxTrailLength, interval=30)
 
     while currentTime < endTime:
-        if intervalTimer >= timeInterval:
+        if plotAreaSweptIntervalTimer >= plotAreaSweptInterval:
             lastSectorPoint = currentSectorPoint
             currentSectorPoint = planet.position
             lastAreaSwept = areaSwept
             centralAngle = degrees(diff_angle(lastSectorPoint, currentSectorPoint))
             areaSwept = pi * distancePlanetSun ** 2 * (centralAngle / 360)
-            intervalTimer = 0
+            plotAreaSweptIntervalTimer = 0
             areaSweptDifference = areaSwept - lastAreaSwept
             if numPlot is True:
                 if dontPlotTheFirstPointFlag is False:
                     dontPlotTheFirstPointFlag = True
                 else:
-                    plotList.append(areaSwept)
+                    plotList.append(areaSwept)  # to plot the difference each interval in the area swept in the last 2 intervals, add "areaSweptDifference" to this list instead of "areaSwept"
                     timeList.append(plotIndex)
-                    plotIndex = plotIndex + timeInterval
+                    plotIndex = plotIndex + plotAreaSweptInterval
 
         distancePlanetSun = np.sqrt((planet.position.x ** 2 + planet.position.y ** 2 + planet.position.z ** 2))
         forcePlanetSun = (gravitationalConstant * planet.mass * sun.mass) / (distancePlanetSun ** 2)
@@ -64,7 +64,7 @@ def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, ta
         planet.position = planet.position + (planet.velocity * timeStep)
         planetSphere.pos = planet.position
         currentTime = currentTime + timeStep
-        intervalTimer = intervalTimer + timeStep
+        plotAreaSweptIntervalTimer = plotAreaSweptIntervalTimer + timeStep
         rate(targetFrameRate)
 
         if maxTrailLength != -2:
