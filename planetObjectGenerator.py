@@ -14,6 +14,7 @@ class planet:
             self.mass = mass
             self.velocity = vector(0, 0, 0)
         else:
+            eccentricityModifier = planetOrbitRadius - (planetOrbitRadius * eccentricity)
             initialVelocity = (2 * np.pi * planetOrbitRadius) / planetPeriod
             self.velocity = vector(0, initialVelocity, 0)
             self.position = vector(planetOrbitRadius, 0, 0)
