@@ -8,73 +8,84 @@ on the second planet object ("sun") are so small as to be negligable, so positio
 the "planet" object. Note however that any planet object may be used in place of "planet". """
 
 
-def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, vPlot, numPlot, endTime):
+def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, endTime):
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
     zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
-    currentTime = 0.0
     sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[1], color=color.yellow)
-    planetSphere = sphere(pos=planet.position, radius=sphereSizeList[0], texture=textures.earth, shininess=0,)
+    planetSphere = sphere(pos=planet.position, radius=sphereSizeList[0], texture=textures.earth, shininess=0)
+
     gravitationalConstant = (4 * np.pi ** 2) / sun.mass
+    currentTime = 0
+    currentPeriodStartTime = currentTime
+    singlePeriodTimeList = []
+    averagePeriodTimeList = []
+    timeList = []
+    plotList = []
+    periodSquaredList = []
+    radiusCubedList = []
 
-    plotAreaSweptInterval = timeStep * 10
-    plotAreaSweptIntervalTimer = 0
-    currentSectorPoint = planet.position
-    lastSectorPoint = planet.position
-    lastAreaSwept = 0
-    areaSwept = 0
-    dontPlotTheFirstPointFlag = False
+    multiplePeriodTime = 0
 
-    if numPlot is True:
-        timeList = []
-        plotList = []
-        plotIndex = 0
+    orbitRadiusListPopulator = 1
+    maxOrbitRadius = 30
+    orbitRadiusIncrement = 1
+    planetOrbitRadiiList = []
 
-    if vPlot is True:
-        gd = graph(width=750, height=700, title='Variation in Mars orbit with addition of Jupiter', xtitle='Time (Years)', ytitle="distance between mars and other mars (AU's)", fast=False)
-        genericPlot = gcurve(color=color.cyan, fast=False)
+    while orbitRadiusListPopulator <= maxOrbitRadius:
+        planetOrbitRadiiList.append(orbitRadiusListPopulator)
+        orbitRadiusListPopulator = orbitRadiusListPopulator + orbitRadiusIncrement
 
     if maxTrailLength != -2:
         planetSphere.trail = curve(pos=[planetSphere.pos], color=color.white, radius=trailRadius, retain=maxTrailLength, interval=30)
 
-    while currentTime < endTime:
-        if plotAreaSweptIntervalTimer >= plotAreaSweptInterval:
-            lastSectorPoint = currentSectorPoint
-            currentSectorPoint = planet.position
-            lastAreaSwept = areaSwept
-            centralAngle = degrees(diff_angle(lastSectorPoint, currentSectorPoint))
-            areaSwept = pi * distancePlanetSun ** 2 * (centralAngle / 360)
-            plotAreaSweptIntervalTimer = 0
-            areaSweptDifference = areaSwept - lastAreaSwept
-            if numPlot is True:
-                if dontPlotTheFirstPointFlag is False:
-                    dontPlotTheFirstPointFlag = True
-                else:
-                    plotList.append(areaSwept)  # to plot the difference each interval in the area swept in the last 2 intervals, add "areaSweptDifference" to this list instead of "areaSwept"
-                    timeList.append(plotIndex)
-                    plotIndex = plotIndex + plotAreaSweptInterval
+    for index in range(len(planetOrbitRadiiList)):
+        currentRadius = planetOrbitRadiiList[index]
+        initialVelocity = np.sqrt((4 * pi ** 2) / currentRadius)
+        planet.velocity = vector(vector(0, initialVelocity, 0))
+        planet.position = vector(currentRadius, 0, 0)
+        currentPeriodStartTime = currentTime
 
-        distancePlanetSun = np.sqrt((planet.position.x ** 2 + planet.position.y ** 2 + planet.position.z ** 2))
-        forcePlanetSun = (gravitationalConstant * planet.mass * sun.mass) / (distancePlanetSun ** 2)
-        accelerationPlanetSun = forcePlanetSun / planet.mass
-        unitPositionVectorPlanetSun = norm(positionVectorGenerator.generatePositionVector(planet, sun))
-        accelerationVectorPlanetSun = accelerationPlanetSun * unitPositionVectorPlanetSun
-        accelerationVectorPlanet = accelerationVectorPlanetSun
-        planet.velocity = planet.velocity + (accelerationVectorPlanet * timeStep)
-        planet.position = planet.position + (planet.velocity * timeStep)
-        planetSphere.pos = planet.position
-        currentTime = currentTime + timeStep
-        plotAreaSweptIntervalTimer = plotAreaSweptIntervalTimer + timeStep
-        rate(targetFrameRate)
+        while len(singlePeriodTimeList) < endTime:
+            lastXVelocity = planet.velocity.x
+            distancePlanetSun = np.sqrt((planet.position.x ** 2 + planet.position.y ** 2 + planet.position.z ** 2))
+            forcePlanetSun = (gravitationalConstant * planet.mass * sun.mass) / (distancePlanetSun ** 2)
+            accelerationPlanetSun = forcePlanetSun / planet.mass
+            unitPositionVectorPlanetSun = norm(positionVectorGenerator.generatePositionVector(planet, sun))
+            accelerationVectorPlanetSun = accelerationPlanetSun * unitPositionVectorPlanetSun
+            accelerationVectorPlanet = accelerationVectorPlanetSun
+            planet.velocity = planet.velocity + (accelerationVectorPlanet * timeStep)
+            planet.position = planet.position + (planet.velocity * timeStep)
+            planetSphere.pos = planet.position
+            currentTime = currentTime + timeStep
+            rate(targetFrameRate)
 
-        if maxTrailLength != -2:
-            planetSphere.trail.append(planetSphere.pos)
+            if lastXVelocity > 0 > planet.velocity.x:
+                currentPeriodTime = currentTime - currentPeriodStartTime
+                singlePeriodTimeList.append(currentPeriodTime)
+                currentPeriodStartTime = currentTime
 
-        if vPlot is True:
-            genericPlot.plot(currentTime, distancePlanetSun)
-    if numPlot is True:
-        plt.plot(timeList, plotList, 'b.')
-        plt.suptitle("Difference in area swept by path of planet per unit time")
-        plt.xlabel("Time (Earth years)")
-        plt.ylabel("Area ((circumferences of Earths orbit)^2)")
-        plt.show()
+            if maxTrailLength != -2:
+                planetSphere.trail.append(planetSphere.pos)
+
+        for i in range(len(singlePeriodTimeList)):
+            print("period " + str(i) + " was " + str(singlePeriodTimeList[i]) + " Earth years.")
+            multiplePeriodTime = multiplePeriodTime + singlePeriodTimeList[i]
+
+        averagePeriodTime = multiplePeriodTime / len(singlePeriodTimeList)
+        averagePeriodTimeList.append(averagePeriodTime)
+        singlePeriodTimeList.clear()
+        print("average period for an orbital radius of " + str(currentRadius) + " Earth orbit radii was: " + str(averagePeriodTime) + " Earth years")
+        print("\n")
+        currentTime = 0
+        multiplePeriodTime = 0
+
+    for i in range(len(averagePeriodTimeList)):
+        periodSquaredList.append(averagePeriodTimeList[i] ** 2)
+        radiusCubedList.append(planetOrbitRadiiList[i] ** 3)
+
+    plt.plot(planetOrbitRadiiList, averagePeriodTimeList, 'b.')
+    plt.suptitle("Period length of a planet with increasing orbital radii")
+    plt.xlabel("Orbital radius (Earth orbit radii)")
+    plt.ylabel("Period length (Earth years)")
+    plt.show()

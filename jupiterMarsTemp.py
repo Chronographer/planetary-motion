@@ -78,12 +78,12 @@ radiusTrail = size_jupiter / 10.0
 L = 1.5*orbital_radius_jupiter
 
 # dimensions of scene
-scene = canvas(title=plot_title, width=win, height=win, range=2*L, forward=vector(-1,-1,-1))
+scene = canvas(title=plot_title, width=win, height=win, range=2*L, forward=vector(-1, -1, -1))
 
 # axes for plot. pos=[] is a list of points which define the curve.
-xaxis = curve(pos=[vector(0,0,0), vector(L,0,0)], color=vector(0.5,0.5,0.5))
-yaxis = curve(pos=[vector(0,0,0), vector(0,L,0)], color=vector(0.5,0.5,0.5))
-zaxis = curve(pos=[vector(0,0,0), vector(0,0,L)], color=vector(0.5,0.5,0.5))
+xaxis = curve(pos=[vector(0, 0, 0), vector(L, 0, 0)], color=vector(0.5, 0.5, 0.5))
+yaxis = curve(pos=[vector(0, 0, 0), vector(0, L, 0)], color=vector(0.5, 0.5, 0.5))
+zaxis = curve(pos=[vector(0, 0, 0), vector(0, 0, L)], color=vector(0.5, 0.5, 0.5))
 
 # initial conditions of planet
 earthXPosition, earthYPosition, earthZPosition = orbital_radius_planet, 0., 0.
@@ -151,4 +151,3 @@ while 1:
 
     numberOfTimeSteps = numberOfTimeSteps + 1
     rate(60)
-

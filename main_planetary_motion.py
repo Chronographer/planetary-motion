@@ -8,6 +8,7 @@ import planetObjectGenerator            # add in arguments later
 import nBodyExperimental
 import twoAndThreeBodyComparison
 import twoBodyProblemNew                # takes arguments (<object> planetObject1, <object> planetObject2, <float> axisLength, <list> sphereSizeList[<float> planet1Radius, <float> planet2Radius], <integer> maxTrailLength, <float> trailRadius, <integer> targetFrameRate, <float> timeStep, <boolean> makeVpythonPlot, <boolean> makeNumPyPlot, <float> endTime)
+import twoBodyProblemPeriodAndRadiusRelationship
 import numpy as np
 import matplotlib.pyplot as plt
 from vpython import *
@@ -21,8 +22,8 @@ trailRadius = 0
 sphereSizeList = [0.1, 0.3]
 
 timeStep = 0.001 * planetaryData.earthPeriod
-targetFrameRate = 2000000
-endTime = 25
+targetFrameRate = 1000000000000
+endTime = 5
 
 makeVpythonPlot = False
 makeNumPyPlot = True
@@ -33,7 +34,7 @@ marsObject = planetObjectGenerator.planet(planetaryData.getPlanetData("mars"))
 jupiterObject = planetObjectGenerator.planet(planetaryData.getPlanetData("jupiter"))
 
 
-twoBodyProblemNew.run(earthObject, sunObject, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
+twoBodyProblemPeriodAndRadiusRelationship.run(earthObject, sunObject, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, endTime)
 
 
 

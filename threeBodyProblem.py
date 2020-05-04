@@ -10,7 +10,7 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
     zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
     currentTime = 0.0
-    if numPlot == True:
+    if numPlot is True:
         threeBodyEarthPositionList = []
         timeList = []
     sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[2], color=color.yellow)
@@ -24,10 +24,10 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
         earthPlot = gcurve(color=color.cyan, fast=False)
         jupiterPlot = gcurve(color=color.red, fast=False)
 
-    performanceList = []
-    counter = 0
+    #performanceList = []
+    #counter = 0
     while currentTime < endTime:
-        beginTime = time.perf_counter_ns()
+        #beginTime = time.perf_counter_ns()
         distanceEarthSun = np.sqrt((earth.position.x ** 2 + earth.position.y ** 2 + earth.position.z ** 2))
         distanceJupiterSun = np.sqrt((jupiter.position.x ** 2 + jupiter.position.y ** 2 + jupiter.position.z ** 2))
         distanceJupiterEarth = np.sqrt((earth.position.x - jupiter.position.x) ** 2 + (earth.position.y - jupiter.position.y) ** 2 + (earth.position.z - jupiter.position.z) ** 2)
@@ -61,11 +61,11 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
 
         currentTime = currentTime + timeStep
 
-        finishTime = time.perf_counter_ns()
+        #finishTime = time.perf_counter_ns()
         #if counter >=1000:
-        performanceList.append(finishTime - beginTime)
+        #performanceList.append(finishTime - beginTime)
             #print("iteration " + str(counter - 1000) + " computed in " + str(performanceList[counter - 1000]) + " nanoseconds")
-        counter = counter + 1
+        #counter = counter + 1
 
         earthSphere.pos = earth.position
         jupiterSphere.pos = jupiter.position
@@ -84,7 +84,7 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
     returnList.append(timeList)
     returnList.append(threeBodyEarthPositionList)
 
-    print("average computation time was " + str( (sum(performanceList)) / (len(performanceList)) ) )
+    #print("average computation time was " + str( (sum(performanceList)) / (len(performanceList)) ) )
 
     return returnList
 

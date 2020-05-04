@@ -47,7 +47,5 @@ def run(orbitRadius, orbitPeriod, maxTrailLength, timeStep, targetFrameRate, end
 
         if maxTrailLength != -2:
             earth.trail.append(earth.pos)
-    returnList = []
-    returnList.append(timeList)
-    returnList.append(twoBodyEarthPositionList)
+    returnList = [timeList, twoBodyEarthPositionList]
     return returnList

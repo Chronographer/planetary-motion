@@ -9,7 +9,7 @@ def run(earthThreeBody, earthTwoBody, jupiter, sun, axisLength, sphereSizeList, 
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
     zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
     currentTime = 0.0
-    if numPlot == True:
+    if numPlot is True:
         threeBodyEarthPositionList = []
         timeList = []
     sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[0], color=color.yellow)
@@ -80,7 +80,7 @@ def run(earthThreeBody, earthTwoBody, jupiter, sun, axisLength, sphereSizeList, 
             earthThreeBodySphere.trail.append(earthThreeBodySphere.pos)
             earthTwoBodySphere.trail.append(earthTwoBodySphere.pos)
             jupiterSphere.trail.append(jupiterSphere.pos)
-        if vPlot == True:
+        if vPlot is True:
             #earthThreeBodyPlot.plot(currentTime, distanceEarthThreeBodySun)
             #earthTwoBodyPlot.plot(currentTime, distanceEarthTwoBodySun)
             #jupiterPlot.plot(currentTime, jupiter.velocity.x)
