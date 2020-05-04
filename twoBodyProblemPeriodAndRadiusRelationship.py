@@ -3,10 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import positionVectorGenerator
 
-""" This program simulates a simple 2-body system. Note that it assumes the effects of the first planet object ("planet") 
-on the second planet object ("sun") are so small as to be negligable, so position, velocity, ect, are only computed for 
-the "planet" object. Note however that any planet object may be used in place of "planet". """
-
 
 def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, endTime):
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
