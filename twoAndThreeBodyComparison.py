@@ -9,24 +9,23 @@ def run(earthThreeBody, earthTwoBody, jupiter, sun, axisLength, sphereSizeList, 
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
     zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
     currentTime = 0.0
+
     if numPlot is True:
         threeBodyEarthPositionList = []
         timeList = []
-    sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[0], color=color.yellow)
-    earthThreeBodySphere = sphere(pos=earthThreeBody.position, radius=sphereSizeList[1], color=color.blue)
-    earthTwoBodySphere = sphere(pos=earthTwoBody.position, radius=sphereSizeList[1], color=color.green)
-    jupiterSphere = sphere(pos=jupiter.position, radius=sphereSizeList[2], color=color.orange)
-    if maxTrailLength != -2:
-        earthThreeBodySphere.trail = curve(pos=[earthThreeBodySphere.pos], color=color.cyan, radius=trailRadius, retain=maxTrailLength, interval=30)
-        earthTwoBodySphere.trail = curve(pos=[earthTwoBodySphere.pos], color=color.white, radius=trailRadius, retain=50, interval=30)
-        jupiterSphere.trail = curve(pos=[jupiterSphere.pos], color=color.red, radius=trailRadius, retain=50, interval=30)
-    gravitationalConstant = (4 * np.pi ** 2) / sun.mass
 
-    gd = graph(width=1500, height=700, title='Variation in Mars orbit with addition of Jupiter', xtitle='Time (Years)', ytitle="distance between mars and other mars (AU's)", fast=False)
-    fastPlot = False
-    earthThreeBodyPlot = gcurve(color=color.cyan, fast=False)
-    earthTwoBodyPlot = gcurve(color=color.green, fast=False)
-    jupiterPlot = gcurve(color=color.red, fast=False)
+    sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[0], color=color.yellow)
+    earthThreeBodySphere = sphere(pos=earthThreeBody.position, radius=sphereSizeList[2], color=color.blue)
+    earthTwoBodySphere = sphere(pos=earthTwoBody.position, radius=sphereSizeList[2], color=color.green)
+    jupiterSphere = sphere(pos=jupiter.position, radius=sphereSizeList[1], color=color.orange)
+
+    if maxTrailLength != -2:
+        earthThreeBodySphere.trail = curve(pos=[earthThreeBodySphere.pos], color=color.cyan, radius=trailRadius, retain=maxTrailLength, interval=180)
+        earthTwoBodySphere.trail = curve(pos=[earthTwoBodySphere.pos], color=color.white, radius=trailRadius, retain=maxTrailLength, interval=30)
+        jupiterSphere.trail = curve(pos=[jupiterSphere.pos], color=color.red, radius=trailRadius, retain=maxTrailLength, interval=30)
+
+    gravitationalConstant = (4 * np.pi ** 2) / sun.mass
+    gd = graph(width=1500, height=700, title='Variation in Mars orbit with addition of Jupiter', xtitle='Time (Earth years)', ytitle="distance between mars and other mars (AU's)", fast=False)
     differencePlot = gcurve(color=color.purple, fast=False)
     differenceList = []
     vpythonTimeList = []
@@ -81,9 +80,6 @@ def run(earthThreeBody, earthTwoBody, jupiter, sun, axisLength, sphereSizeList, 
             earthTwoBodySphere.trail.append(earthTwoBodySphere.pos)
             jupiterSphere.trail.append(jupiterSphere.pos)
         if vPlot is True:
-            #earthThreeBodyPlot.plot(currentTime, distanceEarthThreeBodySun)
-            #earthTwoBodyPlot.plot(currentTime, distanceEarthTwoBodySun)
-            #jupiterPlot.plot(currentTime, jupiter.velocity.x)
             distance = np.sqrt((earthThreeBody.position.x - earthTwoBody.position.x) ** 2 + (earthThreeBody.position.y - earthTwoBody.position.y) ** 2 + (earthThreeBody.position.z - earthTwoBody.position.z) ** 2)
             differenceList.append(distance)
             vpythonTimeList.append(currentTime)
