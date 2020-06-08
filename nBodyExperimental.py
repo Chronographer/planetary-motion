@@ -46,6 +46,7 @@ def run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadiu
     for index in range(len(planetObjectList)):
         planetTotalAccelerationVector = vector(0, 0, 0)
         planetTotalAccelerationVectorList.append(planetTotalAccelerationVector)
+
     if maxTrailLength != -2:
         for index in range(len(planetSphereList)):
             planetSphere = planetSphereList[index]

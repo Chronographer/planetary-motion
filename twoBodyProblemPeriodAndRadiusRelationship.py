@@ -13,7 +13,6 @@ def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, ta
 
     gravitationalConstant = (4 * np.pi ** 2) / sun.mass
     currentTime = 0
-    currentPeriodStartTime = currentTime
     singlePeriodTimeList = []
     averagePeriodTimeList = []
     timeList = []
@@ -47,7 +46,7 @@ def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, ta
             distancePlanetSun = np.sqrt((planet.position.x ** 2 + planet.position.y ** 2 + planet.position.z ** 2))
             forcePlanetSun = (gravitationalConstant * planet.mass * sun.mass) / (distancePlanetSun ** 2)
             accelerationPlanetSun = forcePlanetSun / planet.mass
-            unitPositionVectorPlanetSun = norm(positionVectorGenerator.generatePositionVector(planet, sun))
+            unitPositionVectorPlanetSun = norm(sun.position - planet.position)
             accelerationVectorPlanetSun = accelerationPlanetSun * unitPositionVectorPlanetSun
             accelerationVectorPlanet = accelerationVectorPlanetSun
             planet.velocity = planet.velocity + (accelerationVectorPlanet * timeStep)
