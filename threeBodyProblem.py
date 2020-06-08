@@ -6,11 +6,8 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
     zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
-    currentTime = 0.0
-    if numPlot is True:
-        threeBodyEarthPositionList = []
-        timeList = []
     sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[2], color=color.yellow)
+    currentTime = 0.0
     earthSphere = sphere(pos=earth.position, radius=sphereSizeList[0], color=color.blue)
     jupiterSphere = sphere(pos=jupiter.position, radius=sphereSizeList[1], color=color.orange)
     if maxTrailLength != -2:
@@ -65,7 +62,4 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
         if vPlot is True:
             earthPlot.plot(currentTime, earth.velocity.y)
             jupiterPlot.plot(currentTime, jupiter.velocity.x)
-        if numPlot is True:
-            timeList.append(currentTime)
-            threeBodyEarthPositionList.append(earth.position)
         rate(targetFrameRate)
