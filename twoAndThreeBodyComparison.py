@@ -1,7 +1,6 @@
 from vpython import *
 import numpy as np
 import matplotlib.pyplot as plt
-import positionVectorGenerator
 
 
 def run(earthThreeBody, earthTwoBody, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, vPlot, numPlot, endTime):
@@ -47,10 +46,10 @@ def run(earthThreeBody, earthTwoBody, jupiter, sun, axisLength, sphereSizeList, 
         accelerationJupiterEarthThreeBody = forceJupiterEarthThreeBody / jupiter.mass
         accelerationEarthTwoBodySun = forceEarthTwoBodySun / earthTwoBody.mass
 
-        unitPositionVectorEarthThreeBodySun = norm(positionVectorGenerator.generatePositionVector(earthThreeBody, sun))
-        unitPositionVectorJupiterSun = norm(positionVectorGenerator.generatePositionVector(jupiter, sun))
-        unitPositionVectorJupiterEarthThreeBody = norm(positionVectorGenerator.generatePositionVector(jupiter, earthThreeBody))
-        unitPositionVectorEarthTwoBodySun = norm(positionVectorGenerator.generatePositionVector(earthTwoBody, sun))
+        unitPositionVectorEarthThreeBodySun = norm(sun.position - earthThreeBody.position)
+        unitPositionVectorJupiterSun = norm(sun.position - jupiter.position)
+        unitPositionVectorJupiterEarthThreeBody = norm(earthThreeBody.position - jupiter.position)
+        unitPositionVectorEarthTwoBodySun = norm(sun.position - earthTwoBody.position)
 
         accelerationVectorEarthThreeBodySun = accelerationEarthThreeBodySun * unitPositionVectorEarthThreeBodySun
         accelerationVectorEarthThreeBodyJupiter = accelerationEarthThreeBodyJupiter * -unitPositionVectorJupiterEarthThreeBody

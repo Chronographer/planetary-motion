@@ -1,7 +1,6 @@
 from vpython import *
 import numpy as np
 import matplotlib.pyplot as plt
-import positionVectorGenerator
 
 """ This program simulates a simple 2-body system. Note that it assumes the effects of the first planet object ("planet") 
 on the second planet object ("sun") are so small as to be negligable, so position, velocity, ect, are only computed for 
@@ -57,7 +56,7 @@ def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, ta
         distancePlanetSun = np.sqrt((planet.position.x ** 2 + planet.position.y ** 2 + planet.position.z ** 2))
         forcePlanetSun = (gravitationalConstant * planet.mass * sun.mass) / (distancePlanetSun ** 2)
         accelerationPlanetSun = forcePlanetSun / planet.mass
-        unitPositionVectorPlanetSun = norm(positionVectorGenerator.generatePositionVector(planet, sun))
+        unitPositionVectorPlanetSun = norm(sun.position - planet.position)
         accelerationVectorPlanetSun = accelerationPlanetSun * unitPositionVectorPlanetSun
         accelerationVectorPlanet = accelerationVectorPlanetSun
         planet.velocity = planet.velocity + (accelerationVectorPlanet * timeStep)
@@ -72,6 +71,7 @@ def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, ta
 
         if vPlot is True:
            genericPlot.plot(currentTime, distancePlanetSun)
+
     if numPlot is True:
         plt.plot(timeList, plotList, 'b.')
         plt.suptitle("Difference in area swept by path of planet per unit time")

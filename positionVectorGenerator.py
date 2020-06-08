@@ -1,4 +1,7 @@
 from vpython import vector
+"""
+DEPRECATED. This will likely be removed in future updates. This was originally made to generate a position vector between two planet objects.
+"""
 
 
 def generatePositionVector(planetOne, planetTwo):

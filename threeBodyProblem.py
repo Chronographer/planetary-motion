@@ -1,7 +1,6 @@
 from vpython import *
 import numpy as np
 import matplotlib.pyplot as plt
-import positionVectorGenerator
 import time
 
 
@@ -24,10 +23,8 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
         earthPlot = gcurve(color=color.cyan, fast=False)
         jupiterPlot = gcurve(color=color.red, fast=False)
 
-    #performanceList = []
-    #counter = 0
     while currentTime < endTime:
-        #beginTime = time.perf_counter_ns()
+
         distanceEarthSun = np.sqrt((earth.position.x ** 2 + earth.position.y ** 2 + earth.position.z ** 2))
         distanceJupiterSun = np.sqrt((jupiter.position.x ** 2 + jupiter.position.y ** 2 + jupiter.position.z ** 2))
         distanceJupiterEarth = np.sqrt((earth.position.x - jupiter.position.x) ** 2 + (earth.position.y - jupiter.position.y) ** 2 + (earth.position.z - jupiter.position.z) ** 2)
@@ -41,9 +38,9 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
         accelerationJupiterSun = forceJupiterSun / jupiter.mass
         accelerationJupiterEarth = forceJupiterEarth / jupiter.mass
 
-        unitPositionVectorEarthSun = norm(positionVectorGenerator.generatePositionVector(earth, sun))
-        unitPositionVectorJupiterSun = norm(positionVectorGenerator.generatePositionVector(jupiter, sun))
-        unitPositionVectorJupiterEarth = norm(positionVectorGenerator.generatePositionVector(jupiter, earth))
+        unitPositionVectorEarthSun = norm(sun.position - earth.position)
+        unitPositionVectorJupiterSun = norm(sun.position - jupiter.position)
+        unitPositionVectorJupiterEarth = norm(earth.position - jupiter.position)
 
         accelerationVectorEarthSun = accelerationEarthSun * unitPositionVectorEarthSun
         accelerationVectorEarthJupiter = accelerationEarthJupiter * -unitPositionVectorJupiterEarth
@@ -61,30 +58,16 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
 
         currentTime = currentTime + timeStep
 
-        #finishTime = time.perf_counter_ns()
-        #if counter >=1000:
-        #performanceList.append(finishTime - beginTime)
-            #print("iteration " + str(counter - 1000) + " computed in " + str(performanceList[counter - 1000]) + " nanoseconds")
-        #counter = counter + 1
-
         earthSphere.pos = earth.position
         jupiterSphere.pos = jupiter.position
 
         if maxTrailLength != -2:
             earthSphere.trail.append(earthSphere.pos)
             jupiterSphere.trail.append(jupiterSphere.pos)
-        if vPlot == True:
+        if vPlot is True:
             earthPlot.plot(currentTime, earth.velocity.y)
             jupiterPlot.plot(currentTime, jupiter.velocity.x)
-        if numPlot == True:
-            #timeList.append(currentTime)
+        if numPlot is True:
+            timeList.append(currentTime)
             threeBodyEarthPositionList.append(earth.position)
         rate(targetFrameRate)
-    returnList = []
-    returnList.append(timeList)
-    returnList.append(threeBodyEarthPositionList)
-
-    #print("average computation time was " + str( (sum(performanceList)) / (len(performanceList)) ) )
-
-    return returnList
-

@@ -6,6 +6,9 @@ import matplotlib.pyplot as plt
 UNITS
     1 AU = 1.5 x 10^11  meters
     1 year = 3.2 x 10^7 seconds
+    
+    DEPRECATED: This system was used before I made the planet object system.
+    It will probably be removed in a future update
 '''
 
 
@@ -47,5 +50,3 @@ def run(orbitRadius, orbitPeriod, maxTrailLength, timeStep, targetFrameRate, end
 
         if maxTrailLength != -2:
             earth.trail.append(earth.pos)
-    returnList = [timeList, twoBodyEarthPositionList]
-    return returnList
