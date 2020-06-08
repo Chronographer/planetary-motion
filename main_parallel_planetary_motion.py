@@ -1,4 +1,3 @@
-import twoBodyProblemDeprecated                   # takes arguments (<float> orbitRadius, <float> orbitPeriod, <integer> maxTrailLength, <integer> timeStep, <integer> targetFrameRate)
 import planetaryData                    # takes argument  (<string> planetName) :: returns <list[<float> orbitRadius, <float> orbitPeriod, <float> eccentricity]>
 import threeBodyProblem                 # takes arguments (<object> planetObject1, <object> planetObject2, <object> planetObject3, <float> axisLength, <list[<float> sphere1Size, <float> sphere2Size, <float> sphere3Size>], <integer> maxTrailLength, <float> trailRadius, <float> timeStep, <boolean> makeVpythonPlot, <boolean> makePyPlot)
 import planetObjectGenerator            # add in arguments later
@@ -37,13 +36,13 @@ twoBodyData = []
 
 def threeBodyWorker():
     global threeBodyData
-    threeBodyData = threeBodyProblem.run(earthObject, jupiterObject, sunObject, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
+    threeBodyData = threeBodyProblem.run(earthObject, jupiterObject, sunObject, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)  # This will break as threeBodyProblem no longer has the ability to return a data list
     return threeBodyData
 
 
 def twoBodyWorker():
     global twoBodyData
-    twoBodyData = twoBodyProblemDeprecated.run(planetDataList[0], planetDataList[1], -1, timeStep, targetFrameRate, endTime)
+    twoBodyData = twoBodyProblemDeprecated.run(planetDataList[0], planetDataList[1], -1, timeStep, targetFrameRate, endTime)  # This will break, as this script was removed because this is the only place it is used and this is just a side project anyway.
     return twoBodyData
 
 
@@ -54,7 +53,6 @@ if __name__ == '__main__':
 
     threeBodyProcess = multiprocessing.Process(target=threeBodyWorker, args=())
     twoBodyProcess = multiprocessing.Process(target=twoBodyWorker, args=())
-
 
     # Use a manager to create a shared list object with multiprocessor.managers.SyncManager.list()
 
