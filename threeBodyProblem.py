@@ -1,7 +1,5 @@
 from vpython import *
 import numpy as np
-import matplotlib.pyplot as plt
-import time
 
 
 def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, vPlot, numPlot, endTime):
