@@ -2,16 +2,17 @@ from vpython import *
 import numpy as np
 
 
-def run(earth, jupiter, sun, axisLength, trailRadius, targetFrameRate, timeStep, vPlot, numPlot, endTime):
+def run(earth, jupiter, sun, axisLength, targetFrameRate, timeStep, vPlot, endTime):
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
     zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
 
-    currentTime = 0.0
-    gravitationalConstant = (4 * np.pi ** 2) / sun.mass
     if vPlot is True:
         earthPlot = gcurve(color=color.cyan, fast=False)
         jupiterPlot = gcurve(color=color.red, fast=False)
+
+    currentTime = 0.0
+    gravitationalConstant = (4 * np.pi ** 2) / sun.mass
 
     while currentTime < endTime:
 
@@ -47,8 +48,6 @@ def run(earth, jupiter, sun, axisLength, trailRadius, targetFrameRate, timeStep,
         jupiter.move(jupiter.position + (jupiter.velocity * timeStep))
 
         currentTime = currentTime + timeStep
-
-
 
         if vPlot is True:
             earthPlot.plot(currentTime, earth.velocity.y)

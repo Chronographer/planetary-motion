@@ -25,4 +25,4 @@ sunObject = planetObjectGenerator.planet(planetaryData.getPlanetData("sun"), max
 marsObject = planetObjectGenerator.planet(planetaryData.getPlanetData("mars"), maxTrailLength)
 jupiterObject = planetObjectGenerator.planet(planetaryData.getPlanetData("jupiter"), maxTrailLength)
 
-threeBodyProblem.run(marsObject, jupiterObject, sunObject, axisLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
+threeBodyProblem.run(marsObject, jupiterObject, sunObject, axisLength, targetFrameRate, timeStep, makeVpythonPlot, endTime)
