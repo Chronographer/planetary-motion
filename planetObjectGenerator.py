@@ -28,21 +28,22 @@ class planet:
             if self.name == 'earth':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue)
                 if self.maxTrailLength != -2:
-                    self.sphere.trail = curve(pos=self.position, color=color.cyan)
+                    self.sphere.trail = curve(pos=self.position, color=color.cyan, retain=self.maxTrailLength)
             elif self.name == 'mars':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.red)
                 if self.maxTrailLength != -2:
-                    self.sphere.trail = curve(pos=self.position, color=color.orange)
+                    self.sphere.trail = curve(pos=self.position, color=color.orange, retain=self.maxTrailLength)
             elif self.name == 'jupiter':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.orange)
                 if self.maxTrailLength != -2:
-                    self.sphere.trail = curve(pos=self.position, color=color.red)
+                    self.sphere.trail = curve(pos=self.position, color=color.red, retain=self.maxTrailLength)
             else:
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.white)
                 if maxTrailLength != -2:
-                    self.sphere.trail = curve(pos=self.position, color=color.white)
+                    self.sphere.trail = curve(pos=self.position, color=color.white, retain=self.maxTrailLength)
 
-    def move(self):
+    def move(self, newPosition):
+        self.position = newPosition
         self.sphere.pos = self.position
         if self.maxTrailLength != -2:
             self.sphere.trail.append(self.position)

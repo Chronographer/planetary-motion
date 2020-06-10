@@ -43,13 +43,12 @@ def run(earth, jupiter, sun, axisLength, trailRadius, targetFrameRate, timeStep,
         earth.velocity = earth.velocity + (accelerationVectorEarth * timeStep)
         jupiter.velocity = jupiter.velocity + (accelerationVectorJupiter * timeStep)
 
-        earth.position = earth.position + (earth.velocity * timeStep)
-        jupiter.position = jupiter.position + (jupiter.velocity * timeStep)
+        earth.move(earth.position + (earth.velocity * timeStep))
+        jupiter.move(jupiter.position + (jupiter.velocity * timeStep))
 
         currentTime = currentTime + timeStep
 
-        earth.move()
-        jupiter.move()
+
 
         if vPlot is True:
             earthPlot.plot(currentTime, earth.velocity.y)
