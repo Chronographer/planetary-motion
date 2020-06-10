@@ -6,13 +6,15 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
     zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
+    """
     sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[0], color=color.yellow)
-    currentTime = 0.0
     earthSphere = sphere(pos=earth.position, radius=sphereSizeList[1], color=color.blue)
     jupiterSphere = sphere(pos=jupiter.position, radius=sphereSizeList[2], color=color.orange)
     if maxTrailLength != -2:
         earthSphere.trail = curve(pos=[earthSphere.pos], color=color.cyan, radius=trailRadius, retain=maxTrailLength, interval=30)
         jupiterSphere.trail = curve(pos=[jupiterSphere.pos], color=color.red, radius=trailRadius, retain=maxTrailLength, interval=30)
+    """
+    currentTime = 0.0
     gravitationalConstant = (4 * np.pi ** 2) / sun.mass
     if vPlot is True:
         earthPlot = gcurve(color=color.cyan, fast=False)
@@ -53,12 +55,16 @@ def run(earth, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRa
 
         currentTime = currentTime + timeStep
 
+        earth.move()
+        jupiter.move()
+        """
         earthSphere.pos = earth.position
         jupiterSphere.pos = jupiter.position
 
         if maxTrailLength != -2:
             earthSphere.trail.append(earthSphere.pos)
             jupiterSphere.trail.append(jupiterSphere.pos)
+            """
         if vPlot is True:
             earthPlot.plot(currentTime, earth.velocity.y)
             jupiterPlot.plot(currentTime, jupiter.velocity.x)

@@ -23,7 +23,7 @@ makeNumPyPlot = False
 
 sunObject = planetObjectGenerator.planet(planetaryData.getPlanetData("sun"))
 marsObject = planetObjectGenerator.planet(planetaryData.getPlanetData("mars"))
-twoBodyMarsObject = planetObjectGenerator.planet(planetaryData.getPlanetData("mars"))
+#twoBodyMarsObject = planetObjectGenerator.planet(planetaryData.getPlanetData("mars"))
 jupiterObject = planetObjectGenerator.planet(planetaryData.getPlanetData("jupiter"))
 
 threeBodyProblem.run(marsObject, jupiterObject, sunObject, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)

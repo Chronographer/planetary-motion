@@ -54,7 +54,7 @@ pretendEccentricity = 0.031
 # table of the radii of the planets (The physical size of the planet itself, NOT its orbit!) measured in Earth radii.
 # these values are scaled down by a factor of 10 so that they appear as a useful size, except where otherwise noted.
 # values were obtained from wikipedia https://en.wikipedia.org/wiki/List_of_Solar_System_objects_by_size on 6/10/2020
-sunSphereRadius = 109.3 / 10
+sunSphereRadius = 0.3  # The Sun is too large to be made to scale, as it would engulf the other planets.
 mercurySphereRadius = 0.3829 / 10
 venusSphereRadius = 0.9499 / 10
 earthSphereRadius = 1 / 10
