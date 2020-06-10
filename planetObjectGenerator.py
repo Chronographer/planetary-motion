@@ -4,11 +4,15 @@ import numpy as np
 
 class planet:
     def __init__(self, planetDataList):
-        planetOrbitRadius = planetDataList[0]
-        planetPeriod = planetDataList[1]
-        eccentricity = planetDataList[2]
-        mass = planetDataList[3]
+        name = planetDataList[0]
+        planetOrbitRadius = planetDataList[1]
+        planetPeriod = planetDataList[2]
+        eccentricity = planetDataList[3]
+        mass = planetDataList[4]
+        sphereRadius = planetDataList[5]
 
+        self.name = name
+        self.sphereRadius = sphereRadius
         if planetOrbitRadius == "Null":  # this handles the sun, which is a special case as it does not have an orbital period, velocity, or eccentricity for the purposes of this lab.
             self.position = vector(0, 0, 0)
             self.mass = mass
