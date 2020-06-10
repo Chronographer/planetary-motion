@@ -3,7 +3,7 @@ import numpy as np
 
 
 class planet:
-    def __init__(self, planetDataList):
+    def __init__(self, planetDataList, maxTrailLength):
         name = planetDataList[0]
         planetOrbitRadius = planetDataList[1]
         planetPeriod = planetDataList[2]
@@ -24,16 +24,25 @@ class planet:
             self.velocity = vector(0, initialVelocity, 0)
             self.position = vector(planetOrbitRadius, 0, 0)
             self.eccentricity = eccentricity
-        if self.name == 'earth':
-            self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue)
-            self.sphere.trail = curve(pos=self.position, color=color.cyan)
-        elif self.name == 'mars':
-            self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.red)
-            self.sphere.trail = curve(pos=self.position, color=color.orange)
-        elif self.name == 'jupiter':
-            self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.orange)
-            self.sphere.trail = curve(pos=self.position, color=color.red)
+            self.maxTrailLength = maxTrailLength
+            if self.name == 'earth':
+                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue)
+                if self.maxTrailLength != -2:
+                    self.sphere.trail = curve(pos=self.position, color=color.cyan)
+            elif self.name == 'mars':
+                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.red)
+                if self.maxTrailLength != -2:
+                    self.sphere.trail = curve(pos=self.position, color=color.orange)
+            elif self.name == 'jupiter':
+                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.orange)
+                if self.maxTrailLength != -2:
+                    self.sphere.trail = curve(pos=self.position, color=color.red)
+            else:
+                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.white)
+                if maxTrailLength != -2:
+                    self.sphere.trail = curve(pos=self.position, color=color.white)
 
     def move(self):
         self.sphere.pos = self.position
-        self.sphere.trail.append(self.position)
+        if self.maxTrailLength != -2:
+            self.sphere.trail.append(self.position)
