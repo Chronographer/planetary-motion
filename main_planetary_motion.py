@@ -2,7 +2,7 @@ import planetaryData
 import planetObjectGenerator
 import threeBodyProblem
 import twoAndThreeBodyComparison
-import twoBodyProblem
+import twoBodyProblemAreaSwept
 import twoBodyProblemPeriodAndRadiusRelationship
 from vpython import *
 
@@ -20,10 +20,7 @@ makeVpythonPlot = False
 makeNumPyPlot = True
 
 sunObject = planetObjectGenerator.planet(planetaryData.getPlanetData("sun"), maxTrailLength)
-#marsObject = planetObjectGenerator.planet(planetaryData.getPlanetData("mars"), maxTrailLength)
-#jupiterObject = planetObjectGenerator.planet(planetaryData.getPlanetData("jupiter"), maxTrailLength)
 earthObject = planetObjectGenerator.planet(planetaryData.getPlanetData('earth'), maxTrailLength)
 
-twoBodyProblem.run(earthObject, sunObject, axisLength, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
-#twoBodyProblemPeriodAndRadiusRelationship.run(earthObject, sunObject, axisLength, targetFrameRate, timeStep, endTime)
-#threeBodyProblem.run(marsObject, jupiterObject, sunObject, axisLength, targetFrameRate, timeStep, makeVpythonPlot, endTime)
+twoBodyProblemAreaSwept.run(earthObject, sunObject, axisLength, targetFrameRate, timeStep, makeVpythonPlot, makeNumPyPlot, endTime)
+
