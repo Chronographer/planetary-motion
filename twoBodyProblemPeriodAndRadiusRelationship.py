@@ -1,22 +1,17 @@
 from vpython import *
 import numpy as np
 import matplotlib.pyplot as plt
-import positionVectorGenerator
 
 
-def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, endTime):
+def run(planet, sun, axisLength, targetFrameRate, timeStep, endTime):
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
     zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
-    sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[1], color=color.yellow)
-    planetSphere = sphere(pos=planet.position, radius=sphereSizeList[0], texture=textures.earth, shininess=0)
 
-    gravitationalConstant = (4 * np.pi ** 2) / sun.mass
     currentTime = 0
+    gravitationalConstant = (4 * np.pi ** 2) / sun.mass
     singlePeriodTimeList = []
     averagePeriodTimeList = []
-    timeList = []
-    plotList = []
     periodSquaredList = []
     radiusCubedList = []
 
@@ -30,9 +25,6 @@ def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, ta
     while orbitRadiusListPopulator <= maxOrbitRadius:
         planetOrbitRadiiList.append(orbitRadiusListPopulator)
         orbitRadiusListPopulator = orbitRadiusListPopulator + orbitRadiusIncrement
-
-    if maxTrailLength != -2:
-        planetSphere.trail = curve(pos=[planetSphere.pos], color=color.white, radius=trailRadius, retain=maxTrailLength, interval=30)
 
     for index in range(len(planetOrbitRadiiList)):
         currentRadius = planetOrbitRadiiList[index]
@@ -50,8 +42,7 @@ def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, ta
             accelerationVectorPlanetSun = accelerationPlanetSun * unitPositionVectorPlanetSun
             accelerationVectorPlanet = accelerationVectorPlanetSun
             planet.velocity = planet.velocity + (accelerationVectorPlanet * timeStep)
-            planet.position = planet.position + (planet.velocity * timeStep)
-            planetSphere.pos = planet.position
+            planet.move(planet.position + (planet.velocity * timeStep))
             currentTime = currentTime + timeStep
             rate(targetFrameRate)
 
@@ -60,18 +51,15 @@ def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, ta
                 singlePeriodTimeList.append(currentPeriodTime)
                 currentPeriodStartTime = currentTime
 
-            if maxTrailLength != -2:
-                planetSphere.trail.append(planetSphere.pos)
-
         for i in range(len(singlePeriodTimeList)):
-            print("period " + str(i) + " was " + str(singlePeriodTimeList[i]) + " Earth years.")
+            #print("period " + str(i) + " was " + str(singlePeriodTimeList[i]) + " Earth years.")
             multiplePeriodTime = multiplePeriodTime + singlePeriodTimeList[i]
 
         averagePeriodTime = multiplePeriodTime / len(singlePeriodTimeList)
         averagePeriodTimeList.append(averagePeriodTime)
         singlePeriodTimeList.clear()
         print("average period for an orbital radius of " + str(currentRadius) + " Earth orbit radii was: " + str(averagePeriodTime) + " Earth years")
-        print("\n")
+        #print("\n")
         currentTime = 0
         multiplePeriodTime = 0
 
@@ -79,7 +67,7 @@ def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, ta
         periodSquaredList.append(averagePeriodTimeList[i] ** 2)
         radiusCubedList.append(planetOrbitRadiiList[i] ** 3)
 
-    plt.plot(planetOrbitRadiiList, averagePeriodTimeList, 'b.')
+    plt.plot(planetOrbitRadiiList, averagePeriodTimeList)
     plt.suptitle("Period length of a planet with increasing orbital radii")
     plt.xlabel("Orbital radius (Earth orbit radii)")
     plt.ylabel("Period length (Earth years)")
