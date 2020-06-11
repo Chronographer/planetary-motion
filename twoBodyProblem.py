@@ -7,16 +7,15 @@ on the second planet object ("sun") are so small as to be negligable, so positio
 the "planet" object. Note however that any planet object may be used in place of "planet". """
 
 
-def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, vPlot, numPlot, endTime):
+def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endTime):
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
     zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
-    currentTime = 0.0
-    sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[1], color=color.yellow)
-    planetSphere = sphere(pos=planet.position, radius=sphereSizeList[0], texture=textures.earth, shininess=0,)
-    gravitationalConstant = (4 * np.pi ** 2) / sun.mass
 
-    plotAreaSweptInterval = timeStep * 10
+    gravitationalConstant = (4 * np.pi ** 2) / sun.mass
+    currentTime = 0.0
+
+    plotAreaSweptInterval = timeStep * 1
     plotAreaSweptIntervalTimer = 0
     currentSectorPoint = planet.position
     lastSectorPoint = planet.position
@@ -30,11 +29,8 @@ def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, ta
         plotIndex = 0
 
     if vPlot is True:
-        gd = graph(width=750, height=700, title='Variation in Mars orbit with addition of Jupiter', xtitle='Time (Years)', ytitle="distance between mars and other mars (AU's)", fast=False)
+        gd = graph(width=750, height=700, title='Insert title here', xtitle='insert x axis label here', ytitle="insert y axis label here", fast=False)
         genericPlot = gcurve(color=color.cyan, fast=False)
-
-    if maxTrailLength != -2:
-        planetSphere.trail = curve(pos=[planetSphere.pos], color=color.white, radius=trailRadius, retain=maxTrailLength, interval=30)
 
     while currentTime < endTime:
         if plotAreaSweptIntervalTimer >= plotAreaSweptInterval:
@@ -60,14 +56,11 @@ def run(planet, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, ta
         accelerationVectorPlanetSun = accelerationPlanetSun * unitPositionVectorPlanetSun
         accelerationVectorPlanet = accelerationVectorPlanetSun
         planet.velocity = planet.velocity + (accelerationVectorPlanet * timeStep)
-        planet.position = planet.position + (planet.velocity * timeStep)
-        planetSphere.pos = planet.position
+        planet.move(planet.position + (planet.velocity * timeStep))
+
         currentTime = currentTime + timeStep
         plotAreaSweptIntervalTimer = plotAreaSweptIntervalTimer + timeStep
         rate(targetFrameRate)
-
-        if maxTrailLength != -2:
-            planetSphere.trail.append(planetSphere.pos)
 
         if vPlot is True:
            genericPlot.plot(currentTime, distancePlanetSun)
