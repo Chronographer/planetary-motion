@@ -8,16 +8,17 @@ the "planet" object. Note however that any planet object may be used in place of
 
 
 def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endTime):
+
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
     zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
-
+    print("simulation in progress...")
     gravitationalConstant = (4 * np.pi ** 2) / sun.mass
     currentTime = 0.0
 
     if numPlot is True:
-        timeList = []
-        plotList = []
+        xAxisPlotList = []
+        yAxisPlotList = []
 
     if vPlot is True:
         gd = graph(width=750, height=700, title='Insert title here', xtitle='insert x axis label here', ytitle="insert y axis label here", fast=False)
@@ -33,15 +34,19 @@ def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endT
         planet.velocity = planet.velocity + (accelerationVectorPlanet * timeStep)
         planet.move(planet.position + (planet.velocity * timeStep))
 
-        currentTime = currentTime + timeStep
-        rate(targetFrameRate)
-
+        if numPlot is True:
+            xAxisPlotList.append(planet.position.x)
+            yAxisPlotList.append(planet.position.y)
         if vPlot is True:
             genericPlot.plot(currentTime, distancePlanetSun)
 
+        currentTime = currentTime + timeStep
+        rate(targetFrameRate)
+
     if numPlot is True:
-        plt.plot(timeList, plotList, 'b.')
+        plt.plot(xAxisPlotList, yAxisPlotList)
         plt.suptitle("null")
         plt.xlabel("null")
         plt.ylabel("null")
         plt.show()
+    print("Done.")
