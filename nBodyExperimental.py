@@ -1,7 +1,5 @@
 from vpython import *
 import numpy as np
-import matplotlib.pyplot as plt
-import positionVectorGenerator
 import planetaryData
 
 
@@ -109,7 +107,7 @@ def run(planetObjectList, axisLength, sphereSizeList, maxTrailLength, trailRadiu
                 if innerIndex != index:
                     comparisonPlanetObject = planetObjectList[innerIndex]
                     comparisonPlanetAcceleration = currentPlanetAccelerationList[innerIndex]
-                    unitPositionVector = norm(positionVectorGenerator.generatePositionVector(currentPlanetObject, comparisonPlanetObject))
+                    unitPositionVector = norm(comparisonPlanetObject.position - currentPlanetObject.position)
                     if comparisonPlanetAcceleration != "self":
                         accelerationVector = unitPositionVector * comparisonPlanetAcceleration
                         currentPlanetAccelerationVectorList.append(accelerationVector)

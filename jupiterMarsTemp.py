@@ -63,10 +63,10 @@ massPlanet = massMars
 # pick a good title
 plot_title = "Jupiter + Mars"
 # pick planet size for graphics: adjust scale and 2 numbers as desired
-scale = 50.0
-size_sun = scale*radius_sun
-size_planet = scale*40*radius_earth
-size_jupiter = scale*20.0*radius_jupiter
+scale = 50
+size_sun = scale * radius_sun
+size_planet = scale * 40 * radius_earth
+size_jupiter = scale * 20 * radius_jupiter
 # end USER INPUTS
 
 # initial speeds
@@ -75,7 +75,7 @@ velocityJupiter = 2 * pi / sqrt(orbital_radius_jupiter)
 
 # set trail radius
 radiusTrail = size_jupiter / 10.0
-L = 1.5*orbital_radius_jupiter
+L = 1.5 * orbital_radius_jupiter
 
 # dimensions of scene
 scene = canvas(title=plot_title, width=win, height=win, range=2*L, forward=vector(-1, -1, -1))
