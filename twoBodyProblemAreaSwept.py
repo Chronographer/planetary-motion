@@ -3,8 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 """ This program simulates a simple 2-body system. Note that it assumes the effects of the first planet object ("planet") 
-on the second planet object ("sun") are so small as to be negligable, so position, velocity, ect, are only computed for 
-the "planet" object. Note however that any planet object may be used in place of "planet". """
+on the second planet object ("sun") are so small as to be negligible, so position, velocity, ect, are only computed for 
+the "planet" object. Note however that any planet object may be used in place of either "planet" or "sun". """
 
 
 def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endTime):
@@ -18,8 +18,6 @@ def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endT
     plotAreaSweptInterval = timeStep * 1
     plotAreaSweptIntervalTimer = 0
     currentSectorPoint = planet.position
-    lastSectorPoint = planet.position
-    lastAreaSwept = 0
     areaSwept = 0
     dontPlotTheFirstPointFlag = False
 
@@ -29,7 +27,7 @@ def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endT
         plotIndex = 0
 
     if vPlot is True:
-        gd = graph(width=750, height=700, title='Insert title here', xtitle='insert x axis label here', ytitle="insert y axis label here", fast=False)
+        graphSetup = graph(width=750, height=700, title='Insert title here', xtitle='insert x axis label here', ytitle="insert y axis label here", fast=False)
         genericPlot = gcurve(color=color.cyan, fast=False)
 
     while currentTime < endTime:
@@ -66,8 +64,8 @@ def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endT
            genericPlot.plot(currentTime, distancePlanetSun)
 
     if numPlot is True:
-        plt.plot(timeList, plotList, 'b.')
-        plt.suptitle("Difference in area swept by path of planet per unit time")
+        plt.plot(timeList, plotList, 'b')
+        plt.suptitle("Area swept by path of planet per unit time")
         plt.xlabel("Time (Earth years)")
         plt.ylabel("Area ((circumferences of Earths orbit)^2)")
         plt.show()
