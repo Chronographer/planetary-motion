@@ -26,24 +26,17 @@ class planet:
             self.eccentricity = eccentricity
             self.maxTrailLength = maxTrailLength
             if self.name == 'earth':
-                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue)
-                if self.maxTrailLength != -2:
-                    self.sphere.trail = curve(pos=self.position, color=color.cyan, retain=self.maxTrailLength)
+                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength)
             elif self.name == 'mars':
-                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.red)
-                if self.maxTrailLength != -2:
-                    self.sphere.trail = curve(pos=self.position, color=color.orange, retain=self.maxTrailLength)
+                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.red, make_trail=True, trail_color=color.orange, retain=maxTrailLength)
             elif self.name == 'jupiter':
-                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.orange)
-                if self.maxTrailLength != -2:
-                    self.sphere.trail = curve(pos=self.position, color=color.red, retain=self.maxTrailLength)
+                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.orange, make_trail=True, trail_color=color.red, retain=maxTrailLength)
             else:
-                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.white)
-                if maxTrailLength != -2:
-                    self.sphere.trail = curve(pos=self.position, color=color.white, retain=self.maxTrailLength)
+                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.white, make_trail=True, trail_color=color.white, retain=maxTrailLength)
+
+            if self.maxTrailLength == -2:
+                self.sphere.make_trail = False
 
     def move(self, newPosition):
         self.position = newPosition
         self.sphere.pos = self.position
-        if self.maxTrailLength != -2:
-            self.sphere.trail.append(self.position)

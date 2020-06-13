@@ -14,14 +14,16 @@ axisLength = 1
 maxTrailLength = -2  # To remove the limit set this to -1, to remove the trail entirely, set this to -2. Otherwise set to a positive integer to taste. Can also be set individually for each planet object, if desired.
 
 timeStep = 0.001 * planetaryData.earthPeriod
-targetFrameRate = 600000
-endTime = 5
+targetFrameRate = 240
+endTime = 100
 
 vPlot = False
 numPlot = True
 
 sunObject = planetObjectGenerator.planet(planetaryData.getPlanetData("sun"), maxTrailLength)
 earthObject = planetObjectGenerator.planet(planetaryData.getPlanetData('earth'), maxTrailLength)
+jupiterObject = planetObjectGenerator.planet(planetaryData.getPlanetData('jupiter'), maxTrailLength)
 
-twoBodyProblemAreaSwept.run(earthObject, sunObject, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endTime)
+#twoBodyProblemAreaSwept.run(earthObject, sunObject, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endTime)
+threeBodyProblem.run(earthObject, jupiterObject, sunObject, axisLength, targetFrameRate, timeStep, vPlot, endTime)
 
