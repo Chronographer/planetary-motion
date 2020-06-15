@@ -15,7 +15,8 @@ def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endT
     gravitationalConstant = (4 * np.pi ** 2) / sun.mass
     currentTime = 0.0
 
-    plotAreaSweptInterval = timeStep * 1
+    plotInterval = 1
+    plotAreaSweptInterval = timeStep * plotInterval
     plotAreaSweptIntervalTimer = 0
     currentSectorPoint = planet.position
     areaSwept = 0
@@ -29,6 +30,7 @@ def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endT
     if vPlot is True:
         graphSetup = graph(width=750, height=700, title='Insert title here', xtitle='insert x axis label here', ytitle="insert y axis label here", fast=False)
         genericPlot = gcurve(color=color.cyan, fast=False)
+        secondPlot = gcurve(color=color.red, fast=False)
 
     while currentTime < endTime:
         if plotAreaSweptIntervalTimer >= plotAreaSweptInterval:
@@ -61,11 +63,15 @@ def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endT
         rate(targetFrameRate)
 
         if vPlot is True:
-           genericPlot.plot(currentTime, distancePlanetSun)
+            genericPlot.plot(currentTime, (planet.velocity.z))
+            secondPlot.plot(currentTime, areaSwept)
 
     if numPlot is True:
-        plt.plot(timeList, plotList, 'b')
-        plt.suptitle("Area swept by path of planet per unit time")
+        plt.plot(timeList, plotList, label="Time steps/plot point: " + str(plotInterval) + "\nTime step: " + str(timeStep) + " Years",)
+        plt.suptitle("Area swept by path of planet per unit time\n(Kepler's 2nd Law)")
         plt.xlabel("Time (Earth years)")
         plt.ylabel("Area ((circumferences of Earths orbit)^2)")
+        plt.legend(loc="best")
+        plt.grid(True)
+        #plt.ylim(0, 0.006)  # use this to force the y axis bounds, if desired. If this is commented out, the y axis will automatically scale.
         plt.show()

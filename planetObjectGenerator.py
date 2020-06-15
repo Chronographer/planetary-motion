@@ -1,6 +1,6 @@
 from vpython import vector, sphere, color, curve
 import numpy as np
-
+traceInterval = 10
 
 class planet:
     def __init__(self, planetDataList, maxTrailLength):
@@ -26,7 +26,9 @@ class planet:
             self.eccentricity = eccentricity
             self.maxTrailLength = maxTrailLength
             if self.name == 'earth':
-                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength)
+                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength, interval=traceInterval)
+                """if self.maxTrailLength != -2:
+                    self.sphere.trail = curve(color=color.cyan, retain=maxTrailLength)"""
             elif self.name == 'mars':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.red, make_trail=True, trail_color=color.orange, retain=maxTrailLength)
             elif self.name == 'jupiter':
@@ -40,3 +42,5 @@ class planet:
     def move(self, newPosition):
         self.position = newPosition
         self.sphere.pos = self.position
+        """if self.maxTrailLength != -2:
+            self.sphere.trail.append(self.position)"""
