@@ -25,11 +25,8 @@ class planet:
             self.velocity = vector(0, initialVelocity, 0)
             self.position = vector(planetOrbitRadius, 0, 0)
             self.eccentricity = eccentricity
-            self.maxTrailLength = maxTrailLength
             if self.name == 'earth':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength, interval=traceInterval)
-                """if self.maxTrailLength != -2:
-                    self.sphere.trail = curve(color=color.cyan, retain=maxTrailLength)"""
             elif self.name == 'mars':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.red, make_trail=True, trail_color=color.orange, retain=maxTrailLength)
             elif self.name == 'jupiter':
@@ -37,11 +34,9 @@ class planet:
             else:
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.white, make_trail=True, trail_color=color.white, retain=maxTrailLength)
 
-            if self.maxTrailLength == -2:
+            if maxTrailLength == -2:
                 self.sphere.make_trail = False
 
     def move(self, newPosition):
         self.position = newPosition
         self.sphere.pos = self.position
-        """if self.maxTrailLength != -2:
-            self.sphere.trail.append(self.position)"""

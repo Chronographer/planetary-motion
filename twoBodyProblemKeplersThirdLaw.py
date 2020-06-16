@@ -1,6 +1,19 @@
 from vpython import *
 import numpy as np
 import matplotlib.pyplot as plt
+""" 
+This program verifies Kepler's third Law, that the orbital period squared is linearly proportional to the orbital 
+radius cubed.
+
+NOTE: 'endTime' behaves differently in this script than in others. Normally, a simulation is terminated after
+currentTime exceeds endTime. However in this script, the simulation is not terminated after a certain period of time 
+has passed, but instead terminates after a certain number of periods have been simulated. In other words, if 'endTime' 
+is 5, this script will run a simulation of multiple different systems (one for each orbital radius value stored in 
+planetOrbitRadiiList[], which is populated at run time). Each of these simulations will not run for 5 years, as 
+they would in other scripts, but for 5 periods, regardless of the time required for a planet to complete a single
+period of motion. This is to prevent a planet from having an "incomplete" orbit included in the average time for each
+period, thus distorting the results.  
+"""
 
 
 def run(planet, sun, axisLength, targetFrameRate, timeStep, endTime):
@@ -58,7 +71,7 @@ def run(planet, sun, axisLength, targetFrameRate, timeStep, endTime):
         averagePeriodTime = multiplePeriodTime / len(singlePeriodTimeList)
         averagePeriodTimeList.append(averagePeriodTime)
         singlePeriodTimeList.clear()
-        print("average period for an orbital radius of " + str(currentRadius) + " Earth orbit radii was: " + str(averagePeriodTime) + " Earth years")
+        print("average period for an orbital radius of " + str(currentRadius) + " AU's was: " + str(averagePeriodTime) + " Earth years")
         #print("\n")
         currentTime = 0
         multiplePeriodTime = 0
@@ -67,8 +80,9 @@ def run(planet, sun, axisLength, targetFrameRate, timeStep, endTime):
         periodSquaredList.append(averagePeriodTimeList[i] ** 2)
         radiusCubedList.append(planetOrbitRadiiList[i] ** 3)
 
-    plt.plot(planetOrbitRadiiList, averagePeriodTimeList)
+    plt.plot(planetOrbitRadiiList, averagePeriodTimeList, label="time step: " + str(timeStep) + " years")
     plt.suptitle("Period length of a planet with increasing orbital radii")
-    plt.xlabel("Orbital radius (Earth orbit radii)")
+    plt.xlabel("Orbital radius (AU's)")
     plt.ylabel("Period length (Earth years)")
+    plt.grid(True)
     plt.show()
