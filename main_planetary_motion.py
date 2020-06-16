@@ -14,14 +14,23 @@ axisLength = 1
 maxTrailLength = -2  # To remove the limit set this to -1, to remove the trail entirely, set this to -2. Otherwise set to a positive integer to taste. Can also be set individually for each planet object, if desired.
 
 timeStep = 0.001 * planetaryData.earthPeriod
-targetFrameRate = 2000000
-endTime = 5
+targetFrameRate = 2000000000
+endTime = 300
 
-vPlot = False
-numPlot = True
+vPlot = True
+numPlot = False
 
-sunObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData("sun"), maxTrailLength)
-earthObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('earth'), maxTrailLength)
+"""
+Note: if any planet objects are not being used for a given simulation, their creation should be commented out below 
+because if they are not then they will still be rendered to the display, even though they are not being passed into any
+functions, since the planet object actually creates and handles its own vpython sphere object inside of itself. 
+"""
 
-twoBodyProblemKeplersThirdLaw.run(earthObject, sunObject, axisLength, targetFrameRate, timeStep, endTime)
+sunObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('sun'), maxTrailLength)
+marsObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('mars'), maxTrailLength)
+twoBodyMarsObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('mars'), maxTrailLength)
+jupiterObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('jupiter'), maxTrailLength)
+
+twoAndThreeBodyComparison.run(marsObject, twoBodyMarsObject, jupiterObject, sunObject, axisLength, targetFrameRate, timeStep, endTime)
+#twoBodyProblemKeplersThirdLaw.run(earthObject, sunObject, axisLength, targetFrameRate, timeStep, endTime)
 #twoBodyProblemAreaSwept.run(earthObject, sunObject, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endTime)

@@ -3,31 +3,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def run(earthThreeBody, earthTwoBody, jupiter, sun, axisLength, sphereSizeList, maxTrailLength, trailRadius, targetFrameRate, timeStep, vPlot, numPlot, endTime):
+"""
+This script simultaneously runs a two body and three body simulation and tracks the variance in position between the 
+non-jupiter body (usually earth or mars).
+"""
+
+
+def run(earthThreeBody, earthTwoBody, jupiter, sun, axisLength, targetFrameRate, timeStep, endTime):
     xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
     yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
     zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
     currentTime = 0.0
-
-    if numPlot is True:
-        threeBodyEarthPositionList = []
-        timeList = []
-
-    sunSphere = sphere(pos=vector(0, 0, 0), radius=sphereSizeList[0], color=color.yellow)
-    earthThreeBodySphere = sphere(pos=earthThreeBody.position, radius=sphereSizeList[2], color=color.blue)
-    earthTwoBodySphere = sphere(pos=earthTwoBody.position, radius=sphereSizeList[2], color=color.green)
-    jupiterSphere = sphere(pos=jupiter.position, radius=sphereSizeList[1], color=color.orange)
-
-    if maxTrailLength != -2:
-        earthThreeBodySphere.trail = curve(pos=[earthThreeBodySphere.pos], color=color.cyan, radius=trailRadius, retain=maxTrailLength, interval=180)
-        earthTwoBodySphere.trail = curve(pos=[earthTwoBodySphere.pos], color=color.white, radius=trailRadius, retain=maxTrailLength, interval=30)
-        jupiterSphere.trail = curve(pos=[jupiterSphere.pos], color=color.red, radius=trailRadius, retain=maxTrailLength, interval=30)
 
     gravitationalConstant = (4 * np.pi ** 2) / sun.mass
     gd = graph(width=1500, height=700, title='Variation in Mars orbit with addition of Jupiter', xtitle='Time (Earth years)', ytitle="distance between mars and other mars (AU's)", fast=False)
     differencePlot = gcurve(color=color.purple, fast=False)
     differenceList = []
     vpythonTimeList = []
+
+    earthTwoBody.sphere.color = color.green  # Make the two body earth a different color for viewing ease.
 
     while currentTime < endTime:
         distanceEarthThreeBodySun = np.sqrt((earthThreeBody.position.x ** 2 + earthThreeBody.position.y ** 2 + earthThreeBody.position.z ** 2))
@@ -65,23 +59,15 @@ def run(earthThreeBody, earthTwoBody, jupiter, sun, axisLength, sphereSizeList, 
         jupiter.velocity = jupiter.velocity + (accelerationVectorJupiter * timeStep)
         earthTwoBody.velocity = earthTwoBody.velocity + (accelerationVectorEarthTwoBody * timeStep)
 
-        earthThreeBody.position = earthThreeBody.position + (earthThreeBody.velocity * timeStep)
-        jupiter.position = jupiter.position + (jupiter.velocity * timeStep)
-        earthTwoBody.position = earthTwoBody.position + (earthTwoBody.velocity * timeStep)
+        earthThreeBody.move(earthThreeBody.position + (earthThreeBody.velocity * timeStep))
+        earthTwoBody.move(earthTwoBody.position + (earthTwoBody.velocity * timeStep))
+        jupiter.move(jupiter.position + (jupiter.velocity * timeStep))
 
-        earthThreeBodySphere.pos = earthThreeBody.position
-        jupiterSphere.pos = jupiter.position
-        earthTwoBodySphere.pos = earthTwoBody.position
         currentTime = currentTime + timeStep
 
-        if maxTrailLength != -2:
-            earthThreeBodySphere.trail.append(earthThreeBodySphere.pos)
-            earthTwoBodySphere.trail.append(earthTwoBodySphere.pos)
-            jupiterSphere.trail.append(jupiterSphere.pos)
-        if vPlot is True:
-            distance = np.sqrt((earthThreeBody.position.x - earthTwoBody.position.x) ** 2 + (earthThreeBody.position.y - earthTwoBody.position.y) ** 2 + (earthThreeBody.position.z - earthTwoBody.position.z) ** 2)
-            differenceList.append(distance)
-            vpythonTimeList.append(currentTime)
+        distance = np.sqrt((earthThreeBody.position.x - earthTwoBody.position.x) ** 2 + (earthThreeBody.position.y - earthTwoBody.position.y) ** 2 + (earthThreeBody.position.z - earthTwoBody.position.z) ** 2)
+        differenceList.append(distance)
+        vpythonTimeList.append(currentTime)
         rate(targetFrameRate)
 
     for index in range(len(differenceList)):
