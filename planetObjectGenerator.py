@@ -1,9 +1,9 @@
-from vpython import vector, sphere, color, curve
+from vpython import vector, sphere, color, simple_sphere
 import numpy as np
 traceInterval = 10
 
 
-class planet:
+class makePlanet:
     def __init__(self, planetDataList, maxTrailLength):
         name = planetDataList[0]
         planetOrbitRadius = planetDataList[1]
@@ -18,7 +18,7 @@ class planet:
         if self.name == 'sun':  # this handles the sun, which is a special case as it does not have an orbital period, velocity, or eccentricity for the purposes of this lab.
             self.position = vector(0, 0, 0)
             self.velocity = vector(0, 0, 0)
-            self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.yellow)
+            self.sphere = simple_sphere(pos=self.position, radius=self.sphereRadius, color=color.yellow)
         else:
             eccentricityModifier = planetOrbitRadius - (planetOrbitRadius * eccentricity)  # to include eccentricity, replace planetOrbitRadius on next line with eccentricityModifier.
             initialVelocity = (2 * np.pi * planetOrbitRadius) / planetPeriod
@@ -26,7 +26,7 @@ class planet:
             self.position = vector(planetOrbitRadius, 0, 0)
             self.eccentricity = eccentricity
             if self.name == 'earth':
-                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength, interval=traceInterval)
+                self.sphere = simple_sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength, interval=traceInterval)
             elif self.name == 'mars':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.red, make_trail=True, trail_color=color.orange, retain=maxTrailLength)
             elif self.name == 'jupiter':

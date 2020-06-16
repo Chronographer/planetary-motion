@@ -80,9 +80,11 @@ def run(planet, sun, axisLength, targetFrameRate, timeStep, endTime):
         periodSquaredList.append(averagePeriodTimeList[i] ** 2)
         radiusCubedList.append(planetOrbitRadiiList[i] ** 3)
 
-    plt.plot(planetOrbitRadiiList, averagePeriodTimeList, label="time step: " + str(timeStep) + " years")
+    # plt.plot(planetOrbitRadiiList, averagePeriodTimeList, label="time step: " + str(timeStep) + " years")  # use this to plot the period time vs orbit radius
+    plt.plot(periodSquaredList, radiusCubedList, label="time step: " + str(timeStep) + " years")  # use this to plot the period squared vs the orbit radius cubed
     plt.suptitle("Period length of a planet with increasing orbital radii")
     plt.xlabel("Orbital radius (AU's)")
     plt.ylabel("Period length (Earth years)")
+    plt.legend(loc='best')
     plt.grid(True)
     plt.show()

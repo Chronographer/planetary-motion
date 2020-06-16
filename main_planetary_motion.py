@@ -20,8 +20,8 @@ endTime = 5
 vPlot = False
 numPlot = True
 
-sunObject = planetObjectGenerator.planet(planetaryData.getPlanetData("sun"), maxTrailLength)
-earthObject = planetObjectGenerator.planet(planetaryData.getPlanetData('earth'), maxTrailLength)
+sunObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData("sun"), maxTrailLength)
+earthObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('earth'), maxTrailLength)
 
 twoBodyProblemKeplersThirdLaw.run(earthObject, sunObject, axisLength, targetFrameRate, timeStep, endTime)
 #twoBodyProblemAreaSwept.run(earthObject, sunObject, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endTime)
