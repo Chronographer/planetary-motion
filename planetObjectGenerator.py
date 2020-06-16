@@ -2,6 +2,7 @@ from vpython import vector, sphere, color, curve
 import numpy as np
 traceInterval = 10
 
+
 class planet:
     def __init__(self, planetDataList, maxTrailLength):
         name = planetDataList[0]

@@ -2,9 +2,10 @@ from vpython import *
 import numpy as np
 import matplotlib.pyplot as plt
 
-""" This program simulates a simple 2-body system. Note that it assumes the effects of the first planet object ("planet") 
-on the second planet object ("sun") are so small as to be negligible, so position, velocity, ect, are only computed for 
-the "planet" object. Note however that any planet object may be used in place of either "planet" or "sun". """
+"""
+This program simulates a simple 2-body system, additionally computing the area swept out by the planet per unit time.
+Useful for verification of Kepler's second law.
+"""
 
 
 def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endTime):
@@ -15,7 +16,7 @@ def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endT
     gravitationalConstant = (4 * np.pi ** 2) / sun.mass
     currentTime = 0.0
 
-    plotInterval = 1
+    plotInterval = 1  # the area swept will be computed for time blocks of size plotInterval * timeStep
     plotAreaSweptInterval = timeStep * plotInterval
     plotAreaSweptIntervalTimer = 0
     currentSectorPoint = planet.position
@@ -62,8 +63,8 @@ def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endT
         plotAreaSweptIntervalTimer = plotAreaSweptIntervalTimer + timeStep
         rate(targetFrameRate)
 
-        if vPlot is True:
-            genericPlot.plot(currentTime, (planet.velocity.z))
+        if vPlot is True:  # vPython plots and numpy plots can be modified to plot any desired value.
+            genericPlot.plot(currentTime, planet.velocity.z)
             secondPlot.plot(currentTime, areaSwept)
 
     if numPlot is True:
