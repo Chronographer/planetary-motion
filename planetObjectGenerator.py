@@ -20,11 +20,11 @@ class makePlanet:
             self.velocity = vector(0, 0, 0)
             self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.yellow)
         else:
-            eccentricityModifier = planetOrbitRadius - (planetOrbitRadius * eccentricity)  # to include eccentricity, replace planetOrbitRadius on next line with eccentricityModifier. I do not believe this produces an accurate eccentricity, but it does make the orbit elliptical.
+            # eccentricityModifier = planetOrbitRadius - (planetOrbitRadius * eccentricity)  # to include eccentricity, replace planetOrbitRadius on next line with eccentricityModifier. I do not believe this produces an accurate eccentricity, but it does make the orbit elliptical.
             initialVelocity = (2 * np.pi * planetOrbitRadius) / planetPeriod
             self.velocity = vector(0, initialVelocity, 0)
             self.position = vector(planetOrbitRadius, 0, 0)
-            self.eccentricity = eccentricity
+            self.eccentricity = eccentricity  # currently unused value.
             if self.name == 'earth':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength, interval=traceInterval)
             elif self.name == 'mars':

@@ -41,12 +41,12 @@ def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endT
             centralAngle = degrees(diff_angle(lastSectorPoint, currentSectorPoint))
             areaSwept = pi * distancePlanetSun ** 2 * (centralAngle / 360)
             plotAreaSweptIntervalTimer = 0
-            areaSweptDifference = areaSwept - lastAreaSwept
+            # areaSweptDifference = areaSwept - lastAreaSwept
             if numPlot is True:
                 if dontPlotTheFirstPointFlag is False:
                     dontPlotTheFirstPointFlag = True
                 else:
-                    plotList.append(areaSwept)  # to plot the difference each interval in the area swept in the last 2 intervals, add "areaSweptDifference" to this list instead of "areaSwept"
+                    plotList.append(areaSwept)  # to plot the difference each interval in the area swept in the last 2 intervals, uncomment/add "areaSweptDifference" to this list instead of "areaSwept"
                     timeList.append(plotIndex)
                     plotIndex = plotIndex + plotAreaSweptInterval
 
@@ -74,5 +74,5 @@ def run(planet, sun, axisLength, targetFrameRate, timeStep, vPlot, numPlot, endT
         plt.ylabel("Area ((circumferences of Earths orbit)^2)")
         plt.legend(loc="best")
         plt.grid(True)
-        #plt.ylim(0, 0.006)  # use this to force the y axis bounds, if desired. If this is commented out, the y axis will automatically scale.
+        # plt.ylim(0, 0.006)  # use this to force the y axis bounds, if desired. If this is commented out, the y axis will automatically scale.
         plt.show()
