@@ -1,10 +1,10 @@
 from vpython import vector, sphere, color
 import numpy as np
-traceInterval = 30  # number of time steps to wait between updating the trace. Has no effect when maxTrailLength is -2.
+traceInterval = 10  # number of time steps to wait between updating the trace. Has no effect when maxTrailLength is -2.
 
 
 class makePlanet:
-    def __init__(self, planetDataList, maxTrailLength):
+    def __init__(self, planetDataList, maxTrailLength, planetObjectList):
         name = planetDataList[0]
         planetOrbitRadius = planetDataList[1]
         planetPeriod = planetDataList[2]
@@ -15,15 +15,13 @@ class makePlanet:
         self.name = name
         self.sphereRadius = sphereRadius
         self.mass = mass
-        if self.name == 'sun':  # this handles the sun, which is a special case as it does not have an orbital period, velocity, or eccentricity for the purposes of this lab.
-            self.position = vector(0, 0, 0)
-            self.velocity = vector(0, 0, 0)
-            self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.yellow, make_trail=True, trail_color=color.yellow, retain=maxTrailLength, interval=traceInterval)
-        else:
+        self.momentum = 0  # This is a placeholder value
+        if self.name != 'sun':
             # eccentricityModifier = planetOrbitRadius - (planetOrbitRadius * eccentricity)  # to include eccentricity, replace planetOrbitRadius on next line with eccentricityModifier. I do not believe this produces an accurate eccentricity, but it does make the orbit elliptical.
             initialVelocity = (2 * np.pi * planetOrbitRadius) / planetPeriod
             self.velocity = vector(0, initialVelocity, 0)
             self.position = vector(planetOrbitRadius, 0, 0)
+            self.momentum = self.mass * np.norm(self.velocity)
             self.eccentricity = eccentricity  # currently unused value.
             if self.name == 'earth':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength, interval=traceInterval)
@@ -34,8 +32,16 @@ class makePlanet:
             else:
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.white, make_trail=True, trail_color=color.white, retain=maxTrailLength, interval=traceInterval)
 
-        if maxTrailLength == -2:
-            self.sphere.make_trail = False
+            if maxTrailLength == -2:
+                self.sphere.make_trail = False
+        else:
+            for planet in range(0, len(planetObjectList-1)):
+                self.momentum = self.momentum + planet.momentum
+            self.momentum = -self.momentum
+            self.position = vector(0, 0, 0)
+            self.velocity = vector(0, 0, 0)
+            self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.yellow)
+
 
     def move(self, newPosition):
         self.position = newPosition

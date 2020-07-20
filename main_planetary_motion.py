@@ -5,6 +5,7 @@ import twoAndThreeBodyComparison
 import twoBodyProblemKeplersSecondLaw
 import twoBodyProblemKeplersThirdLaw
 import twoBodyProblem
+import trueThreeBodyProblem
 from vpython import *
 
 
@@ -14,7 +15,7 @@ axisLength = 1
 maxTrailLength = -1  # To remove the limit set this to -1, to remove the trail entirely, set this to -2. Otherwise set to a positive integer to taste. Can also be set individually for each planet object, if desired.
 
 timeStep = 0.001 * planetaryData.earthPeriod
-targetFrameRate = 240
+targetFrameRate = 2400
 endTime = 5000
 
 vPlot = False
@@ -30,7 +31,9 @@ sunObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('sun'),
 earthObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('earth'), maxTrailLength)
 #marsObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('mars'), maxTrailLength)
 #twoBodyMarsObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('mars'), maxTrailLength)
-#jupiterObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('jupiter'), maxTrailLength)
+jupiterObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('jupiter'), maxTrailLength)
+trueThreeBodyProblem.run(earthObject, jupiterObject, sunObject, axisLength, targetFrameRate, timeStep, vPlot, endTime)
+
 
 #twoAndThreeBodyComparison.run(marsObject, twoBodyMarsObject, jupiterObject, sunObject, axisLength, targetFrameRate, timeStep, endTime)
 #twoBodyProblemKeplersThirdLaw.run(earthObject, sunObject, axisLength, targetFrameRate, timeStep, endTime)
