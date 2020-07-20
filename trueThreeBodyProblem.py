@@ -14,7 +14,7 @@ def run(earth, jupiter, sun, axisLength, targetFrameRate, timeStep, vPlot, endTi
     currentTime = 0.0
     gravitationalConstant = (4 * np.pi ** 2) / sun.mass
 
-    sun.velocity = -((earth.mass * earth.velocity) + jupiter.mass * jupiter.velocity) / sun.mass
+    sun.velocity = -((earth.mass * earth.velocity) + (jupiter.mass * jupiter.velocity)) / sun.mass
     print("sun velocity is " + str(sun.velocity))
     sun.position.x = -(((earth.mass * earth.position.x) + (jupiter.mass * jupiter.position.x)) / sun.mass)
     print("sun position is " + str(sun.position))
