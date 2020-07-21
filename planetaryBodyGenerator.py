@@ -25,13 +25,11 @@ class makePlanet:
         self.name = name
         self.sphereRadius = sphereRadius
         self.mass = mass
-        self.momentum = vector(0, 0, 0)  # This is a placeholder value
         if self.name != 'sun':
             # eccentricityModifier = planetOrbitRadius - (planetOrbitRadius * eccentricity)  # to include eccentricity, replace planetOrbitRadius on next line with eccentricityModifier. I do not believe this produces an accurate eccentricity, but it does make the orbit elliptical.
             initialVelocity = (2 * np.pi * planetOrbitRadius) / planetPeriod
             self.velocity = vector(0, initialVelocity, 0)
             self.position = vector(planetOrbitRadius, 0, 0)
-            self.momentum = self.mass * self.velocity
 
             if self.name == 'earth':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength, interval=traceInterval)
@@ -42,12 +40,15 @@ class makePlanet:
             else:
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.white, make_trail=True, trail_color=color.white, retain=maxTrailLength, interval=traceInterval)
         else:
+            totalPlanetMomentum = vector(0, 0, 0)
+            positionOffsetThing = 0
             for index in range(0, len(planetObjectList) - 1):
                 planet = planetObjectList[index]
-                self.momentum = self.momentum + planet.momentum
-            self.momentum = -self.momentum
-            self.position = vector(0, 0, 0)
-            self.velocity = vector(0, 0, 0)
+                totalPlanetMomentum = totalPlanetMomentum + (planet.mass * planet.velocity)
+                positionOffsetThing = positionOffsetThing + (planet.mass * planet.position.x)
+            sunPositionOffset = -positionOffsetThing / self.mass
+            self.velocity = -totalPlanetMomentum / self.mass
+            self.position = vector(sunPositionOffset, 0, 0)
             self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.yellow, make_trail=True, trail_color=color.yellow, retain=maxTrailLength, interval=traceInterval)
 
         if maxTrailLength == -2:
