@@ -1,7 +1,6 @@
-from vpython import vector, sphere, color
-import numpy as np
+from vpython import vector, sphere, color, pi
 import planetaryData
-traceInterval = 10  # number of time steps to wait between updating the trace. Has no effect when maxTrailLength is -2.
+traceInterval = 30  # number of time steps to wait between updating the trace. Has no effect when maxTrailLength is -2.
 
 
 def generatePlanetList(planetList, maxTrailLength):
@@ -18,7 +17,7 @@ class makePlanet:
         name = planetDataList[0]
         planetOrbitRadius = planetDataList[1]
         planetPeriod = planetDataList[2]
-        eccentricity = planetDataList[3]
+        # eccentricity = planetDataList[3]
         mass = planetDataList[4]
         sphereRadius = planetDataList[5]
 
@@ -27,7 +26,7 @@ class makePlanet:
         self.mass = mass
         if self.name != 'sun':
             # eccentricityModifier = planetOrbitRadius - (planetOrbitRadius * eccentricity)  # to include eccentricity, replace planetOrbitRadius on next line with eccentricityModifier. I do not believe this produces an accurate eccentricity, but it does make the orbit elliptical.
-            initialVelocity = (2 * np.pi * planetOrbitRadius) / planetPeriod
+            initialVelocity = (2 * pi * planetOrbitRadius) / planetPeriod
             self.velocity = vector(0, initialVelocity, 0)
             self.position = vector(planetOrbitRadius, 0, 0)
 

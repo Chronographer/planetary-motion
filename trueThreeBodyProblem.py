@@ -1,28 +1,19 @@
 from vpython import *
-import numpy as np
 
 
-def run(planetObjectList, targetFrameRate, timeStep, vPlot, endTime):
-    xAxis = curve(pos=[vector(0, 0, 0), vector(1, 0, 0)], color=color.red)
-    yAxis = curve(pos=[vector(0, 0, 0), vector(0, 1, 0)], color=color.green)
-    zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, 1)], color=color.blue)
-
+def run(planetObjectList, targetFrameRate, timeStep, endTime):
     earth = planetObjectList[0]
     jupiter = planetObjectList[1]
     sun = planetObjectList[2]
 
-    if vPlot is True:
-        earthPlot = gcurve(color=color.cyan, fast=False)
-        jupiterPlot = gcurve(color=color.red, fast=False)
-
     currentTime = 0.0
-    gravitationalConstant = (4 * np.pi ** 2) / sun.mass
+    gravitationalConstant = (4 * pi ** 2) / sun.mass
 
     while currentTime < endTime:
 
-        distanceEarthSun = np.sqrt((earth.position.x ** 2 + earth.position.y ** 2 + earth.position.z ** 2))
-        distanceJupiterSun = np.sqrt((jupiter.position.x ** 2 + jupiter.position.y ** 2 + jupiter.position.z ** 2))
-        distanceJupiterEarth = np.sqrt((earth.position.x - jupiter.position.x) ** 2 + (earth.position.y - jupiter.position.y) ** 2 + (earth.position.z - jupiter.position.z) ** 2)
+        distanceEarthSun = sqrt((earth.position.x ** 2 + earth.position.y ** 2 + earth.position.z ** 2))
+        distanceJupiterSun = sqrt((jupiter.position.x ** 2 + jupiter.position.y ** 2 + jupiter.position.z ** 2))
+        distanceJupiterEarth = sqrt((earth.position.x - jupiter.position.x) ** 2 + (earth.position.y - jupiter.position.y) ** 2 + (earth.position.z - jupiter.position.z) ** 2)
 
         forceEarthSun = (gravitationalConstant * earth.mass * sun.mass) / (distanceEarthSun ** 2)
         forceJupiterSun = (gravitationalConstant * jupiter.mass * sun.mass) / (distanceJupiterSun ** 2)
@@ -60,7 +51,4 @@ def run(planetObjectList, targetFrameRate, timeStep, vPlot, endTime):
 
         currentTime = currentTime + timeStep
 
-        if vPlot is True:
-            earthPlot.plot(currentTime, earth.velocity.y)
-            jupiterPlot.plot(currentTime, jupiter.velocity.x)
         rate(targetFrameRate)
