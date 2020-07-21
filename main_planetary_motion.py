@@ -16,7 +16,7 @@ axisLength = 1
 maxTrailLength = -1  # To remove the limit set this to -1, to remove the trail entirely, set this to -2. Otherwise set to a positive integer to taste. Can also be set individually for each planet object, if desired.
 
 timeStep = 0.001 * planetaryData.earthPeriod
-targetFrameRate = 300
+targetFrameRate = 3000
 endTime = 5000
 
 vPlot = False

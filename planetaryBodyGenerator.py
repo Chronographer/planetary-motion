@@ -42,7 +42,7 @@ class makePlanet:
         else:
             totalPlanetMomentum = vector(0, 0, 0)
             positionOffsetThing = 0
-            for index in range(0, len(planetObjectList) - 1):
+            for index in range(len(planetObjectList)):
                 planet = planetObjectList[index]
                 totalPlanetMomentum = totalPlanetMomentum + (planet.mass * planet.velocity)
                 positionOffsetThing = positionOffsetThing + (planet.mass * planet.position.x)
