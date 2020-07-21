@@ -2,10 +2,14 @@ from vpython import *
 import numpy as np
 
 
-def run(earth, jupiter, sun, axisLength, targetFrameRate, timeStep, vPlot, endTime):
-    xAxis = curve(pos=[vector(0, 0, 0), vector(axisLength, 0, 0)], color=color.red)
-    yAxis = curve(pos=[vector(0, 0, 0), vector(0, axisLength, 0)], color=color.green)
-    #zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, axisLength)], color=color.blue)
+def run(planetObjectList, targetFrameRate, timeStep, vPlot, endTime):
+    xAxis = curve(pos=[vector(0, 0, 0), vector(1, 0, 0)], color=color.red)
+    yAxis = curve(pos=[vector(0, 0, 0), vector(0, 1, 0)], color=color.green)
+    zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, 1)], color=color.blue)
+
+    earth = planetObjectList[0]
+    jupiter = planetObjectList[1]
+    sun = planetObjectList[2]
 
     if vPlot is True:
         earthPlot = gcurve(color=color.cyan, fast=False)

@@ -6,6 +6,7 @@ import twoBodyProblemKeplersSecondLaw
 import twoBodyProblemKeplersThirdLaw
 import twoBodyProblem
 import trueThreeBodyProblem
+import planetaryBodyGenerator
 from vpython import *
 
 
@@ -27,12 +28,16 @@ because if they are not then they will still be rendered to the display, even th
 functions, since the planet object actually creates and handles its own vpython sphere object inside of itself. 
 """
 
-sunObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('sun'), maxTrailLength)
-earthObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('earth'), maxTrailLength)
+#sunObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('sun'), maxTrailLength)
+#earthObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('earth'), maxTrailLength)
 #marsObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('mars'), maxTrailLength)
 #twoBodyMarsObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('mars'), maxTrailLength)
-jupiterObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('jupiter'), maxTrailLength)
-trueThreeBodyProblem.run(earthObject, jupiterObject, sunObject, axisLength, targetFrameRate, timeStep, vPlot, endTime)
+#jupiterObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('jupiter'), maxTrailLength)
+
+planetList = ['earth', 'jupiter', 'sun']
+planetObjectList = planetaryBodyGenerator.generatePlanetList(planetList, maxTrailLength)
+
+trueThreeBodyProblem.run(planetObjectList, targetFrameRate, timeStep, vPlot, endTime)
 
 
 #twoAndThreeBodyComparison.run(marsObject, twoBodyMarsObject, jupiterObject, sunObject, axisLength, targetFrameRate, timeStep, endTime)
