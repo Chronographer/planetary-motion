@@ -16,7 +16,7 @@ axisLength = 1
 maxTrailLength = -1  # To remove the limit set this to -1, to remove the trail entirely, set this to -2. Otherwise set to a positive integer to taste. Can also be set individually for each planet object, if desired.
 
 timeStep = 0.001 * planetaryData.earthPeriod
-targetFrameRate = 30
+targetFrameRate = 300
 endTime = 5000
 
 vPlot = False
@@ -27,12 +27,6 @@ Note: if any planet objects are not being used for a given simulation, their cre
 because if they are not then they will still be rendered to the display, even though they are not being passed into any
 functions, since the planet object actually creates and handles its own vpython sphere object inside of itself. 
 """
-
-#sunObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('sun'), maxTrailLength)
-#earthObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('earth'), maxTrailLength)
-#marsObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('mars'), maxTrailLength)
-#twoBodyMarsObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('mars'), maxTrailLength)
-#jupiterObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('jupiter'), maxTrailLength)
 
 planetList = ['earth', 'jupiter', 'sun']
 planetObjectList = planetaryBodyGenerator.generatePlanetList(planetList, maxTrailLength)

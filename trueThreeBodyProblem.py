@@ -18,11 +18,6 @@ def run(planetObjectList, targetFrameRate, timeStep, vPlot, endTime):
     currentTime = 0.0
     gravitationalConstant = (4 * np.pi ** 2) / sun.mass
 
-    sun.velocity = -((earth.mass * earth.velocity) + (jupiter.mass * jupiter.velocity)) / sun.mass
-    print("sun velocity is " + str(sun.velocity))
-    sun.position.x = -(((earth.mass * earth.position.x) + (jupiter.mass * jupiter.position.x)) / sun.mass)
-    print("sun position is " + str(sun.position))
-
     while currentTime < endTime:
 
         distanceEarthSun = np.sqrt((earth.position.x ** 2 + earth.position.y ** 2 + earth.position.z ** 2))
