@@ -135,4 +135,6 @@ def getPlanetData(planet):
         dataList.append(pretendEccentricity)
         dataList.append(pretendMass)
         dataList.append(pretendSphereRadius)
+    else:
+        exit("Error: Could not find data for planet '" + planet + "' in  'planetaryData.py'\nPlanet object generation failed!")
     return dataList
