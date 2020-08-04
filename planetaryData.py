@@ -36,7 +36,7 @@ saturnMass = 5.7e26 / SolarMass
 uranusMass = 8.8e25 / SolarMass
 neptuneMass = 1.03e26 / SolarMass
 plutoMass = 6.0e24 / SolarMass
-pretendMass = jupiterMass * 2
+pretendMass = jupiterMass * 10
 
 # table of eccentricities of the planets
 sunEccentricity = "Null"
@@ -66,6 +66,10 @@ neptuneSphereRadius = 3.865 / 10
 plutoSphereRadius = 0.186 / 10
 pretendSphereRadius = jupiterSphereRadius
 
+
+earthPeriod = saturnPeriod
+earthOrbitRadius = saturnOrbitRadius
+pretendMass = jupiterMass * 100
 
 def getPlanetData(planet):
     dataList = [planet]

@@ -1,5 +1,16 @@
+from planetaryData import jupiterMass as trueJupiterMass
 from vpython import *
 import matplotlib.pyplot as plt
+
+
+def extractVectorComponents(vectorList):
+    componentList = [[], [], []]
+    for i in range(len(vectorList)):
+        componentList[0].append(vectorList[i].x)
+        componentList[1].append(vectorList[i].y)
+        componentList[2].append(vectorList[i].z)
+    return componentList
+
 
 def run(planetObjectList, targetFrameRate, timeStep, endTime):
     earth = planetObjectList[0]
@@ -8,6 +19,7 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
 
     currentTime = 0.0
     gravitationalConstant = (4 * pi ** 2) / sun.mass
+    sun.sphere.make_trail = False
 
     while currentTime < endTime:
         earth.recordTelemetry(currentTime)
@@ -53,9 +65,13 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
         currentTime = currentTime + timeStep
 
         rate(targetFrameRate)
-    vectorComponent = earth.extractVectorComponent(earth.velocityList)
-    plt.plot(earth.timeList, vectorComponent[1])
+
+    velocityComponents = extractVectorComponents(earth.velocityList)
+    positionComponents = extractVectorComponents(earth.positionList)
+    plt.plot(earth.timeList, velocityComponents[0], label="Jupiter mass: " + str(jupiter.mass/trueJupiterMass) + "x 'real' Jupiter mass")
     plt.xlabel("Time (years)")
-    plt.ylabel("Velocity (AU's per year)")
+    plt.ylabel("Velocity (x component) (AU's per year)")
+    plt.suptitle("Earth velocity in the X direction over time")
+    plt.legend(loc='upper right')
     plt.grid(True)
     plt.show()

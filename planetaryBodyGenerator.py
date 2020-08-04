@@ -3,7 +3,7 @@ import planetaryData
 
 """ Script to generate planet objects. ONLY use with 'trueThreeBodyProblem.py'. For all other scripts, use 'planetObjectGenerator.py'. """
 
-traceInterval = 10  # number of time steps to wait between updating the trace. Has no effect when maxTrailLength is -2.
+traceInterval = 30  # number of time steps to wait between updating the trace. Has no effect when maxTrailLength is -2.
 
 
 def generatePlanetList(planetList, maxTrailLength):
@@ -38,6 +38,8 @@ class makePlanet:
 
             if self.name == 'earth':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength, interval=traceInterval)
+                # self.position = vector(0, 1, 0)
+                # self.velocity = vector(initialVelocity, 0, 0)
             elif self.name == 'mars':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.red, make_trail=True, trail_color=color.orange, retain=maxTrailLength, interval=traceInterval)
             elif self.name == 'jupiter':
@@ -67,11 +69,3 @@ class makePlanet:
         self.timeList.append(currentTime)
         self.velocityList.append(self.velocity)
         self.positionList.append(self.position)
-
-    def extractVectorComponent(self, vectorList):
-        componentList = [[], [], []]
-        for i in range(len(vectorList)):
-            componentList[0].append(vectorList[i].x)
-            componentList[1].append(vectorList[i].y)
-            componentList[2].append(vectorList[i].z)
-        return componentList
