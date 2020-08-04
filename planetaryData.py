@@ -9,7 +9,7 @@ saturnOrbitRadius = 9.54
 uranusOrbitRadius = 19.19
 neptuneOrbitRadius = 30.06
 plutoOrbitRadius = 39.53
-pretendOrbitRadius = 3.21
+pretendOrbitRadius = jupiterOrbitRadius
 
 # table of orbital periods in years
 sunPeriod = "Null"
@@ -22,7 +22,7 @@ saturnPeriod = 29.46
 uranusPeriod = 84.01
 neptunePeriod = 164.8
 plutoPeriod = 248.1
-pretendPeriod = 5.1
+pretendPeriod = jupiterPeriod
 
 # table of masses in units of solar mass
 SolarMass = 2e30
@@ -36,7 +36,7 @@ saturnMass = 5.7e26 / SolarMass
 uranusMass = 8.8e25 / SolarMass
 neptuneMass = 1.03e26 / SolarMass
 plutoMass = 6.0e24 / SolarMass
-pretendMass = 6.6e23 / SolarMass
+pretendMass = jupiterMass * 2
 
 # table of eccentricities of the planets
 sunEccentricity = "Null"
@@ -49,7 +49,7 @@ saturnEccentricity = 0.056
 uranusEccentricity = 0.046
 neptuneEccentricity = 0.010
 plutoEccentricity = 0.248
-pretendEccentricity = 0.031
+pretendEccentricity = jupiterEccentricity
 
 # table of the radii of the planets (The physical size of the planet itself, NOT its orbit!) measured in Earth radii.
 # these values are scaled down by a factor of 10 so that they appear as a useful size, except where otherwise noted.
@@ -64,7 +64,7 @@ saturnSphereRadius = 9.140 / 10
 uranusSphereRadius = 3.981 / 10
 neptuneSphereRadius = 3.865 / 10
 plutoSphereRadius = 0.186 / 10
-pretendSphereRadius = 1.5 / 10
+pretendSphereRadius = jupiterSphereRadius
 
 
 def getPlanetData(planet):

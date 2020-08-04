@@ -1,6 +1,9 @@
 from vpython import vector, sphere, color, pi
 import planetaryData
-traceInterval = 30  # number of time steps to wait between updating the trace. Has no effect when maxTrailLength is -2.
+
+""" Script to generate planet objects. ONLY use with 'trueThreeBodyProblem.py'. For all other scripts, use 'planetObjectGenerator.py'. """
+
+traceInterval = 10  # number of time steps to wait between updating the trace. Has no effect when maxTrailLength is -2.
 
 
 def generatePlanetList(planetList, maxTrailLength):
@@ -24,6 +27,9 @@ class makePlanet:
         self.name = name
         self.sphereRadius = sphereRadius
         self.mass = mass
+        self.timeList = []
+        self.positionList = []
+        self.velocityList = []
         if self.name != 'sun':
             # eccentricityModifier = planetOrbitRadius - (planetOrbitRadius * eccentricity)  # to include eccentricity, replace planetOrbitRadius on next line with eccentricityModifier. I do not believe this produces an accurate eccentricity, but it does make the orbit elliptical.
             initialVelocity = (2 * pi * planetOrbitRadius) / planetPeriod
@@ -56,3 +62,16 @@ class makePlanet:
     def move(self, newPosition):
         self.position = newPosition
         self.sphere.pos = self.position
+
+    def recordTelemetry(self, currentTime):
+        self.timeList.append(currentTime)
+        self.velocityList.append(self.velocity)
+        self.positionList.append(self.position)
+
+    def extractVectorComponent(self, vectorList):
+        componentList = [[], [], []]
+        for i in range(len(vectorList)):
+            componentList[0].append(vectorList[i].x)
+            componentList[1].append(vectorList[i].y)
+            componentList[2].append(vectorList[i].z)
+        return componentList
