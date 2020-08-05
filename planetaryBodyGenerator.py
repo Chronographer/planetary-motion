@@ -38,8 +38,6 @@ class makePlanet:
 
             if self.name == 'earth':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength, interval=traceInterval)
-                # self.position = vector(0, 1, 0)
-                # self.velocity = vector(initialVelocity, 0, 0)
             elif self.name == 'mars':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.red, make_trail=True, trail_color=color.orange, retain=maxTrailLength, interval=traceInterval)
             elif self.name == 'jupiter':
