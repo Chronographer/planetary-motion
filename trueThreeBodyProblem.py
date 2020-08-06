@@ -19,10 +19,10 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
 
     currentTime = 0.0
     gravitationalConstant = (4 * pi ** 2) / sun.mass
-    sun.sphere.make_trail = False
 
     while currentTime < endTime:
         earth.recordTelemetry(currentTime)
+        earth.handlePeriodCounting(currentTime)
 
         distanceEarthSun = sqrt((earth.position.x ** 2 + earth.position.y ** 2 + earth.position.z ** 2))
         distanceJupiterSun = sqrt((jupiter.position.x ** 2 + jupiter.position.y ** 2 + jupiter.position.z ** 2))

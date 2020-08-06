@@ -10,12 +10,12 @@ def generatePlanetList(planetList, maxTrailLength):
     planetObjectList = []
     for i in range(len(planetList)):
         planetDataList = planetaryData.getPlanetData(planetList[i])
-        planetObject = makePlanet(planetDataList, maxTrailLength, planetObjectList)
+        planetObject = planet(planetDataList, maxTrailLength, planetObjectList)
         planetObjectList.append(planetObject)
     return planetObjectList
 
 
-class makePlanet:
+class planet:
     def __init__(self, planetDataList, maxTrailLength, planetObjectList):
         name = planetDataList[0]
         planetOrbitRadius = planetDataList[1]
@@ -27,9 +27,12 @@ class makePlanet:
         self.name = name
         self.sphereRadius = sphereRadius
         self.mass = mass
+        self.lastPeriodEndTime = 0
+        self.halfPeriodCounter = 1
         self.timeList = []
         self.positionList = []
         self.velocityList = []
+        self.periodLengthList = []
         if self.name != 'sun':
             # eccentricityModifier = planetOrbitRadius - (planetOrbitRadius * eccentricity)  # to include eccentricity, replace planetOrbitRadius on next line with eccentricityModifier. I do not believe this produces an accurate eccentricity, but it does make the orbit elliptical.
             initialVelocity = (2 * pi * planetOrbitRadius) / planetPeriod
@@ -55,6 +58,7 @@ class makePlanet:
             self.velocity = -totalPlanetMomentum / self.mass
             self.position = vector(sunPositionOffset, 0, 0)
             self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.yellow, make_trail=True, trail_color=color.yellow, retain=maxTrailLength, interval=traceInterval)
+        self.lastStepSign = self.velocity.y / abs(self.velocity.y)
 
         if maxTrailLength == -2:
             self.sphere.make_trail = False
@@ -67,3 +71,15 @@ class makePlanet:
         self.timeList.append(currentTime)
         self.velocityList.append(self.velocity)
         self.positionList.append(self.position)
+
+    def handlePeriodCounting(self, currentTime):
+        currentStepSign = self.velocity.y / abs(self.velocity.y)
+        if currentStepSign != self.lastStepSign:
+            self.lastStepSign = currentStepSign
+            self.halfPeriodCounter = self.halfPeriodCounter + 1
+            if self.halfPeriodCounter == 2:
+                self.halfPeriodCounter = 0
+                currentPeriodLength = currentTime - self.lastPeriodEndTime
+                self.lastPeriodEndTime = currentTime
+                self.periodLengthList.append(currentPeriodLength)
+                print("period completed! " + str(self.periodLengthList[len(self.periodLengthList)-1]))

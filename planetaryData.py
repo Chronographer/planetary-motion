@@ -67,9 +67,10 @@ plutoSphereRadius = 0.186 / 10
 pretendSphereRadius = jupiterSphereRadius
 
 
-earthPeriod = saturnPeriod
-earthOrbitRadius = saturnOrbitRadius
+earthPeriod = earthPeriod  # These 4 lines are temporary to easily change stuff as I am testing
+earthOrbitRadius = earthOrbitRadius
 pretendMass = jupiterMass * 1
+earthMass = earthMass * 1
 
 
 def getPlanetData(planet):
