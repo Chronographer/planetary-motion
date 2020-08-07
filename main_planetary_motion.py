@@ -1,4 +1,3 @@
-import planetaryData
 import trueThreeBodyProblem
 import planetaryBodyGenerator
 from vpython import *
