@@ -33,19 +33,19 @@ class planet:
         self.positionList = []
         self.velocityList = []
         self.periodLengthList = []
-        if self.name != 'sun':
+        if self.name != 'Sun':
             # eccentricityModifier = planetOrbitRadius - (planetOrbitRadius * eccentricity)  # to include eccentricity, replace planetOrbitRadius on next line with eccentricityModifier. I do not believe this produces an accurate eccentricity, but it does make the orbit elliptical.
             initialVelocity = (2 * pi * planetOrbitRadius) / planetPeriod
             self.velocity = vector(0, initialVelocity, 0)
             self.position = vector(planetOrbitRadius, 0, 0)
 
-            if self.name == 'earth':
+            if self.name == 'Earth':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength, interval=traceInterval)
-            elif self.name == 'mars':
+            elif self.name == 'Mars':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.red, make_trail=True, trail_color=color.orange, retain=maxTrailLength, interval=traceInterval)
-            elif self.name == 'jupiter':
+            elif self.name == 'Jupiter':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.orange, make_trail=True, trail_color=color.red, retain=maxTrailLength, interval=traceInterval)
-            elif self.name == 'uranus':
+            elif self.name == 'Uranus':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength, interVal=traceInterval)
             else:
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.white, make_trail=True, trail_color=color.white, retain=maxTrailLength, interval=traceInterval)
