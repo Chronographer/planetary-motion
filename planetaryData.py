@@ -69,7 +69,7 @@ pretendSphereRadius = jupiterSphereRadius
 
 earthPeriod = earthPeriod  # These 4 lines are temporary to easily change stuff as I am testing
 earthOrbitRadius = earthOrbitRadius
-pretendMass = jupiterMass * 200
+pretendMass = jupiterMass * 10
 earthMass = earthMass * 1
 print(sunMass)
 print(pretendMass)
@@ -78,72 +78,72 @@ print(neptuneMass)
 
 def getPlanetData(planet):
     dataList = [planet]
-    if planet == "mercury":
+    if planet == "Mercury":
         dataList.append(mercuryOrbitRadius)
         dataList.append(mercuryPeriod)
         dataList.append(mercuryEccentricity)
         dataList.append(mercuryMass)
         dataList.append(mercurySphereRadius)
-    elif planet == "venus":
+    elif planet == "Venus":
         dataList.append(venusOrbitRadius)
         dataList.append(venusPeriod)
         dataList.append(venusEccentricity)
         dataList.append(venusMass)
         dataList.append(venusSphereRadius)
-    elif planet == "earth":
+    elif planet == "Earth":
         dataList.append(earthOrbitRadius)
         dataList.append(earthPeriod)
         dataList.append(earthEccentricity)
         dataList.append(earthMass)
         dataList.append(earthSphereRadius)
-    elif planet == "mars":
+    elif planet == "Mars":
         dataList.append(marsOrbitRadius)
         dataList.append(marsPeriod)
         dataList.append(marsEccentricity)
         dataList.append(marsMass)
         dataList.append(marsSphereRadius)
-    elif planet == "jupiter":
+    elif planet == "Jupiter":
         dataList.append(jupiterOrbitRadius)
         dataList.append(jupiterPeriod)
         dataList.append(jupiterEccentricity)
         dataList.append(jupiterMass)
         dataList.append(jupiterSphereRadius)
-    elif planet == "saturn":
+    elif planet == "Saturn":
         dataList.append(saturnOrbitRadius)
         dataList.append(saturnPeriod)
         dataList.append(saturnEccentricity)
         dataList.append(saturnMass)
         dataList.append(saturnSphereRadius)
-    elif planet == "uranus":
+    elif planet == "Uranus":
         dataList.append(uranusOrbitRadius)
         dataList.append(uranusPeriod)
         dataList.append(uranusEccentricity)
         dataList.append(uranusMass)
         dataList.append(uranusSphereRadius)
-    elif planet == "neptune":
+    elif planet == "Neptune":
         dataList.append(neptuneOrbitRadius)
         dataList.append(neptunePeriod)
         dataList.append(neptuneEccentricity)
         dataList.append(neptuneMass)
         dataList.append(neptuneSphereRadius)
-    elif planet == "pluto":
+    elif planet == "Pluto":
         dataList.append(plutoOrbitRadius)
         dataList.append(plutoPeriod)
         dataList.append(plutoEccentricity)
         dataList.append(plutoMass)
         dataList.append(plutoSphereRadius)
-    elif planet == "sun":
+    elif planet == "Sun":
         dataList.append(sunOrbitRadius)
         dataList.append(sunPeriod)
         dataList.append(sunEccentricity)
         dataList.append(sunMass)
         dataList.append(sunSphereRadius)
-    elif planet == "pretend":
+    elif planet == "Pretend":
         dataList.append(pretendOrbitRadius)
         dataList.append(pretendPeriod)
         dataList.append(pretendEccentricity)
         dataList.append(pretendMass)
         dataList.append(pretendSphereRadius)
     else:
-        exit("Error: Could not find data for planet '" + planet + "' in  'planetaryData.py'\nPlanet object generation failed!")
+        exit("Error: Could not find data for planet '" + planet + "' in  'planetaryData.py'\nPlanet object generation failed!\n\n(Did you remember to capitalize the names of all planets in 'planetList' in script 'main_planetary_motion.py'?)\n\n(There is a legitimate reason for this requirement, but I won't go into it here. See github commit from ~ 3:14 on 8/7/2020 for more detail)")
     return dataList
