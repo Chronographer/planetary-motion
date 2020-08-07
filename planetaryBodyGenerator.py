@@ -3,7 +3,7 @@ import planetaryData
 
 """ Script to generate planet objects. ONLY use with 'trueThreeBodyProblem.py'. For all other scripts, use 'planetObjectGenerator.py'. """
 
-traceInterval = 30  # number of time steps to wait between updating the trace. Has no effect when maxTrailLength is -2.
+traceInterval = 10  # number of time steps to wait between updating the trace. Has no effect when maxTrailLength is -2.
 
 
 def generatePlanetList(planetList, maxTrailLength):
@@ -45,15 +45,17 @@ class planet:
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.red, make_trail=True, trail_color=color.orange, retain=maxTrailLength, interval=traceInterval)
             elif self.name == 'jupiter':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.orange, make_trail=True, trail_color=color.red, retain=maxTrailLength, interval=traceInterval)
+            elif self.name == 'uranus':
+                self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength, interVal=traceInterval)
             else:
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.white, make_trail=True, trail_color=color.white, retain=maxTrailLength, interval=traceInterval)
         else:
             totalPlanetMomentum = vector(0, 0, 0)
             positionOffsetThing = 0
             for index in range(len(planetObjectList)):
-                planet = planetObjectList[index]
-                totalPlanetMomentum = totalPlanetMomentum + (planet.mass * planet.velocity)
-                positionOffsetThing = positionOffsetThing + (planet.mass * planet.position.x)
+                localPlanet = planetObjectList[index]
+                totalPlanetMomentum = totalPlanetMomentum + (localPlanet.mass * localPlanet.velocity)
+                positionOffsetThing = positionOffsetThing + (localPlanet.mass * localPlanet.position.x)
             sunPositionOffset = -positionOffsetThing / self.mass
             self.velocity = -totalPlanetMomentum / self.mass
             self.position = vector(sunPositionOffset, 0, 0)
@@ -82,4 +84,3 @@ class planet:
                 currentPeriodLength = currentTime - self.lastPeriodEndTime
                 self.lastPeriodEndTime = currentTime
                 self.periodLengthList.append(currentPeriodLength)
-                print("period completed! " + str(self.periodLengthList[len(self.periodLengthList)-1]))

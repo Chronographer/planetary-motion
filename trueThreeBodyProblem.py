@@ -19,6 +19,9 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
 
     currentTime = 0.0
     gravitationalConstant = (4 * pi ** 2) / sun.mass
+    sun.sphere.make_trail = False
+    jupiter.sphere.make_trail = False
+    earth.sphere.make_trail = False
 
     while currentTime < endTime:
         earth.recordTelemetry(currentTime)
@@ -71,7 +74,19 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
     plt.plot(earth.timeList, velocityComponents[0], label="Jupiter mass: " + str(jupiter.mass/trueJupiterMass) + "x 'real' Jupiter mass")
     plt.xlabel("Time (years)")
     plt.ylabel("Velocity (x component) (AU's per year)")
-    plt.suptitle("Earth velocity in the X direction over time")
+    plt.suptitle(earth.name + " velocity in the X direction over time")
     plt.legend(loc='upper right')
     plt.grid(True)
+    plt.show()
+    iList = []
+    earth.periodLengthList.pop(0)
+
+    for i in range(len(earth.periodLengthList)):
+        iList.append(i)
+
+    plt.plot(iList, earth.periodLengthList)
+    plt.grid(True)
+    plt.suptitle("Sequential length of measured orbital period")
+    plt.xlabel("Period number")
+    plt.ylabel("Period length (Earth years)")
     plt.show()
