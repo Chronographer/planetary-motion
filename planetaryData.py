@@ -9,7 +9,6 @@ saturnOrbitRadius = 9.54
 uranusOrbitRadius = 19.19
 neptuneOrbitRadius = 30.06
 plutoOrbitRadius = 39.53
-pretendOrbitRadius = jupiterOrbitRadius
 
 # table of orbital periods in years
 sunPeriod = "Null"
@@ -22,7 +21,6 @@ saturnPeriod = 29.46
 uranusPeriod = 84.01
 neptunePeriod = 164.8
 plutoPeriod = 248.1
-pretendPeriod = jupiterPeriod
 
 # table of masses in units of solar mass
 SolarMass = 2e30
@@ -36,7 +34,6 @@ saturnMass = 5.7e26 / SolarMass
 uranusMass = 8.8e25 / SolarMass
 neptuneMass = 1.03e26 / SolarMass
 plutoMass = 6.0e24 / SolarMass
-pretendMass = jupiterMass
 
 # table of eccentricities of the planets
 sunEccentricity = "Null"
@@ -49,7 +46,6 @@ saturnEccentricity = 0.056
 uranusEccentricity = 0.046
 neptuneEccentricity = 0.010
 plutoEccentricity = 0.248
-pretendEccentricity = jupiterEccentricity
 
 # table of the radii of the planets (The physical size of the planet itself, NOT its orbit!) measured in Earth radii.
 # these values are scaled down by a factor of 10 so that they appear as a useful size, except where otherwise noted.
@@ -64,16 +60,18 @@ saturnSphereRadius = 9.140 / 10
 uranusSphereRadius = 3.981 / 10
 neptuneSphereRadius = 3.865 / 10
 plutoSphereRadius = 0.186 / 10
+
+pretendOrbitRadius = jupiterOrbitRadius
+pretendPeriod = jupiterPeriod
+pretendEccentricity = jupiterEccentricity
+pretendMass = jupiterMass
 pretendSphereRadius = jupiterSphereRadius
 
-
-earthPeriod = earthPeriod  # These 4 lines are temporary to easily change stuff as I am testing
-earthOrbitRadius = earthOrbitRadius
-pretendMass = jupiterMass * 10
-earthMass = earthMass * 1
-print(sunMass)
-print(pretendMass)
-print(neptuneMass)
+fakeOrbitRadius = earthOrbitRadius
+fakePeriod = earthPeriod
+fakeEccentricity = earthEccentricity
+fakeMass = earthMass
+fakeSphereRadius = earthSphereRadius
 
 
 def getPlanetData(planet):
@@ -144,6 +142,12 @@ def getPlanetData(planet):
         dataList.append(pretendEccentricity)
         dataList.append(pretendMass)
         dataList.append(pretendSphereRadius)
+    elif planet == "Fake":
+        dataList.append(fakeOrbitRadius)
+        dataList.append(fakePeriod)
+        dataList.append(fakeEccentricity)
+        dataList.append(fakeMass)
+        dataList.append(fakeSphereRadius)
     else:
         exit("Error: Could not find data for planet '" + planet + "' in  'planetaryData.py'\nPlanet object generation failed!\n\n(Did you remember to capitalize the names of all planets in 'planetList' in script 'main_planetary_motion.py'?)\n\n(There is a legitimate reason for this requirement, but I won't go into it here. See github commit from ~ 3:14 on 8/7/2020 for more detail)")
     return dataList

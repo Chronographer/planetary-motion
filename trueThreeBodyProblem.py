@@ -1,6 +1,6 @@
 from planetaryData import jupiterMass as trueJupiterMass
-from vpython import *
 import matplotlib.pyplot as plt
+from vpython import *
 
 
 def extractVectorComponents(vectorList):
@@ -71,22 +71,24 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
 
     velocityComponents = extractVectorComponents(earth.velocityList)
     positionComponents = extractVectorComponents(earth.positionList)
-    plt.plot(earth.timeList, velocityComponents[0], label="Jupiter mass: " + str(jupiter.mass/trueJupiterMass) + "x 'real' Jupiter mass")
+    plt.plot(earth.timeList, velocityComponents[0], label=jupiter.name + " mass: " + str(jupiter.mass/trueJupiterMass) + "x Jupiter mass")
+    #plt.title("Earth in Saturn's orbit")
+    plt.suptitle(earth.name + " velocity in the X direction over time")
     plt.xlabel("Time (years)")
     plt.ylabel("Velocity (x component) (AU's per year)")
-    plt.suptitle(earth.name + " velocity in the X direction over time")
     plt.legend(loc='upper right')
     plt.grid(True)
     plt.show()
+
     iList = []
     earth.periodLengthList.pop(0)
-
     for i in range(len(earth.periodLengthList)):
         iList.append(i)
 
-    plt.plot(iList, earth.periodLengthList)
-    plt.grid(True)
-    plt.suptitle("Sequential length of measured orbital period")
+    plt.plot(iList, earth.periodLengthList, label=jupiter.name + " mass: " + str(jupiter.mass/trueJupiterMass) + "x Jupiter mass")
+    plt.suptitle("Sequentially measured orbital orbital period of " + earth.name)
     plt.xlabel("Period number")
     plt.ylabel("Period length (Earth years)")
+    plt.legend(loc='upper right')
+    plt.grid(True)
     plt.show()
