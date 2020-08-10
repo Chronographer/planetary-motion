@@ -4,11 +4,12 @@ from vpython import *
 
 
 def extractVectorComponents(vectorList):
-    componentList = [[], [], []]
+    componentList = [[], [], [], []]
     for i in range(len(vectorList)):
         componentList[0].append(vectorList[i].x)
         componentList[1].append(vectorList[i].y)
         componentList[2].append(vectorList[i].z)
+        componentList[3].append(mag(vectorList[i]))
     return componentList
 
 
@@ -76,6 +77,15 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
     plt.suptitle(earth.name + " velocity in the X direction over time")
     plt.xlabel("Time (years)")
     plt.ylabel("Velocity (x component) (AU's per year)")
+    plt.legend(loc='upper right')
+    plt.grid(True)
+    plt.show()
+
+    plt.plot(earth.timeList, velocityComponents[3], label=jupiter.name + " mass: " + str(jupiter.mass/trueJupiterMass) + "x Jupiter mass")
+    #plt.title("Earth in Saturn's orbit")
+    plt.suptitle(earth.name + " velocity magnitude over time")
+    plt.xlabel("Time (years)")
+    plt.ylabel("Velocity (magnitude) (AU's per year)")
     plt.legend(loc='upper right')
     plt.grid(True)
     plt.show()
