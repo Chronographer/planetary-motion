@@ -15,11 +15,7 @@ class makePlanet:
         self.name = name
         self.sphereRadius = sphereRadius
         self.mass = mass
-        if self.name == 'sun':  # this handles the sun, which is a special case as it does not have an orbital period, velocity, or eccentricity for the purposes of this lab.
-            self.position = vector(0, 0, 0)
-            self.velocity = vector(0, 0, 0)
-            self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.yellow)
-        else:
+        if self.name != 'sun':
             # eccentricityModifier = planetOrbitRadius - (planetOrbitRadius * eccentricity)  # to include eccentricity, replace planetOrbitRadius on next line with eccentricityModifier. I do not believe this produces an accurate eccentricity, but it does make the orbit elliptical.
             initialVelocity = (2 * np.pi * planetOrbitRadius) / planetPeriod
             self.velocity = vector(0, initialVelocity, 0)
@@ -33,6 +29,10 @@ class makePlanet:
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.orange, make_trail=True, trail_color=color.red, retain=maxTrailLength, interval=traceInterval)
             else:
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.white, make_trail=True, trail_color=color.white, retain=maxTrailLength, interval=traceInterval)
+        else:  # This handles the sun, which must be
+            self.position = vector(0, 0, 0)
+            self.velocity = vector(0, 0, 0)
+            self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.yellow)
 
             if maxTrailLength == -2:
                 self.sphere.make_trail = False
