@@ -64,12 +64,12 @@ plutoSphereRadius = 0.186 / 10
 pretendOrbitRadius = jupiterOrbitRadius
 pretendPeriod = jupiterPeriod
 pretendEccentricity = jupiterEccentricity
-pretendMass = jupiterMass * 1000
+pretendMass = mercuryMass
 pretendSphereRadius = jupiterSphereRadius
 
-fakeOrbitRadius = earthOrbitRadius
-fakePeriod = earthPeriod
-fakeEccentricity = earthEccentricity
+fakeOrbitRadius = mercuryOrbitRadius
+fakePeriod = mercuryPeriod
+fakeEccentricity = mercuryEccentricity
 fakeMass = earthMass
 fakeSphereRadius = earthSphereRadius
 
