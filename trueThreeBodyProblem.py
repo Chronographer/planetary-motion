@@ -18,9 +18,10 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
     jupiter = planetObjectList[1]
     sun = planetObjectList[2]
 
-    #scene.camera.follow(jupiter.sphere)
-    scene.width = 1200
+    # scene.camera.follow(jupiter.sphere)
+    scene.width = 780
     scene.height = 735
+    scene.range = 3  # Use this to manually set the zoom of the vPython scene.
     scene.autoscale = False  # Setting this to False will stop vPython from automatically zooming out to keep all objects inside the field of view.
 
     currentTime = 0.0
@@ -28,11 +29,11 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
 
     sun.sphere.make_trail = False
     jupiter.sphere.make_trail = False
-    #earth.sphere.make_trail = False
+    # earth.sphere.make_trail = False
 
     while currentTime < endTime:
-        earth.recordTelemetry(currentTime)
-        earth.handlePeriodCounting(currentTime)
+        """earth.recordTelemetry(currentTime)
+        earth.handlePeriodCounting(currentTime)"""
 
         displacementVectorEarthSun = sun.position - earth.position
         displacementVectorJupiterSun = sun.position - jupiter.position
@@ -79,7 +80,7 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
         currentTime = currentTime + timeStep
 
         rate(targetFrameRate)
-
+    print("Done.")
     """velocityComponents = extractVectorComponents(earth.velocityList)
     positionComponents = extractVectorComponents(earth.positionList)
 
@@ -92,7 +93,7 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
     plt.grid(True)
     plt.show()"""
 
-    iList = []
+    """iList = []
     earth.periodLengthList.pop(0)
     for i in range(len(earth.periodLengthList)):
         iList.append(i)
@@ -103,4 +104,4 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
     plt.ylabel("Period length (Earth years)")
     plt.legend(loc='best')
     plt.grid(True)
-    plt.show()
+    plt.show()"""
