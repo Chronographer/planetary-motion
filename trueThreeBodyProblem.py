@@ -18,8 +18,17 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
     jupiter = planetObjectList[1]
     sun = planetObjectList[2]
 
+    #scene.camera.follow(jupiter.sphere)
+    scene.width = 1200
+    scene.height = 735
+
+    print(earth.mass)
+    print(jupiter.mass)
+    print(sun.mass)
+
     currentTime = 0.0
     gravitationalConstant = (4 * pi ** 2) / sun.mass
+
     sun.sphere.make_trail = False
     jupiter.sphere.make_trail = False
     earth.sphere.make_trail = False
@@ -28,9 +37,13 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
         earth.recordTelemetry(currentTime)
         earth.handlePeriodCounting(currentTime)
 
-        distanceEarthSun = sqrt((earth.position.x ** 2 + earth.position.y ** 2 + earth.position.z ** 2))
-        distanceJupiterSun = sqrt((jupiter.position.x ** 2 + jupiter.position.y ** 2 + jupiter.position.z ** 2))
-        distanceJupiterEarth = sqrt((earth.position.x - jupiter.position.x) ** 2 + (earth.position.y - jupiter.position.y) ** 2 + (earth.position.z - jupiter.position.z) ** 2)
+        displacementVectorEarthSun = sun.position - earth.position
+        displacementVectorJupiterSun = sun.position - jupiter.position
+        displacementVectorJupiterEarth = earth.position - jupiter.position
+
+        distanceEarthSun = mag(displacementVectorEarthSun)
+        distanceJupiterSun = mag(displacementVectorJupiterSun)
+        distanceJupiterEarth = mag(displacementVectorJupiterEarth)
 
         forceEarthSun = (gravitationalConstant * earth.mass * sun.mass) / (distanceEarthSun ** 2)
         forceJupiterSun = (gravitationalConstant * jupiter.mass * sun.mass) / (distanceJupiterSun ** 2)
@@ -43,9 +56,9 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
         accelerationSunEarth = forceEarthSun / sun.mass
         accelerationSunJupiter = forceJupiterSun / sun.mass
 
-        unitPositionVectorEarthSun = norm(sun.position - earth.position)
-        unitPositionVectorJupiterSun = norm(sun.position - jupiter.position)
-        unitPositionVectorJupiterEarth = norm(earth.position - jupiter.position)
+        unitPositionVectorEarthSun = norm(displacementVectorEarthSun)
+        unitPositionVectorJupiterSun = norm(displacementVectorJupiterSun)
+        unitPositionVectorJupiterEarth = norm(displacementVectorJupiterEarth)
 
         accelerationVectorEarthSun = accelerationEarthSun * unitPositionVectorEarthSun
         accelerationVectorEarthJupiter = accelerationEarthJupiter * -unitPositionVectorJupiterEarth
@@ -72,23 +85,15 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
 
     velocityComponents = extractVectorComponents(earth.velocityList)
     positionComponents = extractVectorComponents(earth.positionList)
-    plt.plot(earth.timeList, velocityComponents[0], label=jupiter.name + " mass: " + str(jupiter.mass/trueJupiterMass) + "x Jupiter mass")
-    #plt.title("Earth in Saturn's orbit")
-    plt.suptitle(earth.name + " velocity in the X direction over time")
-    plt.xlabel("Time (years)")
-    plt.ylabel("Velocity (x component) (AU's per year)")
-    plt.legend(loc='upper right')
-    plt.grid(True)
-    plt.show()
 
-    plt.plot(earth.timeList, velocityComponents[3], label=jupiter.name + " mass: " + str(jupiter.mass/trueJupiterMass) + "x Jupiter mass")
+    """plt.plot(earth.timeList, velocityComponents[3], label=jupiter.name + " mass: " + str(jupiter.mass/trueJupiterMass) + "x Jupiter mass")
     #plt.title("Earth in Saturn's orbit")
     plt.suptitle(earth.name + " velocity magnitude over time")
     plt.xlabel("Time (years)")
     plt.ylabel("Velocity (magnitude) (AU's per year)")
     plt.legend(loc='upper right')
     plt.grid(True)
-    plt.show()
+    plt.show()"""
 
     iList = []
     earth.periodLengthList.pop(0)
@@ -99,6 +104,6 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
     plt.suptitle("Sequentially measured orbital orbital period of " + earth.name)
     plt.xlabel("Period number")
     plt.ylabel("Period length (Earth years)")
-    plt.legend(loc='upper right')
+    plt.legend(loc='best')
     plt.grid(True)
     plt.show()
