@@ -81,6 +81,7 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
 
         rate(targetFrameRate)
     print("Done.")
+
     """velocityComponents = extractVectorComponents(earth.velocityList)
     positionComponents = extractVectorComponents(earth.positionList)
 

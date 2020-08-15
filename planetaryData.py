@@ -64,7 +64,7 @@ plutoSphereRadius = 0.186 / 10
 pretendOrbitRadius = jupiterOrbitRadius
 pretendPeriod = jupiterPeriod
 pretendEccentricity = jupiterEccentricity
-pretendMass = jupiterMass * 50
+pretendMass = jupiterMass * 1
 pretendSphereRadius = jupiterSphereRadius
 
 fakeOrbitRadius = mercuryOrbitRadius
@@ -72,6 +72,15 @@ fakePeriod = mercuryPeriod
 fakeEccentricity = mercuryEccentricity
 fakeMass = earthMass
 fakeSphereRadius = earthSphereRadius
+
+
+def setPretendStartParameters(orbitRadius, period, eccentricity, mass, sphereRadius):
+    global pretendOrbitRadius, pretendPeriod, pretendEccentricity, pretendMass, pretendSphereRadius
+    pretendOrbitRadius = orbitRadius
+    pretendPeriod = period
+    pretendEccentricity = eccentricity
+    pretendMass = mass
+    pretendSphereRadius = sphereRadius
 
 
 def getPlanetData(planet):

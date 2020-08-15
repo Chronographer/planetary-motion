@@ -1,4 +1,5 @@
-from planetaryData import jupiterMass as trueJupiterMass
+import planetaryData
+import planetaryBodyGenerator
 import matplotlib.pyplot as plt
 from vpython import *
 
@@ -13,26 +14,25 @@ def extractVectorComponents(vectorList):
     return componentList
 
 
-def run(planetObjectList, targetFrameRate, timeStep, endTime, massList):
-    earth = planetObjectList[0]
-    jupiter = planetObjectList[1]
-    sun = planetObjectList[2]
+def run(planetNameList, targetFrameRate, timeStep, endTime, massList, maxTrailLength):
+    scene.width = 1200
+    scene.height = 800
 
-    # scene.camera.follow(jupiter.sphere)
-    scene.width = 780
-    scene.height = 735
-    scene.range = 3
-    scene.autoscale = False  # Setting this to False will stop vPython from automatically zooming out to keep all objects inside the field of view.
+    for iteration in range(len(massList)):
+        planetaryData.setPretendStartParameters(planetaryData.jupiterOrbitRadius, planetaryData.jupiterPeriod, planetaryData.jupiterEccentricity, (planetaryData.jupiterMass * massList[iteration]), planetaryData.jupiterSphereRadius)
 
-    gravitationalConstant = (4 * pi ** 2) / sun.mass
-    currentTime = 0.0
+        localPlanetObjectList = planetaryBodyGenerator.generatePlanetList(planetNameList, maxTrailLength)
+        earth = localPlanetObjectList[0]
+        jupiter = localPlanetObjectList[1]
+        sun = localPlanetObjectList[2]
 
-    sun.sphere.make_trail = False
-    jupiter.sphere.make_trail = False
-    # earth.sphere.make_trail = False
+        gravitationalConstant = (4 * pi ** 2) / sun.mass
+        currentTime = 0.0
 
-    for iteration in range(massList):
-
+        print("starting iteration " + str(iteration))
+        print("Jupiter mass is " + str(jupiter.mass))
+        print("sun position is " + str(sun.position))
+        print("sun velocity is " + str(sun.velocity))
         while currentTime < endTime:
             earth.recordTelemetry(currentTime)
             earth.handlePeriodCounting(currentTime)
@@ -83,3 +83,5 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime, massList):
 
             rate(targetFrameRate)
         print("Iteration " + str(iteration) + " complete.")
+        print("\n")
+    print("All iterations complete.")
