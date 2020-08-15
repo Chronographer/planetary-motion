@@ -18,6 +18,14 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
     jupiter = planetObjectList[1]
     sun = planetObjectList[2]
 
+    #scene.camera.follow(jupiter.sphere)
+    scene.width = 1200
+    scene.height = 735
+
+    print(earth.mass)
+    print(jupiter.mass)
+    print(sun.mass)
+
     currentTime = 0.0
     gravitationalConstant = (4 * pi ** 2) / sun.mass
 
@@ -78,14 +86,14 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
     velocityComponents = extractVectorComponents(earth.velocityList)
     positionComponents = extractVectorComponents(earth.positionList)
 
-    plt.plot(earth.timeList, velocityComponents[3], label=jupiter.name + " mass: " + str(jupiter.mass/trueJupiterMass) + "x Jupiter mass")
+    """plt.plot(earth.timeList, velocityComponents[3], label=jupiter.name + " mass: " + str(jupiter.mass/trueJupiterMass) + "x Jupiter mass")
     #plt.title("Earth in Saturn's orbit")
     plt.suptitle(earth.name + " velocity magnitude over time")
     plt.xlabel("Time (years)")
     plt.ylabel("Velocity (magnitude) (AU's per year)")
     plt.legend(loc='upper right')
     plt.grid(True)
-    plt.show()
+    plt.show()"""
 
     iList = []
     earth.periodLengthList.pop(0)
@@ -96,6 +104,6 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
     plt.suptitle("Sequentially measured orbital orbital period of " + earth.name)
     plt.xlabel("Period number")
     plt.ylabel("Period length (Earth years)")
-    plt.legend(loc='upper right')
+    plt.legend(loc='best')
     plt.grid(True)
     plt.show()
