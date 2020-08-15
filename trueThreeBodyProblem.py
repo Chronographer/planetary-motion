@@ -21,17 +21,14 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
     #scene.camera.follow(jupiter.sphere)
     scene.width = 1200
     scene.height = 735
-
-    print(earth.mass)
-    print(jupiter.mass)
-    print(sun.mass)
+    scene.autoscale = False  # Setting this to False will stop vPython from automatically zooming out to keep all objects inside the field of view.
 
     currentTime = 0.0
     gravitationalConstant = (4 * pi ** 2) / sun.mass
 
     sun.sphere.make_trail = False
     jupiter.sphere.make_trail = False
-    earth.sphere.make_trail = False
+    #earth.sphere.make_trail = False
 
     while currentTime < endTime:
         earth.recordTelemetry(currentTime)
@@ -83,10 +80,10 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
 
         rate(targetFrameRate)
 
-    velocityComponents = extractVectorComponents(earth.velocityList)
+    """velocityComponents = extractVectorComponents(earth.velocityList)
     positionComponents = extractVectorComponents(earth.positionList)
 
-    """plt.plot(earth.timeList, velocityComponents[3], label=jupiter.name + " mass: " + str(jupiter.mass/trueJupiterMass) + "x Jupiter mass")
+    plt.plot(earth.timeList, velocityComponents[3], label=jupiter.name + " mass: " + str(jupiter.mass/trueJupiterMass) + "x Jupiter mass")
     #plt.title("Earth in Saturn's orbit")
     plt.suptitle(earth.name + " velocity magnitude over time")
     plt.xlabel("Time (years)")
