@@ -18,22 +18,24 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
     jupiter = planetObjectList[1]
     sun = planetObjectList[2]
 
-    # scene.camera.follow(jupiter.sphere)
-    scene.width = 780
-    scene.height = 735
-    scene.range = 3  # Use this to manually set the zoom of the vPython scene.
+    scene.width = 1600  # Sets the window size of the vPython animation. Set to taste.
+    scene.height = 900
+    """
+    scene.range = 8  # Use this to manually set the zoom of the vPython scene.
     scene.autoscale = False  # Setting this to False will stop vPython from automatically zooming out to keep all objects inside the field of view.
+    scene.camera.follow(jupiter.sphere)  # This makes the camera follow Jupiter (or, more specifically, the planet object in planetObjectList[1]
+    """
 
     currentTime = 0.0
     gravitationalConstant = (4 * pi ** 2) / sun.mass
 
     sun.sphere.make_trail = False
     jupiter.sphere.make_trail = False
-    # earth.sphere.make_trail = False
+    earth.sphere.make_trail = False
 
     while currentTime < endTime:
-        """earth.recordTelemetry(currentTime)
-        earth.handlePeriodCounting(currentTime)"""
+        earth.recordTelemetry(currentTime)
+        earth.handlePeriodCounting(currentTime)
 
         displacementVectorEarthSun = sun.position - earth.position
         displacementVectorJupiterSun = sun.position - jupiter.position
@@ -82,17 +84,17 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
         rate(targetFrameRate)
     print("Done.")
 
-    """velocityComponents = extractVectorComponents(earth.velocityList)
-    positionComponents = extractVectorComponents(earth.positionList)
+    velocityComponents = extractVectorComponents(earth.velocityList)
+    # positionComponents = extractVectorComponents(earth.positionList)
 
     plt.plot(earth.timeList, velocityComponents[3], label=jupiter.name + " mass: " + str(jupiter.mass/trueJupiterMass) + "x Jupiter mass")
-    #plt.title("Earth in Saturn's orbit")
+    # plt.title("Earth in Saturn's orbit")
     plt.suptitle(earth.name + " velocity magnitude over time")
     plt.xlabel("Time (years)")
     plt.ylabel("Velocity (magnitude) (AU's per year)")
     plt.legend(loc='upper right')
     plt.grid(True)
-    plt.show()"""
+    plt.show()
 
     """iList = []
     earth.periodLengthList.pop(0)
