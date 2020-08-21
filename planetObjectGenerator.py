@@ -15,7 +15,7 @@ class makePlanet:
         self.name = name
         self.sphereRadius = sphereRadius
         self.mass = mass
-        if self.name == 'sun':  # this handles the sun, which is a special case as it does not have an orbital period, velocity, or eccentricity for the purposes of this lab.
+        if self.name == 'Sun':  # this handles the sun, which is a special case as it does not have an orbital period, velocity, or eccentricity for the purposes of this lab.
             self.position = vector(0, 0, 0)
             self.velocity = vector(0, 0, 0)
             self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.yellow, make_trail=True, trail_color=color.yellow, retain=maxTrailLength, interval=traceInterval)
@@ -25,11 +25,11 @@ class makePlanet:
             self.velocity = vector(0, initialVelocity, 0)
             self.position = vector(planetOrbitRadius, 0, 0)
             self.eccentricity = eccentricity  # currently unused value.
-            if self.name == 'earth':
+            if self.name == 'Earth':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.blue, make_trail=True, trail_color=color.cyan, retain=maxTrailLength, interval=traceInterval)
-            elif self.name == 'mars':
+            elif self.name == 'Mars':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.red, make_trail=True, trail_color=color.orange, retain=maxTrailLength, interval=traceInterval)
-            elif self.name == 'jupiter':
+            elif self.name == 'Jupiter':
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.orange, make_trail=True, trail_color=color.red, retain=maxTrailLength, interval=traceInterval)
             else:
                 self.sphere = sphere(pos=self.position, radius=self.sphereRadius, color=color.white, make_trail=True, trail_color=color.white, retain=maxTrailLength, interval=traceInterval)
