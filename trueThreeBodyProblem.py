@@ -23,7 +23,7 @@ def run(planetObjectList, targetFrameRate, timeStep, endTime):
     """
     scene.range = 8  # Use this to manually set the zoom of the vPython scene.
     scene.autoscale = False  # Setting this to False will stop vPython from automatically zooming out to keep all objects inside the field of view.
-    scene.camera.follow(jupiter.sphere)  # This makes the camera follow Jupiter (or, more specifically, the planet object in planetObjectList[1]
+    scene.camera.follow(jupiter.sphere)  # This makes the camera follow Jupiter (or, more specifically, the planet object in planetObjectList[1])
     """
 
     currentTime = 0.0

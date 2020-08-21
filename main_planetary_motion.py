@@ -22,7 +22,7 @@ planetaryData.setPretendStartParameters(planetaryData.pretendOrbitRadius, planet
 
 planetList = ['Earth', 'Pretend', 'Sun']  # List of planets to use in the simulation. 'Sun' MUST be the last element of the list or total momentum will not be 0. All planet names MUST be capitalized.
 massList = []
-for i in range(1, 101):
+for i in range(1, 60):
     massList.append(i)
 massList.sort()
 # planetObjectList = planetaryBodyGenerator.generatePlanetList(planetList, maxTrailLength)
