@@ -1,6 +1,8 @@
 import trueThreeBodyProblem
 import trueThreeBodyIterative
+import trueAndNotTrueThreeBodyComparison
 import planetaryBodyGenerator
+import planetObjectGenerator
 import planetaryData
 from vpython import *
 
@@ -8,7 +10,7 @@ title = ""  # Put a title here if you want it, or leave it as an empty string to
 # scene = canvas(title=title, width=1200, height=735, forward=vector(-0, -0, -1))
 
 maxTrailLength = -2  # To remove the limit set this to -1, to remove the trail entirely, set this to -2. Otherwise set to a positive integer to taste. Can also be set individually for each planet object, if desired.
-targetFrameRate = 50000
+targetFrameRate = 500
 timeStep = 0.001
 endTime = 100
 
@@ -24,7 +26,15 @@ planetList = ['Earth', 'Pretend', 'Sun']  # List of planets to use in the simula
 massList = []
 for i in range(1, 60):
     massList.append(i)
-massList.sort()
-# planetObjectList = planetaryBodyGenerator.generatePlanetList(planetList, maxTrailLength)
+
+staticEarthObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('Earth'), maxTrailLength)
+staticJupiterObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('Jupiter'), maxTrailLength)
+staticSunObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('Sun'), maxTrailLength)
+
+staticPlanetObjectList = [staticEarthObject, staticJupiterObject, staticSunObject]
+dynamicPlanetObjectList = planetaryBodyGenerator.generatePlanetList(planetList, maxTrailLength)
+
+trueAndNotTrueThreeBodyComparison.run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeStep, endTime)
+
 # trueThreeBodyProblem.run(planetObjectList, targetFrameRate, timeStep, endTime)
-trueThreeBodyIterative.run(planetList, targetFrameRate, timeStep, endTime, massList, maxTrailLength)
+# trueThreeBodyIterative.run(planetList, targetFrameRate, timeStep, endTime, massList, maxTrailLength)
