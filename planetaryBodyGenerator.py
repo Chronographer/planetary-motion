@@ -3,7 +3,7 @@ import planetaryData
 
 """ Script to generate planet objects. ONLY use with 'trueThreeBodyProblem.py'. For all other scripts, use 'planetObjectGenerator.py'. """
 
-traceInterval = 10  # number of time steps to wait between updating the trace. Has no effect when maxTrailLength is -2.
+traceInterval = 30  # number of time steps to wait between updating the trace. Has no effect when maxTrailLength is -2.
 
 
 def generatePlanetList(planetList, maxTrailLength):

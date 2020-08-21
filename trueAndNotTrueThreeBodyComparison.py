@@ -79,9 +79,9 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
 
 
 
-        staticDistanceEarthSun = np.sqrt((staticEarth.position.x ** 2 + staticEarth.position.y ** 2 + staticEarth.position.z ** 2))
-        staticDistanceJupiterSun = np.sqrt((staticJupiter.position.x ** 2 + staticJupiter.position.y ** 2 + staticJupiter.position.z ** 2))
-        staticDistanceJupiterEarth = np.sqrt((staticEarth.position.x - staticJupiter.position.x) ** 2 + (staticEarth.position.y - staticJupiter.position.y) ** 2 + (staticEarth.position.z - staticJupiter.position.z) ** 2)
+        staticDistanceEarthSun = sqrt((staticEarth.position.x ** 2 + staticEarth.position.y ** 2 + staticEarth.position.z ** 2))
+        staticDistanceJupiterSun = sqrt((staticJupiter.position.x ** 2 + staticJupiter.position.y ** 2 + staticJupiter.position.z ** 2))
+        staticDistanceJupiterEarth = sqrt((staticEarth.position.x - staticJupiter.position.x) ** 2 + (staticEarth.position.y - staticJupiter.position.y) ** 2 + (staticEarth.position.z - staticJupiter.position.z) ** 2)
 
         staticForceEarthSun = (gravitationalConstant * staticEarth.mass * staticSun.mass) / (staticDistanceEarthSun ** 2)
         staticForceJupiterSun = (gravitationalConstant * staticJupiter.mass * staticSun.mass) / (staticDistanceJupiterSun ** 2)
