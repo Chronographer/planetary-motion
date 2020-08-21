@@ -17,6 +17,12 @@ def extractVectorComponents(vectorList):
 def run(planetNameList, targetFrameRate, timeStep, endTime, massList, maxTrailLength):
     scene.width = 1200
     scene.height = 800
+    earthPeriodMinimumList = []
+    earthPeriodMaximumList = []
+    earthPeriodAverageList = []
+    for i in range(len(massList)):
+        earthPeriodMaximumList.append(0)
+        earthPeriodMinimumList.append(inf)
 
     for iteration in range(len(massList)):
         planetaryData.setPretendStartParameters(planetaryData.jupiterOrbitRadius, planetaryData.jupiterPeriod, planetaryData.jupiterEccentricity, (planetaryData.jupiterMass * massList[iteration]), planetaryData.jupiterSphereRadius)
@@ -29,12 +35,12 @@ def run(planetNameList, targetFrameRate, timeStep, endTime, massList, maxTrailLe
         gravitationalConstant = (4 * pi ** 2) / sun.mass
         currentTime = 0.0
 
-        print("starting iteration " + str(iteration))
+        print("starting iteration " + str(iteration) + " of " + str(len(massList)))
         print("Jupiter mass is " + str(jupiter.mass))
         print("sun position is " + str(sun.position))
         print("sun velocity is " + str(sun.velocity))
         while currentTime < endTime:
-            earth.recordTelemetry(currentTime)
+            # earth.recordTelemetry(currentTime)
             earth.handlePeriodCounting(currentTime)
 
             displacementVectorEarthSun = sun.position - earth.position
@@ -82,6 +88,38 @@ def run(planetNameList, targetFrameRate, timeStep, endTime, massList, maxTrailLe
             currentTime = currentTime + timeStep
 
             rate(targetFrameRate)
-        print("Iteration " + str(iteration) + " complete.")
+        if len(earth.periodLengthList) > 0:
+            earth.periodLengthList.pop(0)
+            periodLengthSum = 0
+            for index in range(len(earth.periodLengthList)):
+                if earth.periodLengthList[index] > earthPeriodMaximumList[iteration]:
+                    earthPeriodMaximumList[iteration] = earth.periodLengthList[index]
+                if earth.periodLengthList[index] < earthPeriodMinimumList[iteration]:
+                    earthPeriodMinimumList[iteration] = earth.periodLengthList[index]
+                periodLengthSum = periodLengthSum + earth.periodLengthList[index]
+                if len(earth.periodLengthList) > 0:
+                    averagePeriodLength = periodLengthSum / len(earth.periodLengthList)
+                else:
+                    averagePeriodLength = -1  # Make it obvious that this is not a valid data point without making it something that is mathematically un-computable so it doesn't throw a runtime error when the Earth fails to complete a single period.
+            earthPeriodAverageList.append(averagePeriodLength)
+        else:
+            earthPeriodMaximumList.append(0)
+            earthPeriodMinimumList.append(0)
+            earthPeriodAverageList.append(0)
+        print("Iteration " + str(iteration) + " of " + str(len(massList)) + " complete.")
         print("\n")
     print("All iterations complete.")
+
+    plt.plot(massList, earthPeriodMinimumList, label="Minimum Earth period")
+    plt.plot(massList, earthPeriodMinimumList, '.', ms=10, color='blue')
+    plt.plot(massList, earthPeriodMaximumList, 'r', label="Maximum Earth period")
+    plt.plot(massList, earthPeriodMaximumList, '.', ms=10, color='orange')
+    plt.plot(massList, earthPeriodAverageList, 'g', label="Average Earth period")
+    plt.plot(massList, earthPeriodAverageList, '.', ms=10, color='teal')
+    plt.suptitle("Earth period length with varying Jupiter mass")
+    plt.title("Measured over the course of " + str(endTime) + " years")
+    plt.xlabel("Pretend mass (solar masses)")
+    plt.ylabel("Earth period (Earth years)")
+    plt.legend(loc='best')
+    plt.grid(True)
+    plt.show()
