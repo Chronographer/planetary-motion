@@ -22,8 +22,13 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
     staticJupiter = staticPlanetObjectList[1]
     staticSun = staticPlanetObjectList[2]
 
-    scene.width = 1600  # Sets the window size of the vPython animation. Set to taste.
-    scene.height = 900
+    staticEarth.sphere.color = color.green
+    staticEarth.sphere.trail_color = color.blue
+    staticSun.sphere.color = color.orange
+
+
+    scene.width = 1200  # Sets the window size of the vPython animation. Set to taste.
+    scene.height = 800
 
     currentTime = 0.0
     gravitationalConstant = (4 * pi ** 2) / dynamicSun.mass
@@ -77,11 +82,13 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
 
 
 
+        staticDisplacementVectorEarthSun = staticSun.position - staticEarth.position
+        staticDisplacementVectorJupiterSun = staticSun.position - staticJupiter.position
+        staticDisplacementVectorJupiterEarth = staticJupiter.position - staticEarth.position
 
-
-        staticDistanceEarthSun = sqrt((staticEarth.position.x ** 2 + staticEarth.position.y ** 2 + staticEarth.position.z ** 2))
-        staticDistanceJupiterSun = sqrt((staticJupiter.position.x ** 2 + staticJupiter.position.y ** 2 + staticJupiter.position.z ** 2))
-        staticDistanceJupiterEarth = sqrt((staticEarth.position.x - staticJupiter.position.x) ** 2 + (staticEarth.position.y - staticJupiter.position.y) ** 2 + (staticEarth.position.z - staticJupiter.position.z) ** 2)
+        staticDistanceEarthSun = mag(staticDisplacementVectorEarthSun)
+        staticDistanceJupiterSun = mag(staticDisplacementVectorJupiterSun)
+        staticDistanceJupiterEarth = mag(staticDisplacementVectorJupiterEarth)
 
         staticForceEarthSun = (gravitationalConstant * staticEarth.mass * staticSun.mass) / (staticDistanceEarthSun ** 2)
         staticForceJupiterSun = (gravitationalConstant * staticJupiter.mass * staticSun.mass) / (staticDistanceJupiterSun ** 2)
@@ -92,9 +99,9 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
         staticAccelerationJupiterSun = staticForceJupiterSun / staticJupiter.mass
         staticAccelerationJupiterEarth = staticForceJupiterEarth / staticJupiter.mass
 
-        staticUnitPositionVectorEarthSun = norm(staticSun.position - staticEarth.position)
-        staticUnitPositionVectorJupiterSun = norm(staticSun.position - staticJupiter.position)
-        staticUnitPositionVectorJupiterEarth = norm(staticEarth.position - staticJupiter.position)
+        staticUnitPositionVectorEarthSun = norm(staticDisplacementVectorEarthSun)
+        staticUnitPositionVectorJupiterSun = norm(staticDisplacementVectorJupiterSun)
+        staticUnitPositionVectorJupiterEarth = norm(staticDisplacementVectorJupiterEarth)
 
         staticAccelerationVectorEarthSun = staticAccelerationEarthSun * staticUnitPositionVectorEarthSun
         staticAccelerationVectorEarthJupiter = staticAccelerationEarthJupiter * -staticUnitPositionVectorJupiterEarth
@@ -109,8 +116,6 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
 
         staticEarth.move(staticEarth.position + (staticEarth.velocity * timeStep))
         staticJupiter.move(staticJupiter.position + (staticJupiter.velocity * timeStep))
-
-
 
 
 
