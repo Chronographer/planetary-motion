@@ -27,7 +27,7 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
     staticSun.sphere.color = color.orange
 
     scene.width = 1200  # Sets the window size of the vPython animation. Set to taste.
-    scene.height = 750
+    scene.height = 730
 
     currentTime = 0.0
     gravitationalConstant = (4 * pi ** 2) / dynamicSun.mass
@@ -39,8 +39,8 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
     """
     while currentTime < endTime:
         # *** Dynamic Sun model calculations *** #
-        dynamicEarth.recordTelemetry(currentTime)
-        #dynamicEarth.handlePeriodCounting(currentTime)
+        # dynamicEarth.recordTelemetry(currentTime)
+        dynamicEarth.handlePeriodCounting(currentTime)
 
         dynamicDisplacementVectorEarthSun = dynamicSun.position - dynamicEarth.position
         dynamicDisplacementVectorJupiterSun = dynamicSun.position - dynamicJupiter.position
@@ -85,8 +85,8 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
         dynamicSun.move(dynamicSun.position + (dynamicSun.velocity * timeStep))
 
         # *** Static Sun model calculations *** #
-        staticEarth.recordTelemetry(currentTime)
-        #staticEarth.handlePeriodCounting(currentTime)
+        # staticEarth.recordTelemetry(currentTime)
+        staticEarth.handlePeriodCounting(currentTime)
 
         staticDisplacementVectorEarthSun = staticSun.position - staticEarth.position
         staticDisplacementVectorJupiterSun = staticSun.position - staticJupiter.position
@@ -128,7 +128,26 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
         rate(targetFrameRate)
     print("Done.")
 
+    xAxisList = []
+    periodDifferenceList = []
+    staticEarth.periodLengthList.pop(0)   # For reasons I have not yet discovered, the first recorded period seems to be ~ 1/4 what it should be. As...
+    dynamicEarth.periodLengthList.pop(0)  # ... a temporary work around, I just remove the first element so it doesn't throw off anything.
+    if len(staticEarth.periodLengthList) > len(dynamicEarth.periodLengthList):  # if the number of elements in these two lists are different, only plot as many points as are in the shorter of the two.
+        for i in range(len(dynamicEarth.periodLengthList)):
+            xAxisList.append(i)
+            periodDifferenceList.append(dynamicEarth.periodLengthList[i] - staticEarth.periodLengthList[i])
+    else:
+        for i in range(len(staticEarth.periodLengthList)):
+            xAxisList.append(i)
+            periodDifferenceList.append(dynamicEarth.periodLengthList[i] - staticEarth.periodLengthList[i])
 
+    plt.plot(xAxisList, periodDifferenceList, label="Run time: " + str(endTime) + " Earth years\nJupiter mass: " + str(staticJupiter.mass/trueJupiterMass) + "x real Jupiter mass")
+    plt.suptitle("Difference between static and dynamic model\nof sequentially measured orbital orbital period of " + staticEarth.name)
+    plt.xlabel("Period number")
+    plt.ylabel("Difference in period length (Earth years)")
+    plt.legend(loc='best')
+    plt.grid(True)
+    plt.show()
 
     """
     # *** Uncomment this to plot difference between the static and dynamic Earths position and velocity *** #

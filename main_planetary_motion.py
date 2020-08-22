@@ -12,13 +12,13 @@ title = ""  # Put a title here if you want it, or leave it as an empty string to
 maxTrailLength = -2  # To remove the limit set this to -1, to remove the trail entirely, set this to -2. Otherwise set to a positive integer to taste. Can also be set individually for each planet object, if desired.
 targetFrameRate = 500000
 timeStep = 0.001
-endTime = 200
+endTime = 100
 
 xAxis = curve(pos=[vector(0, 0, 0), vector(1, 0, 0)], color=color.red)
 yAxis = curve(pos=[vector(0, 0, 0), vector(0, 1, 0)], color=color.green)
 zAxis = curve(pos=[vector(0, 0, 0), vector(0, 0, 1)], color=color.blue)
 
-localPretendMass = planetaryData.jupiterMass * 1
+localPretendMass = planetaryData.jupiterMass * 50  # Quickly alter the starting mass of the planet 'Pretend' using this. Other parameters can be altered below, if desired.
 
 planetaryData.setPretendStartParameters(planetaryData.pretendOrbitRadius, planetaryData.pretendPeriod, planetaryData.pretendEccentricity, localPretendMass, planetaryData.pretendSphereRadius)
 
@@ -28,7 +28,7 @@ for i in range(1, 101):
     massList.append(i)
 
 staticEarthObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('Earth'), maxTrailLength)
-staticJupiterObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('Jupiter'), maxTrailLength)
+staticJupiterObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('Pretend'), maxTrailLength)
 staticSunObject = planetObjectGenerator.makePlanet(planetaryData.getPlanetData('Sun'), maxTrailLength)
 
 staticPlanetObjectList = [staticEarthObject, staticJupiterObject, staticSunObject]
