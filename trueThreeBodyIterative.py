@@ -3,6 +3,10 @@ import planetaryBodyGenerator
 import matplotlib.pyplot as plt
 from vpython import *
 
+"""
+This script runs multiple iterations of the model, each utilizing a different mass for Jupiter, then plots various data from this.
+"""
+
 
 def extractVectorComponents(vectorList):
     componentList = [[], [], [], []]
@@ -40,8 +44,8 @@ def run(planetNameList, targetFrameRate, timeStep, endTime, massList, maxTrailLe
         print("sun position is " + str(sun.position))
         print("sun velocity is " + str(sun.velocity))
         while currentTime < endTime:
-            # earth.recordTelemetry(currentTime)
-            earth.handlePeriodCounting(currentTime)
+            earth.recordTelemetry(currentTime)  # recordTelemetry() stores information about position and velocity. If you dont need this, commenting this out may slightly improve performance.
+            earth.handlePeriodCounting(currentTime)  # handlePeriodCounting() times the length of each period. If you dont need this, commenting it out may slightly improve performance.
 
             displacementVectorEarthSun = sun.position - earth.position
             displacementVectorJupiterSun = sun.position - jupiter.position

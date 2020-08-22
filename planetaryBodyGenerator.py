@@ -1,7 +1,10 @@
 from vpython import vector, sphere, color, pi
 import planetaryData
 
-""" Script to generate planet objects. ONLY use with 'trueThreeBodyProblem.py'. For all other scripts, use 'planetObjectGenerator.py'. """
+"""
+Script to generate planet objects. ONLY use with models which assume a dynamically modeled Sun, or you will have problems. 
+For all other models, use 'planetObjectGenerator.py'.
+"""
 
 traceInterval = 30  # number of time steps to wait between updating the trace. Has no effect when maxTrailLength is -2.
 

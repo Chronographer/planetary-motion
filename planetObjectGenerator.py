@@ -1,6 +1,14 @@
 from vpython import vector, sphere, color, pi
 traceInterval = 30  # number of time steps to wait between updating the trace. Has no effect when maxTrailLength is -2.
 
+"""
+This script is used to produce planet objects FOR THE 'STATIC' MODEL ONLY. It was used for all scripts used in the lab 7 report, and used in part in the final 
+project report in the 'trueAndNotTrueThreeBodyComparison.py' script to produce the planet objects in the static model.
+
+WARNING: Attempting to use planet objects created by this script with 'trueThreeBodyProblem.py' or any other model which assumes the Sun to be dynamically modeled
+will create problems.
+"""
+
 
 class makePlanet:
     def __init__(self, planetDataList, maxTrailLength):

@@ -2,6 +2,9 @@ from planetaryData import jupiterMass as trueJupiterMass
 import matplotlib.pyplot as plt
 from vpython import *
 
+"""
+This script runs a 'true' three body problem, where the sun is modeled dynamically, and is subject to the forces applied to it by the other planets.
+"""
 
 def extractVectorComponents(vectorList):
     componentList = [[], [], [], []]

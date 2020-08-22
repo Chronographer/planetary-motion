@@ -1,3 +1,11 @@
+"""
+This script stores and retrieves information about various planets so they can be used to create planet objects. I would
+STRONGLY advise against changing any values of the "real" planets, instead, change the mass of Jupiter by giving the
+planet "Pretend" identical parameters, but changing the mass. This can be accomplished manually in this script, or by using
+the setPretendStartParameters() function before the creation of the planet objects from main_planetary_motion.py.
+"""
+
+
 # table of orbital radii in AU
 sunOrbitRadius = "Null"
 mercuryOrbitRadius = 0.39

@@ -1,6 +1,11 @@
 from planetaryData import jupiterMass as trueJupiterMass
 import matplotlib.pyplot as plt
 from vpython import *
+"""
+This script runs two different three body models. The 'static' model assumes the Sun to be totally unmoving and unaffected by the other planets, as assumed in Lab 7. 
+The 'dynamic' model allows the sun to move about in accordance with the forces applied to it by the other planets. These two models are run side by side, but 
+independent of each other, to allow a side by side comparison of the two models, and how both are affected as the mass of Jupiter is varied.
+"""
 
 
 def extractVectorComponents(vectorList):
@@ -39,7 +44,7 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
     """
     while currentTime < endTime:
         # *** Dynamic Sun model calculations *** #
-        # dynamicEarth.recordTelemetry(currentTime)
+        dynamicEarth.recordTelemetry(currentTime)
         dynamicEarth.handlePeriodCounting(currentTime)
 
         dynamicDisplacementVectorEarthSun = dynamicSun.position - dynamicEarth.position
@@ -85,7 +90,7 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
         dynamicSun.move(dynamicSun.position + (dynamicSun.velocity * timeStep))
 
         # *** Static Sun model calculations *** #
-        # staticEarth.recordTelemetry(currentTime)
+        staticEarth.recordTelemetry(currentTime)
         staticEarth.handlePeriodCounting(currentTime)
 
         staticDisplacementVectorEarthSun = staticSun.position - staticEarth.position
@@ -188,4 +193,4 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
     plt.legend(loc='best')
     plt.grid(True)
     plt.show()
-    """
+"""
