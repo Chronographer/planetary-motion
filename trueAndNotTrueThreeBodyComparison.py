@@ -26,16 +26,21 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
     staticEarth.sphere.trail_color = color.blue
     staticSun.sphere.color = color.orange
 
-
     scene.width = 1200  # Sets the window size of the vPython animation. Set to taste.
-    scene.height = 800
+    scene.height = 750
 
     currentTime = 0.0
     gravitationalConstant = (4 * pi ** 2) / dynamicSun.mass
-
+    """
+    Note: 'static' and 'dynamic' refer to the two different versions of the model which are run in this script side by side.
+        The terms refer to the sun, which is either A) simulated as a 'static' body which is assumed to be affected by other 
+        objects to such a negligible degree that their effects can be ignored (as was the case in Lab 7), or B) simulated
+        as a 'dynamic' body, where the effects of the other objects on it are calculated and applied.  
+    """
     while currentTime < endTime:
+        # *** Dynamic Sun model calculations *** #
         dynamicEarth.recordTelemetry(currentTime)
-        dynamicEarth.handlePeriodCounting(currentTime)
+        #dynamicEarth.handlePeriodCounting(currentTime)
 
         dynamicDisplacementVectorEarthSun = dynamicSun.position - dynamicEarth.position
         dynamicDisplacementVectorJupiterSun = dynamicSun.position - dynamicJupiter.position
@@ -79,8 +84,9 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
         dynamicJupiter.move(dynamicJupiter.position + (dynamicJupiter.velocity * timeStep))
         dynamicSun.move(dynamicSun.position + (dynamicSun.velocity * timeStep))
 
-
-
+        # *** Static Sun model calculations *** #
+        staticEarth.recordTelemetry(currentTime)
+        #staticEarth.handlePeriodCounting(currentTime)
 
         staticDisplacementVectorEarthSun = staticSun.position - staticEarth.position
         staticDisplacementVectorJupiterSun = staticSun.position - staticJupiter.position
@@ -117,13 +123,50 @@ def run(dynamicPlanetObjectList, staticPlanetObjectList, targetFrameRate, timeSt
         staticEarth.move(staticEarth.position + (staticEarth.velocity * timeStep))
         staticJupiter.move(staticJupiter.position + (staticJupiter.velocity * timeStep))
 
-
-
-
         currentTime = currentTime + timeStep
 
         rate(targetFrameRate)
     print("Done.")
 
-    velocityComponents = extractVectorComponents(dynamicEarth.velocityList)
-    # positionComponents = extractVectorComponents(dynamicEarth.positionList)
+
+
+    """
+    # *** Uncomment this to plot difference between the static and dynamic Earths position and velocity *** #
+    
+    dynamicVelocityComponents = extractVectorComponents(dynamicEarth.velocityList)
+    dynamicPositionComponents = extractVectorComponents(dynamicEarth.positionList)
+
+    staticVelocityComponents = extractVectorComponents(staticEarth.velocityList)
+    staticPositionComponents = extractVectorComponents(staticEarth.positionList)
+
+    dynamicAndStaticEarthPositionDifferenceList = []
+    dynamicAndStaticEarthVelocityDifferenceList = []
+    for i in range(len(staticEarth.timeList)):
+        dynamicAndStaticEarthPositionDifferenceList.append(dynamicPositionComponents[3][i] - staticPositionComponents[3][i])
+        dynamicAndStaticEarthVelocityDifferenceList.append(dynamicVelocityComponents[3][i] - staticVelocityComponents[3][i])
+
+    plt.plot(staticEarth.timeList, dynamicAndStaticEarthPositionDifferenceList)
+    plt.suptitle("Straight line displacement between static and dynamic Earth")
+    plt.xlabel("Time (years)")
+    plt.ylabel("Distance between static and dynamic Earth (AU's)")
+    # plt.legend(loc='upper right')
+    plt.grid(True)
+    plt.show()
+
+    plt.plot(staticEarth.timeList, dynamicAndStaticEarthVelocityDifferenceList, 'r')
+    plt.suptitle("Velocity difference between static and dynamic Earth")
+    plt.xlabel("Time (years)")
+    plt.ylabel("Velocity difference between static and dynamic Earth (AU's/year)")
+    # plt.legend(loc='upper right')
+    plt.grid(True)
+    plt.show()
+
+    plt.plot(staticEarth.timeList, dynamicAndStaticEarthPositionDifferenceList, label='position')
+    plt.plot(staticEarth.timeList, dynamicAndStaticEarthVelocityDifferenceList, 'r', label='velocity')
+    plt.suptitle("Velocity and position differences between static and dynamic Earth")
+    plt.xlabel("Time (years)")
+    plt.ylabel("Difference in position | velocity between static and dynamic Earth (AU's | AU's/year)")
+    plt.legend(loc='best')
+    plt.grid(True)
+    plt.show()
+    """
